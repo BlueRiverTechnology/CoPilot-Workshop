@@ -1,0 +1,140 @@
+# ==========================================
+# SECURITY (CRITICAL)
+# ==========================================
+
+# Environment files
+.env
+.env.*
+*.env
+.env.local
+.env.production
+.env.development
+
+# API Keys and Tokens (any file with these in name)
+*_TOKEN
+*_SECRET
+*_API_KEY
+*_PASSWORD
+*_CREDENTIALS
+
+# Secret files and directories
+secrets/
+secrets.json
+credentials.json
+.credentials
+*.key
+*.pem
+*.p12
+*.pfx
+
+# Cloud provider credentials
+.aws/
+.azure/
+.gcp/
+google-credentials.json
+
+# ==========================================
+# INFRASTRUCTURE
+# ==========================================
+
+# Infrastructure as Code (may contain secrets)
+terraform.tfstate
+terraform.tfstate.backup
+*.tfvars
+pulumi.*.yaml
+*.auto.tfvars
+
+# Ansible vault files
+*vault*.yml
+*vault*.yaml
+
+# ==========================================
+# LOGS & DEBUG (May contain sensitive data)
+# ==========================================
+
+# Log files
+*.log
+logs/
+*.debug
+
+# ==========================================
+# DATABASE (May contain sensitive data)
+# ==========================================
+
+# Database files
+*.db
+*.sqlite
+*.sqlite3
+*.sql
+
+# Database dumps
+*dump*.sql
+*backup*.sql
+
+# ==========================================
+# BUILD ARTIFACTS (Not useful for AI)
+# ==========================================
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+dist/
+eggs/
+*.egg-info/
+.eggs/
+*.egg
+.venv/
+venv/
+ENV/
+
+# Node.js
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# General
+.git/
+.svn/
+.hg/
+
+# IDE/Editor
+.idea/
+.vscode/settings.json
+*.swp
+*.swo
+*~
+
+# ==========================================
+# LARGE/BINARY FILES (Not useful for AI)
+# ==========================================
+
+# Media files
+*.mp4
+*.mp3
+*.wav
+*.avi
+*.mov
+*.png
+*.jpg
+*.jpeg
+*.gif
+*.svg
+*.ico
+*.pdf
+
+# Archives
+*.zip
+*.tar
+*.gz
+*.rar
+*.7z
+
+# Compiled/Binary
+*.exe
+*.dll
+*.so
+*.dylib
