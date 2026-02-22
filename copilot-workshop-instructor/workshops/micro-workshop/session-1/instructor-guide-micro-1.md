@@ -120,7 +120,41 @@ You click Cancel → Agent tries another approach
 
 ---
 
-### [0:10-0:13] 🎮 All AI Modes - Overview (3 min)
+### [0:08-0:13] 🔧 Controlling Copilot's Capabilities (5 min)
+
+**SAY:**
+> "Beyond .copilotignore, you control WHAT Copilot can DO through VS Code settings.
+>
+> Think of it as: .copilotignore = what it SEES, settings = what it CAN DO."
+
+**DEMO - Show Settings:**
+1. Open Command Palette → "Preferences: Open User Settings (JSON)"
+2. Search for "copilot"
+3. Show `chat.tools.terminal.autoApprove: false`
+
+**SAY:**
+> "This setting means Copilot must ASK before running terminal commands. Important for safety!
+>
+> You decide: Speed vs. Control. I recommend starting with autoApprove FALSE, then relax as you get comfortable."
+
+**DEMO - Show Configure Tools:**
+1. Open Chat view
+2. Select Agent mode
+3. Click "Configure Tools" (wrench icon)
+4. Show the list of tools
+
+**SAY:**
+> "These are the CAPABILITIES Copilot has in Agent mode. You can toggle them on/off.
+>
+> **Pro tip:** When working on critical systems, limit tools to only what you need!"
+
+**CHECKPOINT:** Everyone sees the Configure Tools dialog?
+
+**TIME CHECK:** 5 minutes (keep it brief, this is awareness, not deep dive)
+
+---
+
+### [0:13-0:16] 🎮 All AI Modes - Overview (3 min)
 
 **SHOW VISUAL:**
 ```
@@ -152,7 +186,7 @@ You click Cancel → Agent tries another approach
 
 ---
 
-### [0:13-0:18] 🏗️ Agent Mode + Practice Project Generation (5 min)
+### [0:16-0:21] 🏗️ Agent Mode + Practice Project Generation (5 min)
 
 **ENERGY:** Exciting, "watch this magic" energy
 
@@ -539,6 +573,22 @@ Agent Mode:
 
 ---
 
+**5. Advanced Mentions (Quick Overview - 1 min)**
+
+**SAY:**
+> "Two more mentions you might see:
+>
+> **#codebase** - Includes ALL code in your workspace (use sparingly - lots of tokens!)
+> **#fetch:url** - Fetches content from a web URL
+>
+> We won't use these today, but they're available when needed. Usually #file and #folder are more precise!"
+
+**DO:** Show in chat dropdown briefly, don't demo
+
+**NOTE:** Focus remains on #file, #folder, #terminalSelection, #problems
+
+---
+
 ### [0:32-0:35] 📋 Custom Instructions - Your AI's Personality
 
 **Purpose:**
@@ -670,6 +720,15 @@ Python 3.11+, SQLAlchemy async, PostgreSQL.
 - ✅ Know which mode to use when
 - ✅ Give AI perfect context with #mentions
 - ✅ Custom instructions configured
+
+**IMPORTANT NOTE ABOUT THE PRACTICE PROJECT:**
+> "The practice project you just created was for learning purposes - to experience Agent Mode and #mentions in action.
+>
+> **In Session 2, we'll switch to the REAL workshop project** - a pre-built Todo API that you'll extend and enhance.
+>
+> Think of it as: Session 1 = Training wheels. Session 2+ = Real bike! 🚴
+>
+> You can delete the practice project or keep it for reference - we won't use it again."
 
 **PREVIEW SESSION 2:**
 > "Next up: Context Mastery! We'll learn the professional prompting formula and plan our Todo app.

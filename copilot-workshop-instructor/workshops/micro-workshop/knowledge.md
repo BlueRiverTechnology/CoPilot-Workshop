@@ -579,6 +579,64 @@ When reviewing, be thorough and paranoid.
 List all potential issues with severity ratings.
 ```
 
+### Memory Bank - Persistent Project Context
+
+#### Concept
+The Memory Bank is a community-developed pattern that gives GitHub Copilot persistent memory across chat sessions. It uses structured markdown files in a `memory-bank/` directory, referenced through `.github/copilot-instructions.md`.
+
+#### Origin
+Inspired by the Cline Memory Bank concept, adapted for GitHub Copilot. Now included in GitHub's official `awesome-copilot` repository as a recommended instructions file.
+
+#### Core Files
+| File | Purpose | Update Frequency |
+|------|---------|-----------------|
+| projectbrief.md | Goals, scope, requirements | Rarely |
+| productContext.md | Why it exists, users, UX goals | Rarely |
+| techContext.md | Stack, setup, constraints | Occasionally |
+| systemPatterns.md | Architecture, patterns, conventions | Occasionally |
+| activeContext.md | Current focus, recent changes, next steps | Every session |
+| progress.md | What works, what's left, known issues | Every session |
+
+#### Required copilot-instructions.md Addition
+
+```markdown
+## Memory Bank
+
+This project uses a Memory Bank for persistent context.
+At the start of every task, read the memory-bank/ files
+in this order:
+
+1. memory-bank/projectbrief.md (project goals and scope)
+2. memory-bank/techContext.md (tech stack and setup)
+3. memory-bank/systemPatterns.md (architecture and patterns)
+4. memory-bank/activeContext.md (current focus and recent changes)
+5. memory-bank/progress.md (what works, what's left)
+
+Use this context to inform all responses. If you notice
+the memory bank is outdated based on our conversation,
+suggest updates.
+
+When I say "update memory bank", review ALL memory-bank
+files and update them to reflect the current project state.
+Focus especially on activeContext.md and progress.md.
+```
+
+#### Key Commands
+- "update memory bank" — Copilot reviews and updates all files
+- `#file:memory-bank/activeContext.md` — Reference current context
+- `#folder:memory-bank` — Include entire memory bank
+
+#### Relationship to Other Context Tools
+- **copilot-instructions.md**: Rules and standards (HOW you work)
+- **Custom Agents**: Specialized AI personas (domain expertise)
+- **Memory Bank**: Project state and progress (WHERE you are)
+- **PRD files**: Feature specifications (WHAT to build)
+
+#### Alternative Implementations
+- **MCP-based**: `@modelcontextprotocol/server-memory` for JSON storage
+- **MemoriPilot extension**: VS Code extension with specialized update tools
+- **Copilot Memories**: Official Visual Studio feature (VS 2026 only, not VS Code)
+
 ---
 
 ## Security Best Practices

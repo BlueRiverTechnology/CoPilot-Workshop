@@ -1,5 +1,14 @@
 # Copilot Instructions for Todo API
 
+## Workshop Simplifications
+
+**IMPORTANT:** This is a workshop environment with simplified patterns:
+- **Authentication:** For workshop purposes, use fixed `owner_id = "default-user"` instead of implementing full JWT authentication
+- **Production Note:** In production, all endpoints would use `get_current_user` dependency
+- Follow the specific session instructions which may override these patterns for learning purposes
+
+---
+
 ## Architecture
 - FastAPI with async/await
 - 3-tier architecture: API → Services → Models

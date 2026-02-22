@@ -236,7 +236,215 @@ Add a DELETE /api/v1/todos/{id} endpoint that:
 
 ---
 
-### [0:14-0:18] ⚠️ The 70% Problem - Critical Understanding (4 min)
+### [0:14-0:20] 🧠 Memory Bank - Persistent Project Context (6 min)
+
+**ENERGY:** Mind-blown, "this changes everything"
+
+**SAY:**
+> "Custom Agents are powerful. But here's the problem:
+>
+> Every time you start a new Copilot chat session... it FORGETS everything.
+>
+> Your architecture decisions? Gone.
+> What you worked on yesterday? Gone.
+> What you decided about the database? Gone.
+>
+> **The Memory Bank solves this.**
+>
+> It gives Copilot a structured set of markdown files to read at the start of every conversation — so it always knows your project."
+
+---
+
+#### [0:14-0:16] Why Memory Bank Matters (2 min)
+
+**SHOW ON SCREEN:**
+```
+THE PROBLEM:
+┌──────────────────────────────────────┐
+│  Monday: "We use FastAPI with async" │
+│  Tuesday: "Remember, we use FastAPI" │
+│  Wednesday: "I told you, FastAPI..." │
+│  Thursday: "...FastAPI. AGAIN."      │
+└──────────────────────────────────────┘
+
+THE SOLUTION: Memory Bank
+┌──────────────────────────────────────┐
+│  memory-bank/                        │
+│  ├── projectbrief.md     (goals)     │
+│  ├── productContext.md   (the why)   │
+│  ├── techContext.md      (stack)     │
+│  ├── systemPatterns.md   (patterns)  │
+│  ├── activeContext.md    (right now) │
+│  └── progress.md         (status)   │
+│                                      │
+│  Copilot reads these EVERY session   │
+└──────────────────────────────────────┘
+```
+
+**SAY:**
+> "The Memory Bank is a `memory-bank/` folder in your project root with structured markdown files.
+>
+> Each file serves a specific purpose — from the big picture project brief down to what you're actively working on right now.
+>
+> The magic? Your `.github/copilot-instructions.md` tells Copilot to read these files first. So every new chat session starts with full project context."
+
+---
+
+#### [0:16-0:19] Building a Memory Bank from Scratch (3 min)
+
+**SAY:**
+> "Let me show you how to build a Memory Bank from scratch. There are two parts:
+>
+> **Part 1:** Create the memory-bank folder with 6 core files.
+> **Part 2:** Update your copilot-instructions.md to tell Copilot how to use them.
+>
+> Let's start with the files."
+
+**DO - Show the 6 core files and their purpose:**
+
+**SHOW ON SCREEN:**
+```
+STEP 1: Create the folder structure
+
+your-project/
+├── .github/
+│   └── copilot-instructions.md    ← UPDATE this
+├── memory-bank/                    ← CREATE this
+│   ├── projectbrief.md
+│   ├── productContext.md
+│   ├── techContext.md
+│   ├── systemPatterns.md
+│   ├── activeContext.md
+│   └── progress.md
+└── src/
+    └── ... your code
+```
+
+**SAY:**
+> "Six files. Each one answers a specific question Copilot needs to know."
+
+**SHOW ON SCREEN:**
+```
+STEP 2: What goes in each file
+
+projectbrief.md — "What is this project?"
+  → Project name, goals, scope, requirements
+  → The foundation everything else builds on
+
+productContext.md — "Why does this project exist?"
+  → Problems it solves, who it's for
+  → User experience goals
+  → How it fits in the bigger picture
+
+techContext.md — "What are we building with?"
+  → Languages, frameworks, libraries
+  → Dev environment setup
+  → Technical constraints and decisions
+
+systemPatterns.md — "How do we build things here?"
+  → Architecture (e.g., 3-tier, microservices)
+  → Design patterns in use
+  → Naming conventions, file structure
+
+activeContext.md — "What's happening RIGHT NOW?"
+  → Current sprint/focus area
+  → Recent changes and decisions
+  → Immediate next steps
+  → ⚡ This is the most important file
+
+progress.md — "Where do we stand?"
+  → What's working
+  → What's left to build
+  → Known issues and blockers
+  → Overall project status
+```
+
+**SAY:**
+> "Notice how these build on each other. The project brief feeds into product context and tech context, which feed into system patterns, which all feed into active context and progress.
+>
+> `activeContext.md` is the most important file — it's what Copilot checks first to understand where you left off."
+
+---
+
+**DO - Show what to add to copilot-instructions.md:**
+
+**SAY:**
+> "Now the critical part. You need to tell Copilot the Memory Bank exists and how to use it. Add this to your `.github/copilot-instructions.md`:"
+
+**SHOW ON SCREEN:**
+```markdown
+## Memory Bank
+
+This project uses a Memory Bank for persistent context.
+At the start of every task, read the memory-bank/ files
+in this order:
+
+1. memory-bank/projectbrief.md (project goals and scope)
+2. memory-bank/techContext.md (tech stack and setup)
+3. memory-bank/systemPatterns.md (architecture and patterns)
+4. memory-bank/activeContext.md (current focus and recent changes)
+5. memory-bank/progress.md (what works, what's left)
+
+Use this context to inform all responses. If you notice
+the memory bank is outdated based on our conversation,
+suggest updates.
+
+When I say "update memory bank", review ALL memory-bank
+files and update them to reflect the current project state.
+Focus especially on activeContext.md and progress.md.
+```
+
+**SAY:**
+> "That's it. Now Copilot knows to read your memory bank and stay in context.
+>
+> The 'update memory bank' command is especially powerful — at the end of a session, just say those three words and Copilot will update all your context files based on what you accomplished."
+
+---
+
+#### [0:19-0:20] Memory Bank in Practice (1 min)
+
+**SAY:**
+> "Here's the daily workflow with a Memory Bank:
+>
+> **Start of day:** Copilot reads the Memory Bank automatically. It knows your project, your patterns, and where you left off.
+>
+> **During work:** Code normally. Copilot's responses are more accurate because it has full context.
+>
+> **End of day:** Say 'update memory bank'. Copilot updates activeContext.md and progress.md with what you accomplished and what's next.
+>
+> **Next morning:** Copilot reads the updated files. Zero context lost.
+>
+> Think of it this way: Custom Agents tell Copilot HOW you work. The Memory Bank tells Copilot WHERE you are."
+
+**SHOW ON SCREEN:**
+```
+THE DAILY WORKFLOW
+
+Morning:   Copilot reads memory-bank/ → Full context
+           "I see you're working on the auth module.
+            Last session you finished the login endpoint
+            and planned to start password reset next."
+
+Coding:    Better suggestions because of context
+           No more repeating yourself
+
+End of day: "update memory bank"
+           → activeContext.md updated
+           → progress.md updated
+
+Next day:  Copilot reads updated files → Continuity
+```
+
+**SAY:**
+> "Your workshop project already has `.github/copilot-instructions.md` and `PRD.md` — that's the foundation. The Memory Bank pattern takes it to the next level for real-world, multi-day projects.
+>
+> This is what separates someone who USES Copilot from someone who has a true AI-augmented workflow."
+
+🏆 **ACHIEVEMENT:** "Memory Architect"
+
+---
+
+### [0:20-0:24] ⚠️ The 70% Problem - Critical Understanding (4 min)
 
 **ENERGY:** Serious, professional, setting expectations
 

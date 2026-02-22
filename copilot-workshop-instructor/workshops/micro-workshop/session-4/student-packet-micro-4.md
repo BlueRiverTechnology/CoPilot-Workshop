@@ -143,6 +143,266 @@ _______________________________________________
 
 ---
 
+## 🧠 Memory Bank - Persistent Project Context
+
+### The Problem
+
+Every new Copilot chat session starts with zero memory:
+
+```
+Monday:    "We use FastAPI with async/await and 3-tier..."
+Tuesday:   "Remember, we use FastAPI with async/await..."
+Wednesday: "I already told you, FastAPI..."
+Thursday:  "...I give up explaining."
+```
+
+### The Solution
+
+A `memory-bank/` folder with structured markdown files that Copilot reads at the start of every conversation.
+
+```
+your-project/
+├── .github/
+│   └── copilot-instructions.md    ← Tell Copilot about Memory Bank
+├── memory-bank/                    ← Persistent context lives here
+│   ├── projectbrief.md            ← What is this project?
+│   ├── productContext.md          ← Why does it exist?
+│   ├── techContext.md             ← What tech do we use?
+│   ├── systemPatterns.md         ← How do we build things?
+│   ├── activeContext.md           ← What's happening NOW? ⚡
+│   └── progress.md                ← Where do we stand?
+└── src/
+```
+
+### Build Your Memory Bank: Step by Step
+
+#### Step 1: Create the folder and files
+
+```bash
+mkdir memory-bank
+touch memory-bank/projectbrief.md
+touch memory-bank/productContext.md
+touch memory-bank/techContext.md
+touch memory-bank/systemPatterns.md
+touch memory-bank/activeContext.md
+touch memory-bank/progress.md
+```
+
+#### Step 2: Fill in each file
+
+**projectbrief.md** — The foundation
+```markdown
+# Project Brief
+
+## Project Name
+Todo API Workshop App
+
+## Goals
+- Build a REST API for managing todos
+- Learn AI-assisted development patterns
+- Practice TDD with Copilot
+
+## Scope
+- CRUD operations for todos
+- User ownership model
+- Tagging system (many-to-many)
+- Authentication (simplified for workshop)
+
+## Success Criteria
+- All endpoints return correct responses
+- Ownership validation on all mutations
+- Tests pass for core functionality
+```
+
+**productContext.md** — The why
+```markdown
+# Product Context
+
+## Problem
+Developers need a structured todo management API
+with user isolation and organizational features.
+
+## Users
+- Developers learning AI-augmented development
+- Teams needing a lightweight task API
+
+## User Experience Goals
+- RESTful, predictable API design
+- Clear error messages
+- Fast response times
+```
+
+**techContext.md** — The stack
+```markdown
+# Tech Context
+
+## Stack
+- Python 3.11+
+- FastAPI (async)
+- SQLAlchemy (async sessions)
+- Pydantic v2 (validation)
+- Pytest (testing)
+- SQLite (development)
+
+## Setup
+- Poetry for dependency management
+- uvicorn for local server
+- pyproject.toml for configuration
+
+## Constraints
+- All operations must be async
+- UUID primary keys (string format)
+- Simplified auth (fixed "default-user")
+```
+
+**systemPatterns.md** — How we build
+```markdown
+# System Patterns
+
+## Architecture
+3-tier: API (routers) → Services (business logic) → Models (data)
+
+## File Structure
+- src/api/v1/ → FastAPI routers
+- src/services/ → Business logic layer
+- src/models/ → SQLAlchemy ORM models
+- src/schemas/ → Pydantic request/response schemas
+- tests/ → Pytest test files
+
+## Key Patterns
+- Service layer handles all business logic
+- Routers only handle HTTP concerns
+- Pydantic schemas for all request/response
+- HTTPException for error responses
+- Ownership validation before mutations
+
+## Conventions
+- Async/await everywhere
+- Type hints on all functions
+- Docstrings on public methods
+- PEP 8 style
+```
+
+**activeContext.md** — Right now (most important!)
+```markdown
+# Active Context
+
+## Current Focus
+Completing Session 4 Boss Fight - building tagging feature
+
+## Recent Changes
+- Session 3: Built POST, GET, PUT endpoints for todos
+- Implemented TDD approach for all features
+- Service layer pattern established
+
+## Active Decisions
+- Tags are case-insensitive (stored lowercase)
+- Tag names unique per user
+- Many-to-many via association table
+
+## Next Steps
+- Implement Tag model and association table
+- Build tag endpoints (POST, GET filter, DELETE)
+- Add ownership validation for tags
+- Run code review on completed features
+```
+
+**progress.md** — Status tracker
+```markdown
+# Progress
+
+## What Works
+- [x] Todo model with SQLAlchemy
+- [x] POST /api/v1/todos (create)
+- [x] GET /api/v1/todos (list)
+- [x] PUT /api/v1/todos/{id} (update)
+- [x] Pydantic schemas for todos
+- [x] Service layer pattern
+- [x] Basic test suite
+
+## What's Left
+- [ ] Tag model and association table
+- [ ] POST /api/v1/todos/{id}/tags
+- [ ] GET /api/v1/todos?tag=name
+- [ ] DELETE /api/v1/todos/{id}/tags/{tag_id}
+- [ ] Ownership validation for tags
+- [ ] Complete test coverage
+
+## Known Issues
+- Authentication is simplified (hardcoded user)
+- No pagination on list endpoints
+- No rate limiting
+```
+
+#### Step 3: Update copilot-instructions.md
+
+Add this to your existing `.github/copilot-instructions.md`:
+
+```markdown
+## Memory Bank
+
+This project uses a Memory Bank for persistent context.
+At the start of every task, read the memory-bank/ files
+in this order:
+
+1. memory-bank/projectbrief.md (project goals and scope)
+2. memory-bank/techContext.md (tech stack and setup)
+3. memory-bank/systemPatterns.md (architecture and patterns)
+4. memory-bank/activeContext.md (current focus and recent changes)
+5. memory-bank/progress.md (what works, what's left)
+
+Use this context to inform all responses. If you notice
+the memory bank is outdated based on our conversation,
+suggest updates.
+
+When I say "update memory bank", review ALL memory-bank
+files and update them to reflect the current project state.
+Focus especially on activeContext.md and progress.md.
+```
+
+### The Daily Workflow
+
+```
+MORNING:
+  Copilot reads memory-bank/ → Full context restored
+  No more re-explaining your project
+
+DURING WORK:
+  Better suggestions because Copilot knows your patterns
+  Reference #file:memory-bank/activeContext.md for focus
+
+END OF DAY:
+  Say: "update memory bank"
+  Copilot updates activeContext.md and progress.md
+
+NEXT DAY:
+  Zero context lost. Pick up exactly where you left off.
+```
+
+### How It Connects to What You Learned
+
+| Workshop Concept | Memory Bank Equivalent |
+|------------------|----------------------|
+| copilot-instructions.md (Session 1) | Tells Copilot to read Memory Bank |
+| PRD.md (Session 2) | projectbrief.md + productContext.md |
+| 6-Element Framework (Session 2) | Context is pre-loaded from files |
+| Custom Agents (Session 4) | systemPatterns.md + techContext.md |
+
+**Key Insight:** Custom Agents tell Copilot HOW you work. The Memory Bank tells Copilot WHERE you are.
+
+### Reflection
+
+How would a Memory Bank help in YOUR daily work?
+```
+Project I'd use it on: ______________________________
+Most valuable file for me: __________________________
+What I'd put in activeContext.md: ___________________
+```
+
+🏆 **ACHIEVEMENT UNLOCKED:** "Memory Architect"
+
+---
+
 ## ⚠️ The 70% Problem - Critical Understanding
 
 ### The Reality Check
@@ -412,13 +672,30 @@ _______________________________________________
 |-------------|--------|
 | 🔍 Review Master | [ ] |
 | 🤖 Agent Creator | [ ] |
+| 🧠 Memory Architect | [ ] |
 | ⚠️ 70/30 Understander | [ ] |
 | 🎮 Boss Fighter | [ ] |
 | 🏆 COPILOT CHAMPION | [ ] |
 
 ---
 
-## Resources for Continued Learning
+## 📚 Continue Learning
+
+### GitHub Awesome Copilot - Your Next Stop
+
+**Your next stop for boosting Copilot skills:**
+👉 **https://github.com/github/awesome-copilot**
+
+This curated collection includes:
+- 💡 Advanced tips and tricks
+- 📖 Community best practices
+- 🎯 Use case examples
+- 🔧 Tool integrations
+- ✨ Latest updates and features
+
+⭐ **Star this repo and check it regularly** - it's actively maintained by the community!
+
+### Official Documentation
 
 - [GitHub Copilot Documentation](https://docs.github.com/en/copilot)
 - [Copilot Chat Documentation](https://docs.github.com/en/copilot/github-copilot-chat)

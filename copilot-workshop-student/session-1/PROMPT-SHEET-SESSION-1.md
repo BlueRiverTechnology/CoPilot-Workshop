@@ -45,10 +45,19 @@ build/
 ### Verification Command:
 ```bash
 # Test it works
+echo "test-secret-key" > .env
 # Open Copilot Chat and type: "#file:.env"
 # It should show: "This file is ignored" or not find the file
 ```
 
+---
+
+## Terminal Command Control
+** Copy this into Agent Mode:**
+
+```
+pip install fastapi uvicorn
+```
 ---
 
 ## 2️⃣ Practice Project Generation Prompt

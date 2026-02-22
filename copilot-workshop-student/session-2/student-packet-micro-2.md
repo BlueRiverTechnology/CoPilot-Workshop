@@ -17,6 +17,26 @@
 
 ---
 
+## 🔄 Important: Project Transition
+
+**Session 1 Recap:** You built a PRACTICE project to learn Agent Mode and mentions. That was temporary learning material.
+
+**Starting Session 2:** We're switching to the REAL workshop project!
+
+### Action Required Before Starting:
+1. ✅ Close any files from Session 1 practice project
+2. ✅ Open the `copilot-workshop-student` folder in VS Code (if not already open)
+3. ✅ Verify you see these folders:
+   - `src/` (with models/, schemas/, services/, api/)
+   - `tests/` (for pytest)
+   - `session-1/`, `session-2/`, `session-3/`, `session-4/`
+   - `PRD.md` at the root
+4. ✅ The Session 1 practice project can be deleted or ignored - we won't use it again
+
+**This is your workshop project folder for Sessions 2, 3, and 4!**
+
+---
+
 ## From Session 1 to Session 2
 
 **Session 1 - You learned the TOOLS:**
@@ -24,9 +44,9 @@
 - ✅ #mentions for context
 - ✅ Custom Instructions for standards
 - ✅ Security setup with .copilotignore
-- ✅ Built a PRACTICE project
+- ✅ Built a PRACTICE project (throwaway)
 
-**Session 2 - You learn to USE those tools like a PRO.**
+**Session 2 - You learn to USE those tools like a PRO:**
 - Working with the PRE-BUILT todo app in `/src` and `/tests`
 - This is DIFFERENT from your Session 1 practice project!
 

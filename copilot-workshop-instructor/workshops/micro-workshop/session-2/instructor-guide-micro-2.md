@@ -42,7 +42,29 @@ By end of session, students will:
 
 ## 🧠 SESSION 2 SCRIPT
 
-### [0:00-0:03] Thinking Modes Introduction
+### [0:00-0:01] Project Transition (1 min)
+
+**ENERGY:** Clear, directive
+
+**SAY:**
+> "Before we start - important transition!
+>
+> **Session 1:** You built a practice project to learn Agent Mode. That was throwaway code for learning.
+>
+> **Starting now:** We're working with the REAL workshop project - the pre-built Todo API in `copilot-workshop-student`.
+>
+> Everyone, verify you have:
+> - ✅ The `copilot-workshop-student` folder open in VS Code
+> - ✅ You see `src/`, `tests/`, `PRD.md` at the root
+> - ✅ The Session 1 practice project can be deleted - we won't use it again
+>
+> This is the project you'll build on for Sessions 2, 3, and 4. Let's go! 🚀"
+
+**CHECKPOINT:** Everyone in the right folder?
+
+---
+
+### [0:01-0:04] Thinking Modes Introduction
 
 **ENERGY:** Engaged, building momentum
 

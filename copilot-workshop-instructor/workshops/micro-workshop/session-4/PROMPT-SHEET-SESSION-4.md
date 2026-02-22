@@ -123,6 +123,54 @@ Add a DELETE /api/v1/todos/{id} endpoint that:
 
 ---
 
+## 🧠 Memory Bank Prompts
+
+### Initialize Memory Bank
+
+Ask Copilot to create your Memory Bank:
+
+```
+Create a memory-bank/ folder for this project with these files:
+- projectbrief.md
+- productContext.md
+- techContext.md
+- systemPatterns.md
+- activeContext.md
+- progress.md
+
+Use context from #file:.github/copilot-instructions.md
+and #file:PRD.md to populate them.
+
+Each file should be concise with bullet points,
+not long paragraphs.
+```
+
+### Update Memory Bank
+
+Say this at the end of any work session:
+
+```
+update memory bank
+```
+
+Or be more specific:
+
+```
+Update memory-bank/activeContext.md and memory-bank/progress.md
+to reflect what we accomplished in this session.
+```
+
+### Reference Memory Bank in Prompts
+
+```
+#file:memory-bank/activeContext.md #file:memory-bank/systemPatterns.md
+
+Based on my current context and patterns,
+implement the next feature on my list.
+```
+
+---
+
 ## ⚠️ The 70% Problem Explained
 
 ```
@@ -394,6 +442,7 @@ curl -X DELETE http://localhost:8000/api/v1/todos/<todo_id>/tags/<tag_id>
 
 - 🔍 **Review Master** - Used Copilot Code Review
 - 🤖 **Agent Creator** - Created Custom Agent
+- 🧠 **Memory Architect** - Built a Memory Bank for persistent context
 - ⚠️ **70/30 Understander** - Knows where to add value
 - 🎮 **Boss Fighter** - Completed final challenge
 - 🏆 **COPILOT CHAMPION** - Full workshop complete!

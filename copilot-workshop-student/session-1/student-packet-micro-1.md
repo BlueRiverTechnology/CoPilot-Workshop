@@ -101,6 +101,65 @@ _____________________________________________________________________
 
 ---
 
+## 🔧 Controlling What Copilot Can Do
+
+### VS Code Settings for Copilot
+
+Beyond .copilotignore, you can control Copilot's behavior through VS Code settings:
+
+**Key Settings:**
+- `chat.tools.autoApprove` - Whether Copilot can auto-execute all tools without prompting
+- `chat.tools.terminal.autoApprove` - Whether terminal commands are auto-approved
+- `github.copilot.editor.enableAutoCompletions` - Inline suggestion behavior
+
+**How to Configure:**
+1. Open Command Palette (Cmd+Shift+P / Ctrl+Shift+P)
+2. Type "Preferences: Open User Settings (JSON)"
+3. Search for "copilot" or "chat.tools"
+
+**Example Configuration:**
+```json
+{
+  "chat.tools.terminal.autoApprove": false,  // Always ask before running terminal commands
+  "chat.tools.autoApprove": false,           // Always ask before any tool use
+  "github.copilot.editor.enableAutoCompletions": true
+}
+```
+
+### Agent Tool Controls
+
+**In Agent Mode, you can control which tools Copilot can use:**
+
+1. Open Chat view (Ctrl+Alt+I / Ctrl+Cmd+I)
+2. Select "Agent" from agent picker
+3. Click **"Configure Tools"** (wrench icon)
+4. See which tools are enabled:
+   - File editing
+   - Terminal commands
+   - Running tests
+   - MCP servers (if configured)
+
+**Toggle tools on/off** based on your trust level and workflow needs!
+
+### When to Restrict Tool Access
+
+**Restrict terminal auto-approval when:**
+- Working with production systems
+- Unfamiliar with commands Copilot might suggest
+- Learning phase (you want to review every command)
+
+**Allow auto-approval when:**
+- Well-tested development environment
+- High confidence in prompts
+- Speed is critical (but still review!)
+
+**My settings preference:**
+_____________________________________________________________________
+
+🏆 **Micro-Achievement:** [ ] "Settings Master" unlocked
+
+---
+
 ## 🏗️ Practice Project Setup
 
 ### Generated with Agent Mode (2 min)
@@ -468,6 +527,16 @@ _____________________________________________________________________
 
 **What I'm most excited about:**
 _____________________________________________________________________
+
+---
+
+## 🎯 What Happens to the Practice Project?
+
+The practice project you created (routes/, helpers/, main.py) was for **learning purposes only**.
+
+**Next session:** You'll switch to a pre-built Todo API project with professional structure. The practice project can be deleted - you won't need it again.
+
+**Think of it as:** Session 1 = Training wheels. Session 2+ = Real bike! 🚴
 
 ---
 

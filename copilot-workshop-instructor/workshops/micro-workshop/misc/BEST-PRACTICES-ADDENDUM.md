@@ -242,6 +242,7 @@ If you're adopting AI at scale, measure:
 | **This Month** | Create `.github/copilot-instructions.md` for your team |
 | **This Quarter** | Build team AI playbook with effective prompts |
 | **Ongoing** | Measure, iterate, share what works |
+| **Ongoing** | Explore GitHub Awesome Copilot (https://github.com/github/awesome-copilot) |
 
 ---
 

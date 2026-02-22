@@ -232,6 +232,150 @@ DON'T:
 
 ---
 
+## Memory Bank - Persistent Project Context
+
+### Overview
+
+The Memory Bank gives Copilot persistent memory across chat sessions using structured markdown files in a `memory-bank/` directory.
+
+### Architecture
+
+```
+memory-bank/
+├── projectbrief.md      Foundation: goals, scope, requirements
+│   ├── productContext.md    Why it exists, who it's for
+│   ├── systemPatterns.md    Architecture, patterns, conventions
+│   └── techContext.md       Stack, setup, constraints
+│       ├── activeContext.md     Current focus, recent changes ⚡
+│       └── progress.md         Status, what works, what's left
+```
+
+Files build on each other hierarchically. The project brief informs everything below it. Active context and progress change most frequently.
+
+### The 6 Core Files
+
+| File | Updates | What Goes In It |
+|------|---------|-----------------|
+| `projectbrief.md` | Rarely | Project name, goals, scope, success criteria |
+| `productContext.md` | Rarely | Problem being solved, users, UX goals |
+| `techContext.md` | Occasionally | Stack, setup instructions, constraints |
+| `systemPatterns.md` | Occasionally | Architecture, file structure, conventions |
+| `activeContext.md` | **Every session** | Current focus, recent changes, next steps |
+| `progress.md` | **Every session** | What works, what's left, known issues |
+
+### copilot-instructions.md Addition
+
+Add to your `.github/copilot-instructions.md`:
+
+```markdown
+## Memory Bank
+
+This project uses a Memory Bank for persistent context.
+At the start of every task, read the memory-bank/ files
+in this order:
+
+1. memory-bank/projectbrief.md (project goals and scope)
+2. memory-bank/techContext.md (tech stack and setup)
+3. memory-bank/systemPatterns.md (architecture and patterns)
+4. memory-bank/activeContext.md (current focus and recent changes)
+5. memory-bank/progress.md (what works, what's left)
+
+Use this context to inform all responses. If you notice
+the memory bank is outdated based on our conversation,
+suggest updates.
+
+When I say "update memory bank", review ALL memory-bank
+files and update them to reflect the current project state.
+Focus especially on activeContext.md and progress.md.
+```
+
+### Key Commands
+
+| Command | What Happens |
+|---------|-------------|
+| "update memory bank" | Copilot reviews and updates ALL memory-bank files |
+| `#file:memory-bank/activeContext.md` | Include current focus as context |
+| `#folder:memory-bank` | Include entire memory bank as context |
+
+### Template: activeContext.md
+
+This is the file you'll update most. Template:
+
+```markdown
+# Active Context
+
+## Current Focus
+[What you're working on right now]
+
+## Recent Changes
+- [What changed in the last session]
+- [Key decisions made]
+- [Files modified]
+
+## Active Decisions
+- [Decisions that affect current work]
+- [Trade-offs you've chosen]
+
+## Next Steps
+- [Immediate tasks]
+- [What to work on next session]
+
+## Open Questions
+- [Unresolved decisions]
+- [Things to investigate]
+```
+
+### Template: progress.md
+
+```markdown
+# Progress
+
+## What Works
+- [x] [Completed feature 1]
+- [x] [Completed feature 2]
+
+## What's Left
+- [ ] [Remaining feature 1]
+- [ ] [Remaining feature 2]
+
+## Known Issues
+- [Bug or limitation 1]
+- [Bug or limitation 2]
+
+## Recently Completed
+- [Date]: [What was finished]
+```
+
+### Best Practices
+
+```
+DO:
+✅ Update activeContext.md at end of every session
+✅ Keep files concise — bullet points, not essays
+✅ Commit memory-bank changes with your code
+✅ Use "update memory bank" when ending a session
+✅ Let Copilot suggest updates during conversation
+
+DON'T:
+❌ Put sensitive data in memory bank files
+❌ Write novels — Copilot needs scannable content
+❌ Forget to update after major decisions
+❌ Skip the copilot-instructions.md update
+```
+
+### Memory Bank vs. Other Context Tools
+
+| Tool | Scope | Persistence | Best For |
+|------|-------|-------------|----------|
+| copilot-instructions.md | Rules & standards | Always loaded | HOW you work |
+| Custom Agents (.agent.md) | Specialized roles | Referenced manually | Domain expertise |
+| Memory Bank (memory-bank/) | Project state | Always loaded | WHERE you are |
+| PRD files | Feature specs | Referenced manually | WHAT to build |
+
+**They work together:** Instructions set rules → Memory Bank provides context → Agents add expertise → PRDs define features.
+
+---
+
 ## The 70% Problem
 
 ### Understanding the Split
