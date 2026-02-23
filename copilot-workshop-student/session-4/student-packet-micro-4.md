@@ -430,22 +430,65 @@ _____________________________________________________________________
 
 ## 🎮 BOSS FIGHT - The Ultimate Challenge
 
-### The Challenge
+### First: What Are You Building?
 
-Build ONE powerful API endpoint using the many-to-many relationship:
+**Tags are like labels in Gmail or hashtags on social media.**
 
-**POST /api/v1/todos/{todo_id}/tags**
+**User story:**
+- I have a todo: "Fix login bug"
+- I tag it: "urgent", "backend", "security"
+- Now I can find ALL todos tagged "urgent" or ALL "backend" work
 
-### What's ALREADY BUILT (session-4-start checkpoint)
+**Real-world use:**
+- Organize: Group related tasks
+- Filter: "Show me all urgent items"
+- Context: "What are my backend tasks?"
 
-✅ Tag model (id, name, created_at)
-✅ todo_tags association table
-✅ Relationship defined in Todo model
+You've used this feature a hundred times. Now you're building it!
+
+---
+
+### What's Already Done vs What YOU Build
+
+**ALREADY BUILT in session-4-start checkpoint:**
+
+✅ Tag table (stores tags: "urgent", "backend", "security")
+✅ Association table (connects todos to tags - many-to-many relationship)
+✅ Database relationship configured
 ✅ All CRUD endpoints for todos
 
-### What YOU Build
+**What's "many-to-many"?**
+- One todo can have MANY tags ("urgent" + "backend" + "security")
+- One tag can be on MANY todos (10 todos all tagged "urgent")
+- Association table tracks all these connections
 
-**Endpoint:** POST /api/v1/todos/{todo_id}/tags
+**The infrastructure exists. YOU build the API endpoint!**
+
+---
+
+### YOU vs AI Responsibilities
+
+**AI handles (the HOW):**
+- Database query syntax
+- Creating tag if it doesn't exist
+- Adding association between todo and tag
+- Returning updated todo with tags
+
+**YOU specify (the WHAT and the 30%):**
+- What should happen (add tag to todo)
+- Business rules (case-insensitive, create-if-missing)
+- Security (can I tag someone else's todo? NO!)
+- Edge cases (what if tag already on todo? what if todo doesn't exist?)
+
+**The 30% is where YOU prove you're a professional!**
+
+---
+
+### The Challenge Details
+
+**BUILD THIS ENDPOINT:**
+
+**POST /api/v1/todos/{todo_id}/tags**
 
 **Request body:** `{ "name": "urgent" }`
 

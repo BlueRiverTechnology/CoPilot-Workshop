@@ -1,421 +1,613 @@
 # Student Packet: Micro Session 3
-## Build Sprint - Context Edition 🚀⚡
+## Build Sprint - TDD Edition 🚀🧪
 
-**Name:** _________________________  
-**Date:** _________________________  
+**Name:** _________________________
+**Date:** _________________________
 **Achievement Goal:** 🏆 "Build Master"
 
 ---
 
 ## Learning Objectives
 
-- [ ] Build features using Test-Driven Development
-- [ ] Experience how context quality affects speed
-- [ ] Apply Context+Task+Constraints+Format formula
-- [ ] Use Subagents for parallel work
-- [ ] Use Plan Mode for complex features
-- [ ] Track and analyze your results
+- [ ] Start with working code (checkpoint safety net)
+- [ ] Watch professional TDD workflow with DELETE endpoint
+- [ ] Build ONE feature hands-on using full context
+- [ ] Compare TDD vs full context approaches
+- [ ] Know when to use each approach
+- [ ] Experience the safety of checkpoint-based development
 
 ---
 
-## The Build Challenge
+## From Session 2 to Session 3
 
-**The Experiment:**
-Next 30 minutes, build 3 complete CRUD features.
+**Session 2 - You learned PROFESSIONAL PROMPTING:**
+- ✅ 6-element framework (Context + Task + Constraints + Format + Persona + Examples)
+- ✅ Advanced #mentions for context
+- ✅ PRD creation and planning
+- ✅ Thinking modes for complex decisions
 
-**Compare approaches:**
-- Feature 1: TDD (tests first)
-- Feature 2: Full context formula
-- Feature 3: Speed challenge (3 min!)
-
-**YOU track everything. YOU decide what works!**
-
-**Let's PROVE context mastery works! 🚀**
+**Session 3 - You BUILD with those skills.**
+- Starting with WORKING infrastructure (session-3-start checkpoint)
+- This is DIFFERENT from building from scratch!
+- Focus on learning workflows, not debugging setup
 
 ---
 
-## 🚀 Setup Before Starting
+## The Checkpoint Approach
 
-**1. Install dependencies (if not already done):**
+**The Foundation:**
+You're starting with WORKING code, not empty scaffolding.
+
+**Why this matters:**
+- In the original workshop, too many things could fail at once
+- Database setup, async SQLAlchemy, test fixtures - each failure ate 5+ minutes
+- Students spent time debugging infrastructure, not learning AI workflows
+
+**NEW approach:**
+- Start with working infrastructure
+- Learn by watching professional TDD
+- Build ONE feature with support
+- Safety net: `git reset --hard session-3-start` brings you back anytime
+
+**Today:** Master professional workflows with a safety net!
+
+---
+
+## 🛡️ Checkpoint Verification (3 minutes)
+
+### Step 1: Checkout Session 3 Start Branch
+
+**Commands to run:**
 ```bash
-pip install -r requirements.txt
+git checkout session-3-start
 ```
 
-**2. Start your development server:**
-```bash
-# In a separate terminal window
-uvicorn src.main:app --reload
-```
+**What this branch includes:**
+- ✅ POST /todos endpoint (create)
+- ✅ GET /todos endpoint (list with filtering)
+- ✅ PUT /todos/{id} endpoint (update)
+- ✅ Database setup (create_db.py)
+- ✅ Test fixtures (tests/conftest.py)
+- ✅ All schemas, services, routes
+- ✅ 8 passing tests
 
-Server should be running at: **http://localhost:8000**
-
-✅ Dependencies installed!  
-✅ Server is running and ready!
+**Everything works. Let's verify it!**
 
 ---
 
-## 📊 MY CONTEXT EXPERIMENT
+### Step 2: Verify Checkpoint Works
 
-### Feature 1: POST /todos (TDD Approach)
+**Run these commands:**
 
-**Phase 1: Write Tests First**
+```bash
+# 1. Create the database
+python create_db.py
 
-My prompt for test creation:
-```
-[Context]
-
-
-[Task]
-
-
-[Constraints]
-
-
-[Format]
-
+# 2. Run all tests
+pytest tests/api/test_todos.py -v
 ```
 
-- Time: _____ minutes
-- Tests created: [ ] Success [ ] Auth failure [ ] Validation errors
-
-**Phase 2: Implement to Pass Tests**
-
-My implementation prompt:
+**Expected output: All 8 tests passing**
 ```
-[Context] #file:tests/api/test_todos.py #file:src/models/todo.py
-
-
-[Task]
-
-
-[Constraints]
-
-
-[Format]
-
+✅ test_create_todo
+✅ test_create_todo_minimal
+✅ test_get_todos_empty
+✅ test_get_todos
+✅ test_update_todo
+✅ test_update_todo_partial
+✅ test_update_todo_not_found
+✅ test_create_todo_validation
 ```
 
-- Time: _____ minutes
-- Iterations needed: _____
-- Tests passing: [ ] All [ ] Some [ ] None
+**Status:** [ ] My checkpoint is working (8/8 tests passing)
 
-**Feature 1 Total:**
-- Time: _____ minutes
-- First-attempt success: [ ] Yes [ ] No
-- Approach: TDD (tests first, then implement)
+**If tests fail:**
+```bash
+git reset --hard session-3-start
+# Try again - that's the safety net in action!
+```
 
-**What I learned:**
+---
+
+🏆 **Achievement:** [ ] "Checkpoint Master" (verified working infrastructure)
+
+---
+
+## 🧪 Instructor Demo: DELETE Endpoint with TDD (10 minutes)
+
+**What you're learning:**
+Watch professional Test-Driven Development workflow.
+
+**The TDD Process:**
+1. Write tests FIRST (they'll fail - that's expected!)
+2. Run tests and see them fail (RED)
+3. Implement code to make tests pass (GREEN)
+4. Verify success (all tests pass)
+
+**Your job:** WATCH and take notes. You'll practice the full context approach next!
+
+---
+
+### TDD Step 1: Write Tests First
+
+**Prompt the instructor used:**
+```
+[CONTEXT]
+#file:tests/api/test_todos.py shows existing test patterns
+#file:src/models/todo.py defines the Todo model
+#file:src/api/v1/todos.py has existing endpoints (POST, GET, PUT)
+
+Working on todo API following 3-tier architecture.
+Tests use pytest-asyncio with AsyncClient fixture.
+
+[TASK]
+Add tests for DELETE /api/v1/todos/{todo_id} endpoint to tests/api/test_todos.py
+
+[CONSTRAINTS]
+Test cases to include:
+1. test_delete_todo - Successfully delete owned todo (returns 204)
+2. test_delete_todo_not_found - Delete non-existent todo (returns 404)
+
+Follow existing test patterns:
+- Use client fixture from conftest.py
+- Use default_user fixture for ownership
+- Create test todo using POST first, then delete it
+- Verify deletion with follow-up GET request
+
+DON'T implement the endpoint yet - ONLY add the test functions
+
+[FORMAT]
+Add 2 new test functions to existing tests/api/test_todos.py file
+```
+
+**Key observations:**
+- [ ] Used #file mentions to reference existing patterns
+- [ ] Explicit constraint: DON'T implement yet, tests only
+- [ ] Clear test case descriptions
+- [ ] Follows 6-element framework from Session 2
+
+**Tests created:** _______________________________________________________
+
+---
+
+### TDD Step 2: Run Tests and Watch Them Fail
+
+**Command:**
+```bash
+pytest tests/api/test_todos.py::test_delete_todo -v
+pytest tests/api/test_todos.py::test_delete_todo_not_found -v
+```
+
+**Expected result:** Tests FAIL (endpoint doesn't exist)
+
+**Why this is good:**
+- Proves tests are actually testing something
+- When we implement and tests pass, we KNOW it works
+- This is RED in the TDD Red-Green-Refactor cycle
+
+**Observation:** Tests failed as expected [ ]
+
+---
+
+### TDD Step 3: Implement to Make Tests Pass
+
+**Prompt the instructor used:**
+```
+[CONTEXT]
+#file:tests/api/test_todos.py defines success criteria for DELETE endpoint (test_delete_todo and test_delete_todo_not_found)
+#file:src/api/v1/todos.py has existing endpoints (POST, GET, PUT) showing routing patterns
+#file:src/services/todo_service.py has TodoService class with create, get_all, get_by_id, update methods
+#file:src/models/todo.py defines the Todo model
+#file:.github/copilot-instructions.md has architecture and coding standards
+
+Following 3-tier architecture: API → Service → Models
+
+[TASK]
+Implement DELETE /api/v1/todos/{todo_id} endpoint to make the new tests pass
+
+[CONSTRAINTS]
+Implementation requirements:
+1. Add delete_todo() method to TodoService class:
+   - Parameters: todo_id (str), user_id (str)
+   - Fetch todo by ID
+   - Check ownership (owner_id must match user_id)
+   - If not found or not owned: return None
+   - If owned: delete from database, commit, return True
+   - Use async/await patterns
+
+2. Add DELETE "/{todo_id}" endpoint to todos router:
+   - Path parameter: todo_id (str)
+   - Get database session with Depends(get_db)
+   - Use fixed user_id = "default-user" (matches POST/PUT endpoints)
+   - Call service.delete_todo()
+   - Return 404 if None, 204 No Content if successful
+   - Include proper HTTPException error handling
+
+Must satisfy both test cases:
+- test_delete_todo: Returns 204 when deleting owned todo
+- test_delete_todo_not_found: Returns 404 when todo doesn't exist
+
+Follow existing endpoint patterns for consistency
+
+[FORMAT]
+Update these files:
+1. src/services/todo_service.py - add delete_todo method to TodoService class
+2. src/api/v1/todos.py - add DELETE endpoint
+```
+
+**Key observations:**
+- [ ] Referenced the TESTS as context (AI knows what success looks like)
+- [ ] Detailed constraints for both service and API layers
+- [ ] Must satisfy specific test cases
+- [ ] Follows 3-tier architecture pattern
+
+**Implementation notes:** _________________________________________________
+
+---
+
+### TDD Step 4: Run Tests and Celebrate Green
+
+**Command:**
+```bash
+pytest tests/api/test_todos.py -v
+```
+
+**Expected result:** ALL 10 tests pass (8 original + 2 new DELETE tests)
+
+**Why TDD works with AI:**
+1. Tests give AI clear success criteria
+2. Less ambiguity = better first-try code
+3. Automatic verification - no manual testing needed
+4. Professional workflow from day one
+
+**Final result:** All tests passing [ ]
+
+---
+
+🏆 **Achievement:** [ ] "TDD Observer" (watched complete TDD workflow)
+
+---
+
+## 🎯 Student Hands-On: Build ONE Feature (12 minutes)
+
+**Now YOUR turn!**
+
+You'll build ONE feature yourself using the FULL CONTEXT approach from Session 2.
+
+**Your challenge: Add a 'priority' field to todos**
+
+Simple feature. Clear requirements. Working infrastructure.
+
+---
+
+### Feature Requirements & Strategy (2 minutes)
+
+**First: What does this feature DO for users?**
+
+You know how in any todo app (Todoist, Things, your phone) you can mark tasks as high/medium/low priority? That's what we're building.
+
+**User stories:**
+- Create urgent todo: "Fix production bug" → Priority 1 (high)
+- Create normal todo: "Write docs" → Priority 2 (medium) - the default
+- Create later todo: "Organize files" → Priority 3 (low)
+- Filter: "Show me only urgent tasks" → GET /todos?priority=1
+
+Simple. Familiar. Everyone gets it.
+
+---
+
+**Second: How does our API organize code?**
+
+Our API has three layers (think restaurant):
+- **API Endpoints** (src/api/v1/) = Waiter (takes orders, returns food)
+- **Service Layer** (src/services/) = Kitchen (does the work)
+- **Database Models** (src/models/) = Pantry (stores data)
+
+Plus **Schemas** (src/schemas/) = Menu (defines what's required, optional, defaults)
+
+For todos, we have three schemas:
+- **TodoCreate** = Order form (what's needed to create?)
+- **TodoResponse** = Plated dish (what customer sees?)
+- **TodoUpdate** = Modification form (what can change?)
+
+To add priority, ALL these layers need updating.
+
+---
+
+**Third: What YOU do vs what AI does**
+
+**YOU specify (the WHAT and WHY):**
+- What the priority field does (mark tasks 1/2/3)
+- Business rules (defaults to 2, optional, filterable)
+
+**AI handles (the HOW):**
+- Pydantic syntax, SQLAlchemy columns, async patterns
+- Just give AI good #mentions and clear requirements!
+
+---
+
+**Now the technical requirements:**
+
+```
+FEATURE: Add Priority Field to Todos
+
+WHAT IT DOES:
+Users can mark todos as high/medium/low priority and filter by importance.
+
+TECHNICAL REQUIREMENTS:
+
+1. Database Model (src/models/todo.py):
+   - Add 'priority' field (Integer: 1=high, 2=medium, 3=low)
+   - Default: 2 (medium)
+
+2. Schemas (src/schemas/todo.py):
+   - TodoCreate: priority is Optional[int] = 2
+   - TodoResponse: include priority
+   - TodoUpdate: priority is Optional[int] (can update it)
+
+3. Service Layer (src/services/todo_service.py):
+   - Add priority filtering to get_all() method
+
+4. API Endpoints (src/api/v1/todos.py):
+   - POST /todos: Accept priority in request body
+   - GET /todos: Return priority in response
+   - GET /todos?priority=1: Filter by priority
+   - PUT /todos/{id}: Allow updating priority
+
+SUCCESS CRITERIA:
+✅ Can create todo with priority (1, 2, or 3)
+✅ Can create todo without priority (defaults to 2)
+✅ Can update a todo's priority
+✅ Can filter: GET /todos?priority=1
+✅ All existing tests still pass
+```
+
+---
+
+### Plan Your Approach (30 seconds)
+
+**Questions to think about:**
+1. What complexity level? (Simple/Medium/Complex)
+2. Which elements of the 6-element framework do you need?
+3. What #mentions should you include?
+4. One prompt or multiple steps?
+
+**My strategy:**
+- Complexity: ____________
+- Elements I'll use: ____________
+- Key #mentions: ____________
+- Approach: ____________
+
+---
+
+### Building Time (8 minutes)
+
+**Tips:**
+- Start with ONE good prompt
+- Use #file to reference existing code
+- Be specific in constraints
+- Test after implementation
+
+**If you get stuck:**
+- Raise your hand for help
+- Check the prompt sheet (PROMPT-SHEET-SESSION-3.md)
+- Remember: Safety net is `git reset --hard session-3-start`
+
+**My prompt:**
+```
 _____________________________________________________________________
-
-🏆 **Achievement:** [ ] "TDD Practitioner"
-
----
-
-### Feature 2: GET /todos (Full Context Formula)
-
-**My comprehensive prompt:**
+_____________________________________________________________________
+_____________________________________________________________________
+_____________________________________________________________________
+_____________________________________________________________________
 ```
-[Context]
-#folder:src/api/ #file:src/services/todo_service.py #file:src/schemas/todo.py
 
+**Testing commands:**
+```bash
+# Run existing tests to ensure nothing broke
+pytest tests/api/test_todos.py -v
 
+# Start server to test manually
+uvicorn src.main:app --reload
 
+# Test creating todo with priority
+curl -X POST http://localhost:8000/api/v1/todos \
+  -H "Content-Type: application/json" \
+  -d '{"title": "High priority task", "priority": 1}'
 
-
-
-[Task]
-
-
-
-[Constraints]
-
-
-
-
-
-
-[Format]
-
-
-
-
+# Test filtering by priority
+curl "http://localhost:8000/api/v1/todos?priority=1"
 ```
 
 **Results:**
-- Time: _____ minutes
+- Time taken: _____ minutes
+- First attempt success: [ ] Yes [ ] No
 - Iterations needed: _____
-- First-attempt success: [ ] Yes [ ] No
-
-**Compared to Feature 1:**
-```
-Feature 1 (TDD):         _____ min, _____ iterations
-Feature 2 (Full Context): _____ min, _____ iterations
-
-What was different? _____
-```
-
-**Start Server (if not running):**
-```bash
-uvicorn src.main:app --reload
-```
-Server should be running at: http://localhost:8000
-
-**Testing:**
-- [ ] GET /api/v1/todos
-- [ ] GET /api/v1/todos?completed=false
-- [ ] GET /api/v1/todos?skip=0&limit=10
-
-🏆 **Achievement:** [ ] "Context Master"
+- Final status: [ ] Working [ ] In progress [ ] Stuck
 
 ---
 
-### Feature 3: PUT /todos/{id} (SPEED CHALLENGE! 🎯)
-
-**Goal:** Complete in 3 minutes!
-
-**Timer:** Start: ___:___ End: ___:___
-
-**My approach:**
-- [ ] TDD (tests first)
-- [ ] Full context prompt
-- [ ] Hybrid approach
-
-**My optimized prompt:**
-```
-
-
-
-
-
-
-```
-
-**Pair partner:** _________________________
-
-**Results:**
-- Time: _____ minutes
-- Made 3-minute goal: [ ] Yes [ ] No
-- Iterations needed: _____
-
-**My performance pattern:**
-```
-Feature 1: _____ min
-Feature 2: _____ min  
-Feature 3: _____ min
-
-Pattern I notice: _____
-```
-
-**Testing (server should be running at http://localhost:8000):**
-- [ ] Can update title
-- [ ] Can update description
-- [ ] Can toggle completed status
-- [ ] Returns 404 if not found
-- [ ] Returns 403 if not owned by user
-
-🏆 **Achievement:** [ ] "Speed Demon"
+🏆 **Achievement:** [ ] "Feature Builder" (built complete feature with full context)
 
 ---
 
-## 🤖 Subagents - Parallel Work
+## 🧠 Reflection & Comparison (3 minutes)
 
-### What I Learned About Subagents
+### Two Approaches Comparison
 
-**Subagent concept:**
-- Isolated agents that run in parallel
-- Main agent continues working
-- Subagent reports back when done
+**🧪 TDD APPROACH (Instructor Demo - DELETE endpoint)**
 
-**Example subagent prompt I tried:**
-```
+Process: Tests First → Fail → Implement → Pass
 
+Strengths I observed:
+- _________________________________________________________________
+- _________________________________________________________________
+- _________________________________________________________________
 
+Best for: _____________________________________________________________
 
-```
+---
 
-**What it did:**
+**⚡ FULL CONTEXT APPROACH (Your Priority Field)**
+
+Process: Plan → One Comprehensive Prompt → Implement
+
+Strengths I experienced:
+- _________________________________________________________________
+- _________________________________________________________________
+- _________________________________________________________________
+
+Best for: _____________________________________________________________
+
+---
+
+### When to Use Each Approach
+
+**Use TDD when:**
+- [ ] Requirements are complex or unclear
+- [ ] Learning a new pattern
+- [ ] Testing is critical (security, payments, data integrity)
+- [ ] Establishing patterns for AI to follow
+
+**Use Full Context when:**
+- [ ] Requirements are crystal clear
+- [ ] Existing patterns to follow
+- [ ] Speed matters
+- [ ] Infrastructure already working (like today!)
+
+**The Pro Move:**
+Combine them! Start with TDD for first feature (establishes patterns), switch to Full Context for similar features (follows patterns), back to TDD when adding something genuinely new.
+
+**My takeaway:**
 _____________________________________________________________________
-
-**When I'd use subagents:**
-- [ ] Code review while building
-- [ ] Running tests in parallel
-- [ ] Documentation generation
-- [ ] Multiple independent tasks
-
-🏆 **Achievement:** [ ] "Parallel Worker"
-
----
-
-## 📋 Plan Mode
-
-### Using /plan for Complex Features
-
-**I used /plan for:**
-```
-
-
-
-```
-
-**What the plan showed:**
-1. _________________________________
-2. _________________________________
-3. _________________________________
-4. _________________________________
-
-**Why Plan Mode is useful:**
-_____________________________________________________________________
-
-🏆 **Achievement:** [ ] "Strategic Planner"
-
----
-
-## Results Analysis
-
-### My Build Sprint Statistics
-
-| Feature | Approach | Time | Iterations | Success? |
-|---------|----------|------|------------|----------|
-| Feature 1 | TDD | _____ | _____ | _____ |
-| Feature 2 | Full Context | _____ | _____ | _____ |
-| Feature 3 | Speed Challenge | _____ | _____ | _____ |
-| **TOTAL** | | _____ | | |
-
-### What Made the Biggest Difference?
-
-**Rank these (1 = most impact, 5 = least):**
-- _____ Better #mentions
-- _____ Clear constraints in prompts
-- _____ More context upfront
-- _____ Structured requests (Context+Task+Constraints+Format)
-- _____ TDD approach
-- _____ Subagents
-- _____ Plan Mode
-
-### My Pattern Discovery
-
-**Best results with:**
-- [ ] TDD (tests first gives clear target)
-- [ ] Full context (one comprehensive prompt)
-- [ ] Speed challenge (forcing optimization)
-
-**Why it worked:**
-_____________________________________________________________________
-
-**What I'd improve next time:**
 _____________________________________________________________________
 
 ---
 
-## What I Built Today
-
-### Features Completed:
-- [ ] POST /api/v1/todos - Create todo
-- [ ] GET /api/v1/todos - List with pagination & filtering
-- [ ] PUT /api/v1/todos/{id} - Update todo
-- [ ] Used Subagents for parallel verification
-- [ ] Used Plan Mode for complex planning
-
-**Total endpoints:** _____  
-**Total files created/modified:** _____  
-**Approaches tested:** 3 different strategies
+🏆 **Achievement:** [ ] "Strategic Thinker" (understands when to use each approach)
 
 ---
 
-## My Insights
+## Session 3 Victory Lap
 
-**Context quality impact:**
-```
-Weak context → _____ iterations
-Strong context → _____ iterations
+**Look at what you accomplished in 30 minutes:**
 
-Difference: _____
-```
+✅ Started with working API (checkpoint verified)
+✅ Watched professional TDD workflow (DELETE endpoint)
+✅ Built a complete feature hands-on (priority field)
+✅ Learned when to use TDD vs Full Context
+✅ Experienced checkpoint safety net
+✅ Used 6-element framework in practice
+✅ Professional AI development skills
 
-**TDD benefits I experienced:**
-_____________________________________________________________________
-
-**Full context formula benefits:**
-_____________________________________________________________________
-
-**Subagents benefits:**
-_____________________________________________________________________
-
-**Plan Mode benefits:**
-_____________________________________________________________________
-
-**Would I use these techniques on real projects?**
-_____________________________________________________________________
-
-**Which approach fits which situation:**
-- TDD when: ___________________________________________________________
-- Full context when: __________________________________________________
-- Subagents when: _____________________________________________________
-- Plan Mode when: _____________________________________________________
+**Capabilities gained:**
+- 🧪 Test-Driven Development with AI
+- ⚡ Full Context implementation
+- 🎯 Strategic approach selection (TDD vs Full Context)
+- 🛡️ Checkpoint-based development safety
+- 📋 Professional prompt structure in action
 
 ---
 
-## Session 3 Achievement Summary
+## 🏆 Session 3 Achievements Checklist
 
-### Achievements Unlocked Today:
+- [ ] 🛡️ **Checkpoint Master** - Successfully used checkpoint safety net
+- [ ] 👀 **TDD Observer** - Watched complete TDD workflow
+- [ ] 🏗️ **Feature Builder** - Built a complete feature with full context
+- [ ] 🧠 **Strategic Thinker** - Understands when to use each approach
+- [ ] 🏆 **Build Master** - Completed Session 3!
 
-- [ ] 🧪 **TDD Practitioner** - Used Test-Driven Development
-- [ ] 🎯 **Context Master** - Applied full context formula
-- [ ] 🏃 **Speed Demon** - Completed 3-minute challenge
-- [ ] 📊 **Results Tracker** - Tracked and analyzed performance
-- [ ] 🤖 **Parallel Worker** - Used Subagents
-- [ ] 📋 **Strategic Planner** - Used Plan Mode
-- [ ] 🏆 **Build Master** - Complete session
-
-**Total Achievements:** ______ / 7
+**Total Achievements Earned:** _____ / 5
 
 ---
 
-## Self-Assessment
+## What Made Today's Session Work?
 
-Rate your confidence (1-5):
+**The checkpoint safety net:**
+- ✅ Working database setup
+- ✅ Async fixtures configured
+- ✅ 8 passing tests proving it works
+- ✅ Complete examples to reference
 
-| Skill | Before | After | Growth |
-|-------|--------|-------|--------|
-| Test-Driven Development with AI | ___ | ___ | ___ |
-| Writing comprehensive prompts | ___ | ___ | ___ |
-| Using Subagents | ___ | ___ | ___ |
-| Using Plan Mode | ___ | ___ | ___ |
-| Context optimization | ___ | ___ | ___ |
+**This let you focus on:**
+- Learning workflows instead of debugging infrastructure
+- Comparing approaches instead of fixing setup
+- Building features instead of troubleshooting async issues
 
-**Biggest win:**
-_____________________________________________________________________
+**The power of `git reset --hard session-3-start`:**
+Anytime you broke something, one command brought you back.
 
-**Most surprising discovery:**
-_____________________________________________________________________
-
-**What I'll do differently from now on:**
-_____________________________________________________________________
+**That's checkpoint-based learning!** 🛡️
 
 ---
 
-## Preview: Session 4
+## Looking Ahead: Session 4 Preview
 
-**Next up: Advanced Tools & Boss Fight! 🎮**
+**What's next - the FINALE!** 🎮
+
+**Session 4: Code Review, Custom Agents & Boss Fight**
 
 You'll learn:
-- Advanced prompting (thinking modes, specificity)
-- Code Review with Copilot
-- Custom Agents (.agent.md files)
-- Professional patterns from industry
-- **BOSS FIGHT:** Complex feature using ALL techniques!
+- Code Review with Copilot (automated quality checks)
+- Custom Agents (.agent.md files for specialized tasks)
+- Memory Bank (persistent project context)
+- The 70% Problem (AI gets you 70%, you add the critical 30%)
 
-**The finale where you become a certified Power User! 🚀**
+Then: **THE BOSS FIGHT!** 💪
+- 10-minute challenge
+- Build ONE tag-related endpoint
+- Tag model already provided (another checkpoint!)
+- Apply EVERYTHING you learned
+- Earn Power User Certification!
+
+**Preparation:**
+- [ ] Session 3 completed
+- [ ] Understand TDD vs Full Context trade-offs
+- [ ] Confident with 6-element framework
+- [ ] Ready for the finale!
 
 ---
 
-## Notes & Questions
+## Quick Reference Card
 
-_____________________________________________________________________
+### Checkpoint Commands
+```bash
+# Checkout session 3 start
+git checkout session-3-start
 
-_____________________________________________________________________
+# Reset if something breaks
+git reset --hard session-3-start
 
-_____________________________________________________________________
+# Verify checkpoint works
+python create_db.py
+pytest tests/api/test_todos.py -v
+```
+
+### TDD Cycle
+```
+1. Write Tests First (RED)
+   ↓
+2. Run Tests → Fail
+   ↓
+3. Implement Code (GREEN)
+   ↓
+4. Run Tests → Pass
+   ↓
+5. Refactor (optional)
+```
+
+### 6-Element Framework (from Session 2)
+```
+[PERSONA] + [CONTEXT] + [TASK] + [CONSTRAINTS] + [FORMAT] + [EXAMPLES]
+           ↑ Always!    ↑ Always!
+```
+
+### When to Use What
+```
+TDD: Complex features, unclear requirements, critical testing
+Full Context: Clear requirements, existing patterns, speed matters
+Hybrid: Best of both - TDD for patterns, Full Context to follow them
+```
 
 ---
 
