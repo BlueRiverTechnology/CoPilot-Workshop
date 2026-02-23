@@ -1,142 +1,216 @@
 # Student Packet: Micro Session 4
 ## Code Review, Custom Agents & Boss Fight 🎮🏆
 
-**Duration:** 33 minutes  
-**Achievement:** 🏆 "Copilot Champion"
+**Name:** _________________________
+**Date:** _________________________
+**Duration:** 30 minutes
+**Achievement Goal:** 🏆 "Copilot Champion"
 
 ---
 
-## What You'll Master
+## Learning Objectives
 
-| Technique | Why It Matters |
-|-----------|----------------|
-| Copilot Code Review | Catch issues before they ship |
-| Custom Agents | Pre-loaded context for your project |
-| The 70% Problem | Know where YOU add value |
-| Boss Fight | Prove complete mastery |
+- [ ] Verify checkpoint and understand starting point
+- [ ] Use Copilot Code Review for quality assurance
+- [ ] Create Custom Agents for persistent expertise
+- [ ] Build a Memory Bank for project continuity
+- [ ] Understand the 70% Problem and your critical 30%
+- [ ] Complete Boss Fight using ALL workshop techniques
+- [ ] Earn Power User Certification
+
+---
+
+## 🚦 Checkpoint Verification (Start Here!)
+
+**Before beginning, verify you're on the session-4-start checkpoint:**
+
+### Step 1: Switch to Checkpoint Branch
+```bash
+git checkout session-4-start
+```
+
+### Step 2: Initialize Database
+```bash
+python create_db.py
+```
+
+### Step 3: Run Tests
+```bash
+pytest tests/api/test_todos.py -v
+```
+
+**Expected:** 10 tests passing ✅
+
+```
+✅ test_create_todo
+✅ test_create_todo_minimal
+✅ test_get_todos_empty
+✅ test_get_todos
+✅ test_update_todo
+✅ test_update_todo_partial
+✅ test_update_todo_not_found
+✅ test_create_todo_validation
+✅ test_delete_todo
+✅ test_delete_todo_not_found
+========== 10 passed ==========
+```
+
+### What This Checkpoint Gives You
+
+**Pre-built endpoints:**
+- [ ] POST /api/v1/todos (create)
+- [ ] GET /api/v1/todos (list with pagination)
+- [ ] PUT /api/v1/todos/{id} (update)
+- [ ] DELETE /api/v1/todos/{id} (delete)
+
+**Pre-built infrastructure:**
+- [ ] Tag model with many-to-many relationship
+- [ ] todo_tags association table
+- [ ] Complete service layer pattern
+- [ ] Comprehensive test suite
+
+**Your checkpoint status:**
+```
+[ ] All 10 tests passing
+[ ] Database initialized
+[ ] Server can start (uvicorn src.main:app --reload)
+```
+
+🏆 **ACHIEVEMENT UNLOCKED:** "Checkpoint Master"
 
 ---
 
 ## 🔍 Copilot Code Review
 
-### On GitHub (Pull Requests)
+### Two Ways to Review Code
 
+**1. On GitHub Pull Requests:**
 ```
-HOW TO USE:
 1. Create a Pull Request on GitHub
 2. Request review from "Copilot" as a reviewer
 3. Copilot analyzes your changes
 4. Get inline comments and suggestions
-
-WHAT IT CHECKS:
-✅ Code quality and best practices
-✅ Potential bugs and edge cases
-✅ Security vulnerabilities
-✅ Performance issues
-✅ Consistency with codebase patterns
 ```
 
-### In-Editor Review
+**2. In VS Code Chat (Try This Now):**
 
-Copy this prompt to review your own code:
-
+Copy this prompt into Copilot Chat:
 ```
-Review my recent changes in #file:src/api/v1/todos.py.
+Review my implementation in #file:src/api/v1/todos.py
 
 Check for:
-1. Security issues (auth, validation)
+1. Security issues (auth, validation, ownership checks)
 2. Error handling completeness
-3. Performance concerns
+3. Performance concerns (N+1 queries, missing indexes)
 4. Best practice violations
 
-Be thorough and critical.
+Be thorough and critical. Point out specific line numbers.
 ```
 
-**Exercise:** Run a code review on any file you've created in this workshop.
+### My Code Review Results
 
-What issues did Copilot find?
+**Issues Copilot found:**
 ```
-1. _______________________________________________
-2. _______________________________________________
-3. _______________________________________________
+1. _____________________________________________
+2. _____________________________________________
+3. _____________________________________________
+```
+
+**What I learned from the review:**
+_____________________________________________________________________
+
+**Why Code Review matters:**
+```
+AI generates fast → Code Review ensures quality
+This is YOUR 30% work ensuring production readiness!
 ```
 
 🏆 **ACHIEVEMENT UNLOCKED:** "Review Master"
 
 ---
 
-## 🤖 Custom Agents
+## 🤖 Custom Agents - Persistent Expertise
 
 ### What Are Custom Agents?
 
-Custom Agents are pre-configured AI specialists for your project:
+Custom Agents are `.agent.md` files that pre-load AI with your project's:
+- Architecture patterns
+- Coding standards
+- File structure
+- Domain knowledge
 
-```
-Location: .github/agents/*.agent.md
+**Think of it as:** Creating a senior developer persona who KNOWS your codebase.
 
-What they do:
-- Define specialized AI personas
-- Include project-specific knowledge
-- Set constraints and patterns
-- Reusable across conversations
-```
+### Exercise: Create a Todo API Expert Agent
 
-### Create Your First Custom Agent
-
-Create this file: `.github/agents/todo-api.agent.md`
+**Create this file:** `.github/agents/todo-api-expert.agent.md`
 
 ```markdown
 # Todo API Expert Agent
 
-You are an expert in our Todo API codebase. You know:
+You are an expert in our Todo API codebase.
 
 ## Architecture
 - FastAPI with async/await
 - 3-tier architecture: API → Services → Models
-- SQLAlchemy with async sessions
-- Pydantic for validation
+- SQLAlchemy with async sessions (aiosqlite)
+- Pydantic v2 for validation and serialization
 
 ## Key Patterns
-- All endpoints require authentication (get_current_user)
+- All endpoints use fixed owner_id = "default-user" (no JWT auth)
 - Service layer handles business logic
-- Models use UUID primary keys
+- Models use UUID string primary keys
+- All database operations are async
 - Responses use Pydantic schemas
 
 ## File Structure
-- src/api/v1/ - API endpoints
-- src/services/ - Business logic
-- src/models/ - SQLAlchemy models
-- src/schemas/ - Pydantic schemas
-- tests/api/ - API tests
+- src/api/v1/ - API endpoints (FastAPI routers)
+- src/services/ - Business logic (service classes)
+- src/models/ - SQLAlchemy ORM models
+- src/schemas/ - Pydantic request/response schemas
+- tests/api/ - API endpoint tests (pytest-asyncio)
+
+## Database Models
+- User: id (UUID), username, email, hashed_password
+- Todo: id (UUID), title, description, completed, owner_id
+- Tag: id (UUID), name, created_at
+- todo_tags: Association table (todo_id, tag_id)
 
 ## Coding Standards
 - Use async/await for all database operations
-- Return appropriate HTTP status codes
-- Include comprehensive error handling
-- Write tests for all new endpoints
+- Return appropriate HTTP status codes (200, 201, 204, 400, 403, 404, 500)
+- Include comprehensive error handling (try/except with HTTPException)
+- Write tests for all new endpoints (TDD preferred)
+- Follow patterns in existing code
 
-When asked to implement features:
-1. Follow existing patterns in the codebase
-2. Create tests first (TDD approach)
-3. Use the 3-tier architecture
-4. Include proper validation and error handling
+## When Asked to Implement Features
+1. Follow the 3-tier architecture
+2. Create Pydantic schemas first
+3. Implement service layer logic
+4. Add API endpoint with proper error handling
+5. Include ownership validation where applicable
+6. Write tests to verify functionality
 ```
 
-### Use Your Custom Agent
+### Try Using Your Custom Agent
 
+Test it with this prompt:
 ```
-Using #file:.github/agents/todo-api.agent.md context:
+Using context from #file:.github/agents/todo-api-expert.agent.md:
 
-Add a DELETE /api/v1/todos/{id} endpoint that:
-- Requires authentication
-- Checks ownership
-- Returns 204 on success, 404/403 on errors
+Review the patterns in our codebase and suggest best practices
+for adding a new feature.
 ```
 
-**Reflection:** How does including the agent context improve the output?
+**What the agent helped with:**
+_____________________________________________________________________
+
+**How Custom Agents improve results:**
 ```
-_______________________________________________
-_______________________________________________
+Without Agent: You explain architecture every time
+With Agent: AI KNOWS your patterns automatically
+
+Less explaining → Better results → Consistent code!
 ```
 
 🏆 **ACHIEVEMENT UNLOCKED:** "Agent Creator"
@@ -147,196 +221,73 @@ _______________________________________________
 
 ### The Problem
 
-Every new Copilot chat session starts with zero memory:
+Every new Copilot chat session starts with ZERO memory:
 
 ```
-Monday:    "We use FastAPI with async/await and 3-tier..."
-Tuesday:   "Remember, we use FastAPI with async/await..."
-Wednesday: "I already told you, FastAPI..."
-Thursday:  "...I give up explaining."
+Monday:    "We use FastAPI with 3-tier architecture..."
+Tuesday:   "Remember, FastAPI with 3-tier..."
+Wednesday: "I TOLD you yesterday..."
+Thursday:  *gives up explaining*
 ```
 
-### The Solution
+### The Solution: Memory Bank
 
-A `memory-bank/` folder with structured markdown files that Copilot reads at the start of every conversation.
+A structured set of markdown files that Copilot reads at the start of EVERY conversation.
 
 ```
 your-project/
 ├── .github/
-│   └── copilot-instructions.md    ← Tell Copilot about Memory Bank
-├── memory-bank/                    ← Persistent context lives here
-│   ├── projectbrief.md            ← What is this project?
-│   ├── productContext.md          ← Why does it exist?
-│   ├── techContext.md             ← What tech do we use?
-│   ├── systemPatterns.md         ← How do we build things?
-│   ├── activeContext.md           ← What's happening NOW? ⚡
-│   └── progress.md                ← Where do we stand?
+│   └── copilot-instructions.md    ← Tell Copilot to read Memory Bank
+├── memory-bank/                    ← 6 context files
+│   ├── projectbrief.md            (What is this project?)
+│   ├── productContext.md          (Why does it exist?)
+│   ├── techContext.md             (What tech do we use?)
+│   ├── systemPatterns.md          (How do we build things?)
+│   ├── activeContext.md           (What's happening RIGHT NOW?) ⚡
+│   └── progress.md                (Where do we stand?)
 └── src/
 ```
 
-### Build Your Memory Bank: Step by Step
+### The 6 Files Explained
 
-#### Step 1: Create the folder and files
+| File | Updates | Purpose |
+|------|---------|---------|
+| `projectbrief.md` | Rarely | Project name, goals, scope, requirements |
+| `productContext.md` | Rarely | Why it exists, who it's for, UX goals |
+| `techContext.md` | Occasionally | Stack, setup, constraints |
+| `systemPatterns.md` | Occasionally | Architecture, file structure, conventions |
+| `activeContext.md` | **Daily** | Current focus, recent changes, next steps |
+| `progress.md` | **Daily** | What works, what's left, known issues |
 
-```bash
-mkdir memory-bank
-touch memory-bank/projectbrief.md
-touch memory-bank/productContext.md
-touch memory-bank/techContext.md
-touch memory-bank/systemPatterns.md
-touch memory-bank/activeContext.md
-touch memory-bank/progress.md
-```
+### Quick Exercise: activeContext.md Template
 
-#### Step 2: Fill in each file
+**This is the MOST IMPORTANT file** - update it daily!
 
-**projectbrief.md** — The foundation
-```markdown
-# Project Brief
-
-## Project Name
-Todo API Workshop App
-
-## Goals
-- Build a REST API for managing todos
-- Learn AI-assisted development patterns
-- Practice TDD with Copilot
-
-## Scope
-- CRUD operations for todos
-- User ownership model
-- Tagging system (many-to-many)
-- Authentication (simplified for workshop)
-
-## Success Criteria
-- All endpoints return correct responses
-- Ownership validation on all mutations
-- Tests pass for core functionality
-```
-
-**productContext.md** — The why
-```markdown
-# Product Context
-
-## Problem
-Developers need a structured todo management API
-with user isolation and organizational features.
-
-## Users
-- Developers learning AI-augmented development
-- Teams needing a lightweight task API
-
-## User Experience Goals
-- RESTful, predictable API design
-- Clear error messages
-- Fast response times
-```
-
-**techContext.md** — The stack
-```markdown
-# Tech Context
-
-## Stack
-- Python 3.11+
-- FastAPI (async)
-- SQLAlchemy (async sessions)
-- Pydantic v2 (validation)
-- Pytest (testing)
-- SQLite (development)
-
-## Setup
-- Poetry for dependency management
-- uvicorn for local server
-- pyproject.toml for configuration
-
-## Constraints
-- All operations must be async
-- UUID primary keys (string format)
-- Simplified auth (fixed "default-user")
-```
-
-**systemPatterns.md** — How we build
-```markdown
-# System Patterns
-
-## Architecture
-3-tier: API (routers) → Services (business logic) → Models (data)
-
-## File Structure
-- src/api/v1/ → FastAPI routers
-- src/services/ → Business logic layer
-- src/models/ → SQLAlchemy ORM models
-- src/schemas/ → Pydantic request/response schemas
-- tests/ → Pytest test files
-
-## Key Patterns
-- Service layer handles all business logic
-- Routers only handle HTTP concerns
-- Pydantic schemas for all request/response
-- HTTPException for error responses
-- Ownership validation before mutations
-
-## Conventions
-- Async/await everywhere
-- Type hints on all functions
-- Docstrings on public methods
-- PEP 8 style
-```
-
-**activeContext.md** — Right now (most important!)
 ```markdown
 # Active Context
 
 ## Current Focus
-Completing Session 4 Boss Fight - building tagging feature
+Session 4 Boss Fight - implementing tag endpoint
 
 ## Recent Changes
-- Session 3: Built POST, GET, PUT endpoints for todos
-- Implemented TDD approach for all features
-- Service layer pattern established
+- Session 3: Built full CRUD for todos
+- Checkpoint provides Tag model pre-built
+- DELETE endpoint already exists
 
 ## Active Decisions
-- Tags are case-insensitive (stored lowercase)
-- Tag names unique per user
-- Many-to-many via association table
+- Tags stored in existing Tag model
+- Many-to-many via todo_tags association table
+- Using simplified auth (default-user)
 
 ## Next Steps
-- Implement Tag model and association table
-- Build tag endpoints (POST, GET filter, DELETE)
-- Add ownership validation for tags
-- Run code review on completed features
+- Build POST /todos/{id}/tags endpoint
+- Verify ownership validation
+- Test tag functionality
 ```
 
-**progress.md** — Status tracker
-```markdown
-# Progress
+### Update copilot-instructions.md
 
-## What Works
-- [x] Todo model with SQLAlchemy
-- [x] POST /api/v1/todos (create)
-- [x] GET /api/v1/todos (list)
-- [x] PUT /api/v1/todos/{id} (update)
-- [x] Pydantic schemas for todos
-- [x] Service layer pattern
-- [x] Basic test suite
-
-## What's Left
-- [ ] Tag model and association table
-- [ ] POST /api/v1/todos/{id}/tags
-- [ ] GET /api/v1/todos?tag=name
-- [ ] DELETE /api/v1/todos/{id}/tags/{tag_id}
-- [ ] Ownership validation for tags
-- [ ] Complete test coverage
-
-## Known Issues
-- Authentication is simplified (hardcoded user)
-- No pagination on list endpoints
-- No rate limiting
-```
-
-#### Step 3: Update copilot-instructions.md
-
-Add this to your existing `.github/copilot-instructions.md`:
+Add this to `.github/copilot-instructions.md`:
 
 ```markdown
 ## Memory Bank
@@ -364,40 +315,31 @@ Focus especially on activeContext.md and progress.md.
 
 ```
 MORNING:
-  Copilot reads memory-bank/ → Full context restored
-  No more re-explaining your project
+  Copilot reads memory-bank/ → Full context
+  No more re-explaining your project!
 
 DURING WORK:
   Better suggestions because Copilot knows your patterns
-  Reference #file:memory-bank/activeContext.md for focus
 
 END OF DAY:
   Say: "update memory bank"
-  Copilot updates activeContext.md and progress.md
+  → activeContext.md and progress.md updated automatically
 
 NEXT DAY:
-  Zero context lost. Pick up exactly where you left off.
+  Zero context lost. Pick up where you left off.
 ```
 
-### How It Connects to What You Learned
+### How It All Connects
 
 | Workshop Concept | Memory Bank Equivalent |
-|------------------|----------------------|
+|------------------|------------------------|
 | copilot-instructions.md (Session 1) | Tells Copilot to read Memory Bank |
 | PRD.md (Session 2) | projectbrief.md + productContext.md |
-| 6-Element Framework (Session 2) | Context is pre-loaded from files |
 | Custom Agents (Session 4) | systemPatterns.md + techContext.md |
 
-**Key Insight:** Custom Agents tell Copilot HOW you work. The Memory Bank tells Copilot WHERE you are.
-
-### Reflection
-
-How would a Memory Bank help in YOUR daily work?
-```
-Project I'd use it on: ______________________________
-Most valuable file for me: __________________________
-What I'd put in activeContext.md: ___________________
-```
+**Key Insight:**
+- **Custom Agents** tell Copilot HOW you work (patterns, rules)
+- **Memory Bank** tells Copilot WHERE you are (current state)
 
 🏆 **ACHIEVEMENT UNLOCKED:** "Memory Architect"
 
@@ -405,7 +347,9 @@ What I'd put in activeContext.md: ___________________
 
 ## ⚠️ The 70% Problem - Critical Understanding
 
-### The Reality Check
+### The Reality of AI-Assisted Development
+
+Research shows a consistent pattern:
 
 ```
 THE 70/30 SPLIT
@@ -413,36 +357,71 @@ THE 70/30 SPLIT
 AI Delivers Fast (70%):
 ┌────────────────────────────────────┐
 │ ✅ Boilerplate code                │
-│ ✅ Standard CRUD operations        │
+│ ✅ Standard patterns               │
 │ ✅ Happy path implementation       │
 │ ✅ Basic structure                 │
-│ ✅ Common patterns                 │
+│ ✅ Common use cases                │
 └────────────────────────────────────┘
 
 YOU Must Add (30%):
 ┌────────────────────────────────────┐
 │ 🎯 Edge cases AI missed            │
 │ 🎯 Ownership validation            │
+│ 🎯 Performance optimization        │
 │ 🎯 Security hardening              │
-│ 🎯 Error message quality           │
-│ 🎯 Production-ready error handling │
+│ 🎯 Production-readiness            │
 │ 🎯 Business logic nuances          │
+│ 🎯 Real-world error handling       │
+│ 🎯 "What if" scenarios             │
 └────────────────────────────────────┘
 ```
 
 ### Why This Matters
 
-- Organizations that understand this: **26% productivity gains**
-- Organizations that don't: **Accumulating technical debt**
+**Organizations that understand this:**
+- 26% productivity gains
+- Sustainable AI workflows
+- High code quality maintained
 
-**Your Professional Value:**
-The 30% is why companies hire professionals. AI handles the routine. YOU handle the critical.
+**Organizations that don't:**
+- Accumulating technical debt
+- Bugs in production
+- Decreased trust in AI
 
-**Reflection:** Think of a time when "done" code wasn't production-ready:
+### Your Professional Value = The 30%
+
+**Example from our Todo API:**
+
+**AI's 70%:**
+- Creates the endpoint structure ✓
+- Connects to database ✓
+- Returns data ✓
+- Basic validation ✓
+
+**YOUR 30%:**
+- Checks: Can user only tag THEIR OWN todos? 🎯
+- Handles: What if todo doesn't exist? 🎯
+- Optimizes: Is there an N+1 query problem? 🎯
+- Secures: Could this leak another user's data? 🎯
+
+### Reflection
+
+Think about code you've seen that "worked" but wasn't production-ready:
+
+**What was missing?**
+_____________________________________________________________________
+
+**Who caught it?**
+_____________________________________________________________________
+
+**What could have gone wrong?**
+_____________________________________________________________________
+
+**In the Boss Fight, ask yourself:**
 ```
-What was missing? ____________________________
-Who caught it? ______________________________
-What could have gone wrong? __________________
+"What could go wrong?"
+"What did AI assume?"
+"What edge cases exist?"
 ```
 
 🏆 **ACHIEVEMENT UNLOCKED:** "70/30 Understander"
@@ -453,145 +432,229 @@ What could have gone wrong? __________________
 
 ### The Challenge
 
-Build a **complete TODO TAGGING feature** with many-to-many relationships using ALL techniques from Sessions 1-3.
+Build ONE powerful API endpoint using the many-to-many relationship:
 
-### Requirements
+**POST /api/v1/todos/{todo_id}/tags**
 
-```
-ENDPOINTS:
-- POST /api/v1/todos/{id}/tags - Add tag to todo
-- GET /api/v1/todos?tag=name - Filter todos by tag
-- DELETE /api/v1/todos/{id}/tags/{tag_id} - Remove tag
+### What's ALREADY BUILT (session-4-start checkpoint)
 
-DATABASE:
-- Tag model: id, name, user_id, created_at
-- todo_tags association table (many-to-many)
+✅ Tag model (id, name, created_at)
+✅ todo_tags association table
+✅ Relationship defined in Todo model
+✅ All CRUD endpoints for todos
 
-CONSTRAINTS:
-- Ownership validation required
-- Case-insensitive tags (store lowercase)
-- Proper error handling (404, 403, 400)
-- 3-tier architecture (models, services, API)
-```
+### What YOU Build
+
+**Endpoint:** POST /api/v1/todos/{todo_id}/tags
+
+**Request body:** `{ "name": "urgent" }`
+
+**Functionality:**
+- Creates tag if doesn't exist (case-insensitive)
+- Associates tag with todo
+- Returns updated TodoResponse with tags included
+
+**Error handling:**
+- 404 if todo not found
+- 403 if todo not owned by user
+- Clear, helpful error messages
+
+**THE CRITICAL 30%:**
+- Ownership validation works
+- Edge cases handled
+- Error messages are clear
+- Tags are case-insensitive
 
 ### Scoring
 
 | Time | Level | Description |
 |------|-------|-------------|
-| ≤6 min | 🏆 PLATINUM | Top 1% - Elite |
-| ≤8 min | 🥇 GOLD | Top 10% - Expert |
-| ≤10 min | 🥈 SILVER | Top 25% - Skilled |
+| ≤3 min | 🏆 PLATINUM | Top 1% - Elite |
+| ≤4 min | 🥇 GOLD | Top 10% - Expert |
+| ≤5 min | 🥈 SILVER | Top 25% - Skilled |
 | Completed | ✅ CERTIFIED | Passed! |
 
-**Bonus:** +1 level for each technique used:
-- [ ] think hard for planning
-- [ ] Plan Mode (/plan)
-- [ ] TDD approach
-- [ ] Custom Agent
+**Bonus Points (+1 level each):**
+- [ ] Used 'think hard' for planning
+- [ ] Used TDD approach
+- [ ] Used Custom Agent context
+- [ ] Verified ownership validation (the 30%)
 
 ---
 
-### Your Boss Fight Tracker
+### My Boss Fight Tracker
 
-**Start Time:** _____________
+**Start Time:** ___:___
 
-#### Phase 1: Planning (30 seconds)
+#### Phase 1: Planning (Recommended: 30 seconds)
+
+**My approach:**
 ```
-I used: [ ] think hard  [ ] Plan Mode
-
-My plan:
-_______________________________________________
-_______________________________________________
-```
-
-#### Phase 2: Implementation (3 minutes)
-```
-Files created/modified:
-[ ] models/tag.py
-[ ] schemas/tag.py
-[ ] services/todo_service.py
-[ ] api/v1/todos.py
+[ ] 'think hard' planning
+[ ] Direct implementation
+[ ] Plan Mode (/plan)
 ```
 
-#### Phase 3: The Critical 30% (1.5 minutes)
+**My plan:**
 ```
-I verified:
-[ ] Ownership validation works
-[ ] Tags are case-insensitive
-[ ] Error handling is complete
-[ ] Edge cases covered
+_____________________________________________
+_____________________________________________
+_____________________________________________
 ```
 
-#### Phase 4: Testing (1 minute)
+#### Phase 2: Implementation (Target: 3 min)
+
+**Files I need to create/update:**
 ```
-Tests I ran:
-[ ] Create todo
-[ ] Add tag to todo
-[ ] Filter by tag
-[ ] Remove tag
+[ ] src/schemas/tag.py (TagCreate, TagResponse)
+[ ] src/schemas/todo.py (add tags to TodoResponse)
+[ ] src/services/todo_service.py (add_tag_to_todo method)
+[ ] src/api/v1/todos.py (POST endpoint)
 ```
 
-**End Time:** _____________
+**Prompt I used:**
+```
+_____________________________________________
+_____________________________________________
+_____________________________________________
+_____________________________________________
+```
 
-**Total Time:** _____________ minutes
+#### Phase 3: The Critical 30% (Target: 30 seconds)
+
+**Verification checklist:**
+```
+[ ] Ownership validation - Can only tag own todos?
+[ ] Case sensitivity - Tags normalized to lowercase?
+[ ] Idempotency - What if tag already on todo?
+[ ] Error messages - Clear and helpful?
+[ ] Edge cases - Todo not found? Tag already exists?
+```
+
+**Issues I fixed:**
+```
+_____________________________________________
+_____________________________________________
+```
+
+#### Phase 4: Testing (Target: 30 seconds)
+
+**Quick tests:**
+```bash
+# Create a todo
+curl -X POST http://localhost:8000/api/v1/todos \
+  -H "Content-Type: application/json" \
+  -d '{"title":"Test Todo"}'
+
+# Add tag (copy todo_id from above)
+curl -X POST http://localhost:8000/api/v1/todos/<todo_id>/tags \
+  -H "Content-Type: application/json" \
+  -d '{"name":"urgent"}'
+
+# Verify tags appear
+curl http://localhost:8000/api/v1/todos/<todo_id>
+```
+
+**Tests passed:**
+```
+[ ] Tag created successfully
+[ ] Tag appears in todo response
+[ ] Case-insensitive (URGENT = urgent)
+[ ] Ownership validated
+```
+
+**End Time:** ___:___
 
 ---
 
-### My Score
+### My Boss Fight Results
 
+**Total Time:** _____ minutes
+
+**Base Level:**
 ```
-BASE LEVEL (by time):
-[ ] ≤6 min = PLATINUM
-[ ] ≤8 min = GOLD
-[ ] ≤10 min = SILVER
+[ ] ≤3 min = PLATINUM
+[ ] ≤4 min = GOLD
+[ ] ≤5 min = SILVER
 [ ] Completed = CERTIFIED
-
-BONUSES EARNED:
-[ ] Used think hard (+1)
-[ ] Used Plan Mode (+1)
-[ ] Used TDD (+1)
-[ ] Used Custom Agent (+1)
-
-FINAL LEVEL: _________________
 ```
+
+**Bonus Points Earned:**
+```
+[ ] Used 'think hard' (+1 level)
+[ ] Used TDD (+1 level)
+[ ] Used Custom Agent (+1 level)
+[ ] Verified ownership (the 30%) (+1 level)
+```
+
+**FINAL LEVEL:** _________________
 
 🏆 **ACHIEVEMENT UNLOCKED:** "Boss Fighter"
 
 ---
 
-## 🏆 Power User Certification
+### What Made the Difference
 
-Congratulations! You've completed the GitHub Copilot Power User Workshop!
+**Most helpful technique:**
+_____________________________________________________________________
 
-### Skills Mastered
+**What I'd do differently:**
+_____________________________________________________________________
 
-```
-SESSION 1: FOUNDATION
-✅ Security-first development
-✅ Copilot modes (Ask, Edit, Agent, Plan)
-✅ #file and #folder mentions
-✅ .copilotignore configuration
+**Biggest challenge:**
+_____________________________________________________________________
 
-SESSION 2: CONTEXT MASTERY
-✅ Thinking modes (think hard)
-✅ Explore → Plan → Code workflow
-✅ 6-element framework
-✅ PRD-driven development
+**How I solved it:**
+_____________________________________________________________________
 
-SESSION 3: BUILD SPRINT
-✅ Test-Driven Development
-✅ Subagents for parallel work
-✅ Plan Mode for visibility
-✅ Three features in 30 minutes
+---
 
-SESSION 4: MASTERY
-✅ Code Review
-✅ Custom Agents
-✅ The 70/30 Problem
-✅ Boss Fight completion
-```
+## 🎉 Victory Lap & Certification
 
-### Your Certification
+### You've Completed the GitHub Copilot Power User Workshop!
+
+**In 4 sessions, you learned:**
+
+**Session 1:**
+- Security-first development (.copilotignore, approval models)
+- All Copilot modes (Ask, Edit, Agent, Plan)
+- Writing effective rules and instructions
+
+**Session 2:**
+- Context mastery with #mentions
+- Professional workflows (Explore → Plan → Code)
+- 6-Element Prompt Framework
+
+**Session 3:**
+- TDD with AI
+- Subagents and parallel work
+- Building features FAST
+
+**Session 4:**
+- Code Review and Custom Agents
+- Memory Bank pattern
+- The critical 70/30 understanding
+- Boss Fight completion!
+
+---
+
+## Session 4 Achievement Summary
+
+### Achievements Unlocked Today:
+
+- [ ] 🚦 **Checkpoint Master** - Verified session-4-start checkpoint
+- [ ] 🔍 **Review Master** - Used Copilot Code Review
+- [ ] 🤖 **Agent Creator** - Created Custom Agent
+- [ ] 🧠 **Memory Architect** - Built Memory Bank
+- [ ] ⚠️ **70/30 Understander** - Knows where to add value
+- [ ] 🎮 **Boss Fighter** - Completed final challenge
+- [ ] 🏆 **COPILOT CHAMPION** - Full workshop complete!
+
+**Total Achievements:** ______ / 7
+
+---
+
+## Power User Certification
 
 ```
 ┌─────────────────────────────────────────────┐
@@ -609,6 +672,7 @@ SESSION 4: MASTERY
 │   ✅ Test-Driven Development                │
 │   ✅ Subagents & Plan Mode                  │
 │   ✅ Code Review & Custom Agents            │
+│   ✅ Memory Bank pattern                    │
 │   ✅ Boss Fight completion                  │
 │                                             │
 │   Name: _____________________               │
@@ -626,32 +690,32 @@ SESSION 4: MASTERY
 
 **Most valuable technique:**
 ```
-_______________________________________________
+_____________________________________________
 ```
 
 **Biggest mindset shift:**
 ```
-_______________________________________________
+_____________________________________________
 ```
 
 **What I'll use Monday morning:**
 ```
-_______________________________________________
+_____________________________________________
 ```
 
 ### My Action Plan
 
 **This week, I will:**
 ```
-1. _______________________________________________
-2. _______________________________________________
-3. _______________________________________________
+1. _____________________________________________
+2. _____________________________________________
+3. _____________________________________________
 ```
 
 **In 30 days, I want to:**
 ```
-_______________________________________________
-_______________________________________________
+_____________________________________________
+_____________________________________________
 ```
 
 ---
@@ -666,24 +730,10 @@ _______________________________________________
 
 ---
 
-## Session 4 Achievement Summary
+## Continue Learning
 
-| Achievement | Earned |
-|-------------|--------|
-| 🔍 Review Master | [ ] |
-| 🤖 Agent Creator | [ ] |
-| 🧠 Memory Architect | [ ] |
-| ⚠️ 70/30 Understander | [ ] |
-| 🎮 Boss Fighter | [ ] |
-| 🏆 COPILOT CHAMPION | [ ] |
+### GitHub Awesome Copilot
 
----
-
-## 📚 Continue Learning
-
-### GitHub Awesome Copilot - Your Next Stop
-
-**Your next stop for boosting Copilot skills:**
 👉 **https://github.com/github/awesome-copilot**
 
 This curated collection includes:
@@ -693,7 +743,7 @@ This curated collection includes:
 - 🔧 Tool integrations
 - ✨ Latest updates and features
 
-⭐ **Star this repo and check it regularly** - it's actively maintained by the community!
+⭐ **Star this repo and check it regularly!**
 
 ### Official Documentation
 
@@ -703,6 +753,22 @@ This curated collection includes:
 
 ---
 
-**End of Student Packet: Session 4** 🎓
+## Notes & Questions
+
+_____________________________________________________________________
+
+_____________________________________________________________________
+
+_____________________________________________________________________
+
+---
+
+**End of Student Packet: Micro Session 4** 🎓
 
 **🎉 CONGRATULATIONS - You're a Copilot Power User! 🎉**
+
+**You're not a beginner anymore.**
+**You're a POWER USER.**
+**You're an AI-AUGMENTED PROFESSIONAL.**
+
+**Go transform how your team codes! 💪🚀**

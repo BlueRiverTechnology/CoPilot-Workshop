@@ -589,112 +589,239 @@ Agent Mode:
 
 ---
 
-### [0:32-0:35] 📋 Custom Instructions - Your AI's Personality
+### [0:32-0:42] 📋 Writing Effective AI Rules - The Context Multiplier
 
 **Purpose:**
 
-Custom instructions let you define persistent guidelines that shape how Copilot behaves in your project. Instead of repeating context in every prompt, you set it once and Copilot follows it automatically.
+Custom instructions are **always-on context** that multiplies your AI productivity. Instead of repeating guidelines in every prompt, you write them once and Copilot follows them automatically. This is one of the most transferable skills—every project benefits from well-written AI rules.
 
-**ENERGY:** Conceptual but crucial
+**ENERGY:** This is a game-changer, teach with conviction
 
 **SAY:**
-> "Last 5 minutes - the customization that changes everything."
+> "Next 10 minutes - the skill that separates AI amateurs from AI professionals. We're learning how to write rules that actually shape AI behavior."
 
 ---
 
-#### [0:32-0:34] Custom Instructions File (2 min)
+#### [0:32-0:34] The Rules Ecosystem - Where Instructions Live (2 min)
+
+**SAY:**
+> "There's not just one place for AI rules. There's an entire ecosystem. Let me show you the full picture."
 
 **SHOW VISUAL:**
 ```
-.github/copilot-instructions.md
-
-This file is automatically included in every Copilot interaction!
-
-Contents:
-- Project overview
-- Coding standards
-- Naming conventions
-- Architectural guidelines
-- Technology preferences
+📁 Your Project
+├── .github/
+│   ├── copilot-instructions.md          ← REPO-WIDE (always active)
+│   ├── instructions/
+│   │   ├── testing.instructions.md      ← PATH-SPECIFIC (tests/** only)
+│   │   └── api.instructions.md          ← PATH-SPECIFIC (api/** only)
+│   └── agents/
+│       └── code-reviewer.agent.md       ← CUSTOM AGENT (Session 4)
+├── AGENTS.md                             ← CROSS-TOOL (Copilot, Claude, Cursor)
+└── VS Code Settings
+    ├── Code generation instructions
+    ├── Test generation instructions
+    ├── Review instructions
+    └── Commit message instructions
 ```
 
 **SAY:**
-> "Custom instructions tell Copilot HOW you want code written.
+> "The hierarchy:
+> 1. **`.github/copilot-instructions.md`** - Repository-wide. Always active. Works in Chat, Agent Mode, and Code Review.
+> 2. **`.github/instructions/*.instructions.md`** - Path-specific rules with frontmatter like `applyTo: '**/tests/**'`. Only active when working on matching files.
+> 3. **`.github/agents/*.agent.md`** - Custom agent definitions (we'll cover these in Session 4).
+> 4. **`AGENTS.md`** - Emerging open standard from Linux Foundation. Works across Copilot, Claude Code, Cursor, and other AI tools.
+> 5. **VS Code settings** - Per-operation instructions (code gen, test gen, review, commits).
 >
-> Create once, applied everywhere. No more repeating 'use type hints' in every prompt!"
+> Today we're focusing on repo-wide instructions. The skill you learn here applies to ALL of these."
+
+🎯 **CHECKPOINT:** Everyone understands there are multiple layers of instructions?
 
 ---
 
-#### [0:34-0:35] Create First Custom Instructions File (1 min)
+#### [0:34-0:38] Research-Backed Principles - What Makes Rules Work (4 min)
 
 **SAY:**
-> "Let's create your first custom instructions file."
+> "Not all rules are equal. Research from GitHub, Anthropic, and the AI engineering community shows clear patterns for what works."
 
-**DO - Create the file:**
+**SHOW ON SCREEN:**
 
-1. **Create folder:** `.github/` in project root
-2. **Create file:** `copilot-instructions.md`
-3. **Add content:**
+**Principle 1: Short, Imperative, Self-Contained Statements**
 
+**SAY:**
+> "GitHub's own docs say instructions should be 'short, self-contained statements that add context.' Not paragraphs. Not essays.
+>
+> **BAD:** 'We generally try to follow industry best practices for code quality and maintainability, so please write code that is clean and well-tested.'
+>
+> **GOOD:** 'Use type hints on all function signatures.'
+>
+> See the difference? Specific, actionable, scannable."
+
+---
+
+**Principle 2: Tell the AI What TO DO, Not What to Avoid**
+
+**SAY:**
+> "LLMs are poor at negations. Positive directives work better than negative prohibitions.
+>
+> **BAD:** 'Don't use print statements for debugging.'
+>
+> **GOOD:** 'Use `logging` module at DEBUG level for diagnostic output.'
+>
+> Notice: The GOOD version tells the AI the correct alternative, not just what to avoid."
+
+---
+
+**Principle 3: Be Specific and Actionable**
+
+**SAY:**
+> "Vague aspirational goals don't work. Concrete patterns do.
+>
+> **BAD:** 'Follow good naming conventions.'
+>
+> **GOOD:** 'Use camelCase for JavaScript variables and functions. Use PascalCase for classes.'
+>
+> **BAD:** 'Make sure code is well-tested.'
+>
+> **GOOD:** 'Every service method must have a corresponding test file in tests/services/.'
+>
+> Zero ambiguity = better compliance."
+
+---
+
+**Principle 4: Use Structured Markdown (or XML for Claude-based tools)**
+
+**SAY:**
+> "Copilot parses structured content better than prose. Use distinct headings, bullet points, code examples.
+>
+> For Claude-based tools like Claude Code, Anthropic recommends XML tags:"
+
+**SHOW EXAMPLE:**
 ```markdown
-# Project: Todo API
+<role>Senior Python developer specializing in FastAPI</role>
 
-## Overview
-FastAPI backend for personal task management.
-Python 3.11+, SQLAlchemy async, PostgreSQL.
+<architecture>
+  - 3-tier: API routes → Service layer → Models
+  - All database operations use async/await
+  - Pydantic v2 for all request/response schemas
+</architecture>
 
-## Coding Standards
-- Use type hints on all functions
-- Write docstrings in Google style
-- Use async/await for all I/O
-- Follow PEP 8
-- Max line length: 100 characters
-
-## Naming Conventions
-- Files: snake_case
-- Classes: PascalCase  
-- Functions: snake_case
-- Constants: UPPER_SNAKE_CASE
-
-## Error Handling
-- Always use try/except for I/O operations
-- Return meaningful error messages
-- Log errors with appropriate severity
+<constraints>
+  - Never use raw SQL — always use SQLAlchemy ORM
+  - All endpoints return proper HTTP status codes (400/401/403/404/500)
+  - Include type hints on every function signature
+</constraints>
 ```
 
 **SAY:**
-> "See? Clear sections for different guidelines.
->
-> This file is automatically read by Copilot for every interaction!
->
-> Because it's in `.github/`, it's project-specific. Perfect for team standards."
-
-**STUDENT PRACTICE:**
-> "Everyone create this file now. Customize the project overview for your style. 1 minute!"
-
-**TIMER:** 1 minute
-
-**AT 1:00:**
-> "Done! ✅ You've got Custom Instructions. Copilot now knows your preferences!"
-
-🎯 **CHECKPOINT:** Everyone has created their custom instructions file
+> "XML tags create clear boundaries that prevent the AI from mixing up context, instructions, and examples. Whether you use XML or Markdown headings depends on the tool, but the principle is the same: **Create clear, labeled compartments for different types of information.**"
 
 ---
 
-**BONUS: Path-Specific Instructions**
+**Principle 5: Include Code Examples Where They Clarify Intent**
+
+**SAY:**
+> "A before/after code snippet removes ambiguity. Show the pattern, don't just describe it.
+>
+> Example: Instead of 'Use proper error handling,' show:"
+
+```python
+# GOOD - Do this
+async def get_user(user_id: str) -> User:
+    try:
+        return await db.get(User, user_id)
+    except NotFoundError:
+        raise HTTPException(status_code=404, detail="User not found")
+```
+
+---
+
+**Principle 6: Keep Files Under ~1,000 Lines**
+
+**SAY:**
+> "GitHub explicitly warns: beyond 1,000 lines, quality deteriorates. Start minimal. Add iteratively based on what you actually need."
+
+---
+
+**Principle 7: Iterate Based on What Works**
+
+**SAY:**
+> "Rules writing is empirical. Start with 5-10 rules. Test them. See if Copilot follows them. Refine.
+>
+> This is the most important principle: **Rules are a living document.**"
+
+🎯 **CHECKPOINT:** These principles make sense? They're grounded in research, not guesswork!
+
+---
+
+#### [0:38-0:40] Live Exercise - Write Your Own Rules (2 min)
+
+**SAY:**
+> "Now YOU write rules for the Todo API project. Don't just copy mine—write rules that answer: 'What would a new developer on my team need to know to write code that fits this project?'"
+
+**DO - Guide the exercise:**
+
+**SAY:**
+> "Create `.github/copilot-instructions.md` in your practice project. Write 3-5 custom rules. Use the principles we just covered:
+> - Short imperative statements
+> - Positive directives (what TO do)
+> - Specific and actionable
+> - Organized with clear Markdown headings
+>
+> I'll give you 2 minutes. Go!"
+
+**TIMER:** 2 minutes
+
+**AT 2:00:**
+> "Done! ✅ You've written your first AI rules using research-backed principles!"
+
+🎯 **CHECKPOINT:** Everyone has created their custom instructions file with their own rules
+
+---
+
+#### [0:40-0:41] Path-Specific Instructions - Rules That Scope (1 min)
 
 **SAY:**
 > "Want different rules for different parts of your code? Use path-specific instructions!"
 
+**SHOW VISUAL:**
 ```
-.github/instructions/
-├── api.instructions.md      # For routes/
-├── tests.instructions.md    # For tests/
-└── docs.instructions.md     # For documentation
+.github/instructions/testing.instructions.md
+
+---
+applyTo: "**/tests/**"
+---
+
+# Testing Guidelines
+
+- Use pytest fixtures for database setup
+- Every test function name starts with test_
+- Use AAA pattern: Arrange, Act, Assert
+- Mock external API calls
 ```
 
 **SAY:**
-> "Each file can specify which paths it applies to. Advanced topic for later!"
+> "Path-specific instructions + repo-wide instructions **stack together**. When working on test files, Copilot sees both!
+>
+> This is powerful for teams: different rules for API code, test code, documentation, scripts."
+
+---
+
+#### [0:41-0:42] How Rules Connect to Everything Else (1 min)
+
+**SAY:**
+> "Rules are the foundation of the professional workflow you'll learn in Session 2:
+>
+> **Rules + PRD + Memory Bank = Copilot that truly knows your project.**
+>
+> Custom instructions are **always-on context** that saves you from repeating yourself. Every prompt you write from now on benefits from these rules.
+>
+> This is context mastery. This is what separates AI amateurs from AI professionals."
+
+🎯 **CHECKPOINT:** Everyone understands how rules fit into the bigger picture?
+
+**SAY:**
+> "You can verify rules are being used by checking the **References** section in Copilot Chat responses. It'll show `.github/copilot-instructions.md` when it's reading your rules."
 
 ---
 

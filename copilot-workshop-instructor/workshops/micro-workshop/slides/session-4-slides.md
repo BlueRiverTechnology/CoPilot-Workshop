@@ -18,11 +18,11 @@ SESSION 4
 
 "Prove everything you've learned"
 
-Duration: 33 minutes
+Duration: 30 minutes
 ```
 
 ### Speaker Notes
-> "The finale! Session 4 is where you prove mastery. Code Review, Custom Agents, the 70% Problem, and the Boss Fight. Complete the Boss Fight and you're a certified Copilot Power User."
+> "The finale! Session 4 is where you prove mastery. Checkpoint verification, Code Review, Custom Agents, Memory Bank, the 70% Problem, and the Boss Fight. Complete the Boss Fight and you're a certified Copilot Power User!"
 
 ---
 
@@ -38,119 +38,181 @@ SESSION 4 OBJECTIVES - THE FINALE
 
 By the end of this session, you will:
 
+○  Verify session-4-start checkpoint
+   Start with working API + Tags infrastructure
+
 ○  Use Copilot Code Review for PR feedback
-   Automated quality checks on every PR
+   Automated quality checks
 
 ○  Create Custom Agents (.agent.md files)
    Specialized AI personas for your project
+
+○  Build a Memory Bank
+   Persistent project context across sessions
 
 ○  Understand the 70% Problem
    Where AI helps, where YOU add value
 
 ○  Complete the BOSS FIGHT
-   Build complex feature using ALL techniques
+   Build tag endpoint using ALL techniques
 
 ○  EARN POWER USER CERTIFICATION 🏆
    Prove your mastery
 ```
 
 ### Speaker Notes
-> "Four final skills, then the ultimate test. Code Review, Custom Agents, the 70% Problem, and Boss Fight. Complete the Boss Fight - you're certified."
+> "Seven objectives for the finale. Checkpoint verification, Code Review, Custom Agents, Memory Bank, the 70% Problem, Boss Fight, and certification. Complete the Boss Fight - you're certified. Let's go!"
 
 ---
 
-## SLIDE 59: Copilot Code Review
+## SLIDE 59: Checkpoint Verification - Session 4 Start
+
+### Visual
+- **Layout:** Terminal commands with expected output
+- **Checkmarks:** Green verification indicators
+- **Safety net:** Highlighted
+
+### Text on Slide
+```
+CHECKPOINT VERIFICATION - SESSION 4
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Verify you have the working API with Tags:
+
+┌─────────────────────────────────────────────────────────┐
+│ # Switch to session-4-start checkpoint                  │
+│ git checkout session-4-start                            │
+│                                                         │
+│ # Create database                                       │
+│ python create_db.py                                     │
+│                                                         │
+│ # Run tests (should have 10 passing)                    │
+│ pytest tests/api/test_todos.py -v                       │
+└─────────────────────────────────────────────────────────┘
+
+EXPECTED: 10 tests PASSED ✅
+(8 from Session 3 + 2 new DELETE tests)
+
+WHAT'S NEW IN THIS CHECKPOINT:
+✅ DELETE endpoint working
+✅ Tag model created (id, name, created_at)
+✅ todo_tags association table
+✅ Many-to-many relationship ready
+
+Your safety net for the Boss Fight!
+```
+
+### Speaker Notes
+> "First: checkpoint verification. Everyone switch to session-4-start, create the database, run tests. You should see 10 tests pass. This checkpoint gives you everything from Session 3 PLUS the Tag infrastructure. Tag model exists, association table is ready, many-to-many relationship is defined. This is your safety net for the Boss Fight!"
+
+---
+
+## SLIDE 60: Copilot Code Review
 
 ### Visual
 - **Layout:** GitHub PR interface mockup
-- **Copilot reviewer:** Shown in reviewer section
-- **Inline comments:** Example feedback
+- **Icons:** Review checkmark, comments
+- **Two-panel:** GitHub + VS Code
 
 ### Text on Slide
 ```
 🔍 COPILOT CODE REVIEW
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 Automated code review on every Pull Request
 
-HOW IT WORKS:
-┌─────────────────────────────────────────────────────────┐
-│  1. Create Pull Request on GitHub                       │
-│  2. Request review from "copilot" as reviewer           │
-│  3. Copilot analyzes your changes                       │
-│  4. Get inline comments and suggestions                 │
-└─────────────────────────────────────────────────────────┘
+TWO WAYS TO USE:
+
+1️⃣ GITHUB PR REVIEW:
+   • Create PR on GitHub
+   • Request review from "copilot"
+   • Get inline comments and suggestions
+
+2️⃣ IN-EDITOR REVIEW:
+   • No PR needed!
+   • Use Copilot Chat directly
+   • Instant feedback
 
 WHAT IT CHECKS:
-  ✅ Code quality and best practices
-  ✅ Potential bugs and edge cases
-  ✅ Security vulnerabilities
-  ✅ Performance issues
-  ✅ Consistency with codebase patterns
+✅ Code quality and best practices
+✅ Potential bugs and edge cases
+✅ Security vulnerabilities
+✅ Performance issues
+✅ Consistency with codebase patterns
 
 Like having a tireless reviewer on every PR!
 ```
 
 ### Speaker Notes
-> "Copilot Code Review. On GitHub, request 'copilot' as a reviewer on any PR. It analyzes your changes, leaves inline comments, finds bugs, security issues, performance problems. Tireless code reviewer on every PR."
+> "Copilot Code Review works two ways. On GitHub, request 'copilot' as a reviewer on any PR. It analyzes changes, leaves inline comments, finds bugs, security issues. Or use it in VS Code Chat for instant feedback without creating a PR. Either way, it's like having a tireless code reviewer!"
 
 ---
 
-## SLIDE 60: In-Editor Code Review
+## SLIDE 61: In-Editor Code Review Demo
 
 ### Visual
-- **Layout:** VS Code chat panel with review prompt
-- **Output:** Review comments example
+- **Layout:** Chat panel with review prompt
+- **Output:** Sample review comments
+- **Highlighting:** Specific issues found
 
 ### Text on Slide
 ```
-🔍 IN-EDITOR CODE REVIEW
+IN-EDITOR CODE REVIEW - INSTANT FEEDBACK
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-Review without creating a PR:
+Review code WITHOUT creating a PR:
 
 ┌─────────────────────────────────────────────────────────┐
-│ "Review my recent changes in #file:src/api/v1/todos.py │
+│ Review my implementation in #file:src/api/v1/todos.py  │
 │                                                         │
-│  Check for:                                             │
-│  1. Security issues (auth, validation)                  │
-│  2. Error handling completeness                         │
-│  3. Performance concerns                                │
-│  4. Best practice violations                            │
+│ Check for:                                              │
+│ 1. Security issues (auth, validation, ownership)        │
+│ 2. Error handling completeness                          │
+│ 3. Performance concerns (N+1 queries, missing indexes)  │
+│ 4. Best practice violations                             │
 │                                                         │
-│  Be thorough and critical."                             │
+│ Be thorough and critical. Point out line numbers.       │
 └─────────────────────────────────────────────────────────┘
+
+RESULT:
+Copilot provides detailed feedback with line numbers,
+specific issues, and suggestions for fixes
 
 USE FOR:
 • Self-review before committing
 • Quick sanity check on changes
 • Learning from AI feedback
+• Finding edge cases you missed
 ```
 
 ### Speaker Notes
-> "You can also review in the editor. Ask Copilot to review a file, be thorough and critical. Great for self-review before committing or quick sanity checks."
+> "In-editor review is powerful. Ask Copilot to review a file, be thorough and critical. It provides detailed feedback with line numbers, specific issues, suggestions. Use this for self-review before committing, quick sanity checks, learning from AI, finding edge cases. This is YOUR 30% work - ensuring quality!"
 
 ---
 
-## SLIDE 61: Custom Agents
+## SLIDE 62: Custom Agents Overview
 
 ### Visual
-- **Layout:** Agent file structure
+- **Layout:** Agent file structure diagram
 - **Icons:** Different specialized robot icons
-- **File path:** .github/agents/*.agent.md
+- **Hierarchy:** Showing relationship to instructions
 
 ### Text on Slide
 ```
 🤖 CUSTOM AGENTS (.agent.md)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-Create specialized AI personas for your project:
+Create specialized AI personas for your project
 
 LOCATION: .github/agents/*.agent.md
 
+FILE STRUCTURE:
 ┌─────────────────────────────────────────────────────────┐
-│  .github/                                               │
-│  └── agents/                                            │
-│      ├── fastapi-expert.agent.md                        │
-│      ├── testing-specialist.agent.md                    │
-│      └── security-reviewer.agent.md                     │
+│ .github/                                                │
+│ └── agents/                                             │
+│     ├── todo-api-expert.agent.md                        │
+│     ├── testing-specialist.agent.md                     │
+│     └── security-reviewer.agent.md                      │
 └─────────────────────────────────────────────────────────┘
 
 WHAT THEY DO:
@@ -159,15 +221,20 @@ WHAT THEY DO:
 • Set constraints and patterns
 • Reusable across conversations
 
+THE HIERARCHY:
+.github/copilot-instructions.md → Repo-wide, always active
+.github/instructions/*.md → Path-specific rules
+.github/agents/*.agent.md → Custom personas
+
 Pre-configured experts for YOUR codebase!
 ```
 
 ### Speaker Notes
-> "Custom Agents are specialized AI personas. Create .agent.md files in .github/agents/. Each agent knows your specific patterns, architecture, coding standards. Pre-configured experts for your project."
+> "Custom Agents are specialized AI personas. Create .agent.md files in .github/agents/. Each agent knows your specific patterns, architecture, coding standards. They sit in the hierarchy: repo-wide instructions are always active, path-specific scope to files, and agents are specialized personas you invoke. Pre-configured experts for your codebase!"
 
 ---
 
-## SLIDE 62: Creating a Custom Agent
+## SLIDE 63: Creating a Custom Agent
 
 ### Visual
 - **Layout:** Full agent file example
@@ -177,8 +244,9 @@ Pre-configured experts for YOUR codebase!
 ### Text on Slide
 ```
 CREATING A CUSTOM AGENT
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-# .github/agents/todo-api.agent.md
+.github/agents/todo-api-expert.agent.md
 
 ┌─────────────────────────────────────────────────────────┐
 │ # Todo API Expert Agent                                 │
@@ -191,34 +259,39 @@ CREATING A CUSTOM AGENT
 │ - SQLAlchemy with async sessions                        │
 │                                                         │
 │ ## Key Patterns                                         │
-│ - All endpoints require authentication                  │
+│ - Fixed owner_id = "default-user" (no JWT auth)         │
 │ - Service layer handles business logic                  │
-│ - Models use UUID primary keys                          │
+│ - Models use UUID string primary keys                   │
 │                                                         │
-│ ## When implementing:                                   │
+│ ## When Implementing                                    │
 │ 1. Follow existing patterns                             │
-│ 2. Create tests first (TDD)                             │
-│ 3. Use 3-tier architecture                              │
-│ 4. Include proper error handling                        │
+│ 2. Use 3-tier architecture                              │
+│ 3. Include proper error handling                        │
+│ 4. Return appropriate HTTP status codes                 │
 └─────────────────────────────────────────────────────────┘
+
+Reference with #file:.github/agents/todo-api-expert.agent.md
+AI automatically follows all these rules!
 ```
 
 ### Speaker Notes
-> "Here's a custom agent. It knows your architecture, patterns, file structure, coding standards. Reference it with #file and AI automatically follows all these rules. Less explaining, better results."
+> "Here's a custom agent for our Todo API. It knows the architecture, patterns, file structure, coding standards. Reference it with #file in your prompt and AI automatically follows all these rules. Less explaining in each prompt, better results, consistent code. This is persistent expertise you invoke on demand!"
 
 ---
 
-## SLIDE 62A: The Memory Problem
+## SLIDE 64: The Memory Problem
 
 ### Visual
-- **Layout:** Split screen — left shows repeated chat messages, right shows frustration
-- **Animation:** Messages stacking up on repeat
+- **Layout:** Split screen - repeated messages vs frustration
+- **Animation:** Messages stacking up
+- **Emphasis:** "Every session starts from zero"
 
 ### Text on Slide
 ```
 🧠 THE PROBLEM: COPILOT FORGETS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-Every new chat session starts from zero.
+Every new chat session starts from zero
 
 Monday:    "We use FastAPI with async..."
 Tuesday:   "Remember, we use FastAPI..."
@@ -228,60 +301,72 @@ Thursday:  😤
 Your context. Your decisions. Your progress.
 Gone. Every. Single. Time.
 
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Custom Agents define HOW you work
+But they don't remember WHERE you are
+
 What if Copilot could REMEMBER?
 ```
 
 ### Speaker Notes
-> "Custom Agents are great for defining roles. But Copilot still forgets between sessions. You end up repeating your project setup, your decisions, your progress. The Memory Bank fixes this."
+> "Custom Agents are great for defining how you work - your patterns and rules. But here's the problem: Copilot forgets between sessions. Every new chat starts from zero. You end up repeating your project setup, your decisions, your progress. Monday you explain, Tuesday you repeat, Wednesday you're frustrated. The Memory Bank solves this."
 
 ---
 
-## SLIDE 62B: Memory Bank Structure
+## SLIDE 65: Memory Bank Structure
 
 ### Visual
-- **Layout:** Folder tree on left, descriptions on right
-- **Color coding:** Each file a different color
-- **Highlight:** activeContext.md glows (most important)
+- **Layout:** Folder tree with descriptions
+- **Color coding:** Each file different color
+- **Highlight:** activeContext.md glows
 
 ### Text on Slide
 ```
-🧠 THE MEMORY BANK
+🧠 THE MEMORY BANK - 6 FILES FOR PERSISTENT CONTEXT
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 memory-bank/
 ├── projectbrief.md      → What is this project?
-├── productContext.md     → Why does it exist?
-├── techContext.md        → What tech do we use?
-├── systemPatterns.md     → How do we build things?
-├── activeContext.md  ⚡  → What's happening NOW?
-└── progress.md           → Where do we stand?
+├── productContext.md    → Why does it exist?
+├── techContext.md       → What tech do we use?
+├── systemPatterns.md    → How do we build things?
+├── activeContext.md  ⚡ → What's happening NOW?
+└── progress.md          → Where do we stand?
 
 + Update .github/copilot-instructions.md
-  to tell Copilot: "Read memory-bank/ first"
+  Tell Copilot: "Read memory-bank/ first"
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ✨ Copilot reads these EVERY session
 ✨ Say "update memory bank" to save state
 ✨ Zero context lost between sessions
+
+activeContext.md changes most - current focus, recent
+changes, next steps. Others are more stable.
 ```
 
 ### Speaker Notes
-> "Six markdown files, each answering a question Copilot needs. The project brief is the foundation. Active context is what changes most — it's your current focus, recent changes, and next steps. You update copilot-instructions to tell Copilot to read these files. Then say 'update memory bank' at the end of each session."
+> "The Memory Bank is six markdown files, each answering a question Copilot needs. Project brief is the foundation. Tech context is your stack. System patterns is your architecture. Active context is what changes most - your current focus, recent changes, next steps. Progress is where you stand. Update copilot-instructions to tell Copilot to read these files first. Then say 'update memory bank' at end of session to save state!"
 
 ---
 
-## SLIDE 62C: Memory Bank Daily Workflow
+## SLIDE 66: Memory Bank Daily Workflow
 
 ### Visual
 - **Layout:** Circular flow diagram
-- **Steps:** Morning → Code → End of Day → Next Morning
-- **Key insight:** Custom Agents = HOW, Memory Bank = WHERE
+- **Steps:** Morning → Code → End of Day → Loop
+- **Key insight:** Custom Agents vs Memory Bank
 
 ### Text on Slide
 ```
 🧠 THE DAILY WORKFLOW
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ┌─────────────┐
   │   MORNING   │ Copilot reads memory-bank/
-  │  Full context restored automatically
+  │  Context restored automatically
   └──────┬──────┘
          │
   ┌──────▼──────┐
@@ -290,23 +375,27 @@ memory-bank/
   └──────┬──────┘
          │
   ┌──────▼──────┐
-  │  END OF DAY │ "update memory bank"
+  │ END OF DAY  │ "update memory bank"
   │  State saved to markdown
   └──────┬──────┘
          │
          └──────→ Next day: zero context lost
 
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
 KEY INSIGHT:
-  Custom Agents → HOW you work
-  Memory Bank   → WHERE you are
+Custom Agents → HOW you work (patterns, rules)
+Memory Bank   → WHERE you are (current state)
+
+Together: Copilot becomes a true project partner!
 ```
 
 ### Speaker Notes
-> "This is the workflow. Morning: context is restored. During coding: better results. End of day: update the bank. Next morning: pick up where you left off. Think of it this way — Custom Agents tell Copilot how you work. The Memory Bank tells Copilot where you are. Together, Copilot becomes a true project partner."
+> "This is the workflow. Morning: context automatically restored. Coding: better results, no repeating. End of day: update the bank. Next morning: pick up where you left off. Think of it this way - Custom Agents tell Copilot HOW you work. Memory Bank tells Copilot WHERE you are. Together, Copilot becomes a true project partner with persistent knowledge!"
 
 ---
 
-## SLIDE 63: The 70% Problem
+## SLIDE 67: The 70% Problem
 
 ### Visual
 - **Layout:** Split graphic - 70% / 30%
@@ -316,271 +405,267 @@ KEY INSIGHT:
 ### Text on Slide
 ```
 ⚠️ THE 70% PROBLEM - CRITICAL UNDERSTANDING
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-AI delivers rapid initial progress.
-But the final 30%? That's where YOU add value.
+AI delivers rapid initial progress
+But the final 30%? That's where YOU add value
 
-┌─────────────────────────┬───────────────────────────────┐
-│   AI DELIVERS (70%)     │    YOU MUST ADD (30%)         │
-├─────────────────────────┼───────────────────────────────┤
-│ ✅ Boilerplate code      │ 🎯 Edge cases AI missed       │
-│ ✅ Standard patterns     │ 🎯 Performance optimization   │
-│ ✅ Happy path impl       │ 🎯 Security hardening         │
-│ ✅ Basic structure       │ 🎯 Production-readiness       │
-│                         │ 🎯 Business logic nuances     │
-│                         │ 🎯 Real-world error handling  │
-└─────────────────────────┴───────────────────────────────┘
+┌─────────────────────────┬───────────────────────────┐
+│   AI DELIVERS (70%)     │   YOU MUST ADD (30%)      │
+├─────────────────────────┼───────────────────────────┤
+│ ✅ Boilerplate code      │ 🎯 Edge cases AI missed   │
+│ ✅ Standard patterns     │ 🎯 Ownership validation   │
+│ ✅ Happy path impl       │ 🎯 Performance optimization│
+│ ✅ Basic structure       │ 🎯 Security hardening     │
+│                         │ 🎯 Production-readiness   │
+│                         │ 🎯 Business logic nuances │
+│                         │ 🎯 Real-world errors      │
+└─────────────────────────┴───────────────────────────┘
 
 Organizations that understand this: 26% productivity gains
 Those that don't: Accumulating technical debt
+
+In Boss Fight: AI gets 70% fast. YOU finish the 30%!
 ```
 
 ### Speaker Notes
-> "Critical understanding: AI gets you 70% there fast. But the final 30% - edge cases, performance, security, production-readiness - that's where YOU add value. In the Boss Fight, AI will get you 70% quickly. YOUR job is to finish the 30%."
+> "Critical understanding: AI gets you 70% there fast. Boilerplate, standard patterns, basic structure. But the final 30% - edge cases, ownership validation, performance, security, production-readiness - that's where YOU add value. Organizations that understand this see 26% productivity gains. Those that don't accumulate technical debt. In the Boss Fight, AI will get you 70% quickly. Your job is to finish the critical 30%!"
 
 ---
 
-## SLIDE 64: Boss Fight Introduction
+## SLIDE 68: Boss Fight Introduction
 
 ### Visual
 - **Layout:** Epic challenge announcement
 - **Gaming theme:** Boss health bar, challenge card
-- **Timer:** Prominent countdown graphic
+- **Timer:** Prominent 5-minute countdown
 
 ### Text on Slide
 ```
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-              🎮 BOSS FIGHT 🎮                              
-          THE ULTIMATE CHALLENGE                           
+              🎮 BOSS FIGHT 🎮
+          THE ULTIMATE CHALLENGE
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-CHALLENGE: Build complete TODO TAGGING feature
-           Many-to-many relationships
+CHALLENGE: Build POST /api/v1/todos/{todo_id}/tags
 
-TIME LIMIT: 10 minutes
+TIME LIMIT: 5 minutes ⏱️
 
-REQUIREMENTS:
-• POST /api/v1/todos/{id}/tags - Add tag
-• GET /api/v1/todos?tag=name - Filter by tag
-• DELETE /api/v1/todos/{id}/tags/{tag_id} - Remove tag
-• Full 3-tier architecture
-• Ownership validation (THE 30%!)
-• Error handling (404, 403, 400)
+WHAT'S ALREADY BUILT (session-4-start):
+✅ Tag model (id, name, created_at)
+✅ todo_tags association table
+✅ Todo.tags relationship defined
+
+WHAT YOU BUILD:
+• POST /api/v1/todos/{todo_id}/tags
+• Request body: { "name": "urgent" }
+• Creates tag if doesn't exist (case-insensitive)
+• Associates tag with todo
+• Returns updated TodoResponse with tags
+• THE 30%: Ownership validation (404/403 errors)
+• THE 30%: Proper error handling and messages
 
 USE ALL TECHNIQUES FROM SESSIONS 1-3! 🔥
 ```
 
 ### Speaker Notes
-> "This is it. The Boss Fight. Build a complete tagging feature with many-to-many relationships. 10 minutes. Use EVERYTHING you've learned. AI gets you 70% - you add the 30%. Ownership validation, proper error handling. That's YOUR value."
+> "This is it. The Boss Fight. Build a POST endpoint to add tags to todos. 5 minutes. Infrastructure is already built - Tag model exists, association table is ready. You build ONE endpoint with proper ownership validation and error handling. That's YOUR 30%. Use EVERYTHING you've learned!"
 
 ---
 
-## SLIDE 65: Boss Fight Techniques
+## SLIDE 69: Boss Fight Techniques Checklist
 
 ### Visual
-- **Layout:** Technique checklist
+- **Layout:** Technique checklist with bonuses
 - **Icons:** Each technique from previous sessions
-- **Scoring bonus:** Points for each technique used
+- **Scoring:** Points for each technique
 
 ### Text on Slide
 ```
-🛠️ TECHNIQUES TO USE
+🛠️ BOSS FIGHT TECHNIQUES CHECKLIST
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-From Session 1:
+USE THESE TECHNIQUES:
+
+FROM SESSION 1:
 ☐ Agent Mode for building
-☐ #mentions for context
+☐ #mentions for context (#file, #folder)
+☐ Custom instructions reference
 
-From Session 2:
+FROM SESSION 2:
 ☐ "think hard" for planning
-☐ 6-element framework prompts
+☐ Context+Task+Constraints+Format framework
 ☐ PRD reference
 
-From Session 3:
-☐ TDD approach
-☐ Subagents for parallel work
-☐ Plan Mode for visibility
+FROM SESSION 3:
+☐ Start from checkpoint (session-4-start)
+☐ Verify with tests
 
-From Session 4:
-☐ Custom Agent (bonus!)
+FROM SESSION 4:
+☐ Custom Agent reference (bonus!)
+☐ Code Review when done
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 SCORING:
-• Complete in 6 min: 🏆 PLATINUM
-• Complete in 8 min: 🥇 GOLD
-• Complete in 10 min: 🥈 SILVER
+• Complete in 3 min: 🏆 PLATINUM
+• Complete in 4 min: 🥇 GOLD
+• Complete in 5 min: 🥈 SILVER
 • Complete at all: ✅ CERTIFIED
+
++1 level for each technique used!
 ```
 
 ### Speaker Notes
-> "Use everything. Agent Mode, mentions, thinking modes, 6-element framework, TDD, subagents, Plan Mode. Each technique used is bonus points. Platinum if you finish in 6 minutes, certified if you finish at all. Let's go!"
+> "Use everything. Agent Mode, mentions, think hard, the framework, checkpoint start, custom agents, code review. Each technique used is bonus points. Platinum if under 3 minutes, certified if you finish at all. Let's go!"
 
 ---
 
-## SLIDE 66: Boss Fight Strategy - Planning
+## SLIDE 70: Boss Fight - Winning Strategy
 
 ### Visual
-- **Layout:** Initial planning prompt
-- **Highlighting:** think hard keyword
-- **Step indicator:** Step 1
+- **Layout:** Step-by-step strategy guide
+- **Highlighting:** Key prompt elements
+- **Timer:** Step durations
 
 ### Text on Slide
 ```
-🎮 BOSS FIGHT STRATEGY - STEP 1: PLAN
+BOSS FIGHT WINNING STRATEGY
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-Start with "think hard":
+STEP 1: PLAN (30 seconds)
+Use "think hard" to get implementation plan
 
-┌─────────────────────────────────────────────────────────┐
-│ #file:PRD-Tags.md #file:src/models/todo.py              │
-│                                                         │
-│ think hard about implementing many-to-many tagging      │
-│ for todos.                                              │
-│                                                         │
-│ Requirements:                                           │
-│ - POST /api/v1/todos/{id}/tags                          │
-│ - GET /api/v1/todos?tag=name                            │
-│ - DELETE /api/v1/todos/{id}/tags/{tag_id}               │
-│ - 3-tier architecture                                   │
-│ - Ownership validation                                  │
-│                                                         │
-│ Consider: Schema, case sensitivity, API design          │
-│                                                         │
-│ Give me the complete implementation plan.               │
-└─────────────────────────────────────────────────────────┘
+STEP 2: IMPLEMENT (3-4 minutes)
+One comprehensive prompt with:
+  #file:.github/agents/todo-api-expert.agent.md
+  #file:PRD.md
+  #file:src/models/tag.py
+  #folder:src/api/v1/
 
-⏱️ ~30 seconds for planning
+  [Context] - Tag infrastructure exists
+  [Task] - POST /api/v1/todos/{todo_id}/tags
+  [Constraints] - Layer by layer specs
+    - TagCreate schema
+    - Service method (get/create tag, add to todo)
+    - API endpoint (ownership validation!)
+  [Format] - Which files to create/update
+
+STEP 3: THE 30% (30 seconds)
+Verify ownership validation:
+  "Can ANY user tag ANY todo? Or just their own?"
+  Fix any issues!
+
+STEP 4: QUICK TEST (30 seconds)
+curl test or pytest
 ```
 
 ### Speaker Notes
-> "Step 1: Plan with think hard. Get a complete implementation plan before writing any code. 30 seconds of planning saves minutes of iteration."
+> "Winning strategy: Plan with think hard for 30 seconds. Implement with one comprehensive prompt including custom agent, PRD, model files. Specify constraints layer by layer. Then verify the critical 30% - ownership validation. Finally, quick test. This strategy gets you there!"
 
 ---
 
-## SLIDE 67: Boss Fight Strategy - Implementation
-
-### Visual
-- **Layout:** Plan Mode or sequential approach
-- **Options:** Two paths shown
-- **Step indicator:** Step 2
-
-### Text on Slide
-```
-🎮 BOSS FIGHT STRATEGY - STEP 2: IMPLEMENT
-
-OPTION A: Plan Mode (recommended)
-┌─────────────────────────────────────────────────────────┐
-│ /plan Implement tagging feature:                        │
-│ 1. Create Tag model and association table               │
-│ 2. Create schemas                                       │
-│ 3. Add service methods                                  │
-│ 4. Add API endpoints                                    │
-│ 5. Include ownership validation                         │
-│                                                         │
-│ Follow patterns in #folder:src/                         │
-└─────────────────────────────────────────────────────────┘
-
-OPTION B: Sequential (TDD style)
-• Step 1: Database models
-• Step 2: Schemas
-• Step 3: Service layer
-• Step 4: API endpoints
-• Step 5: Add the 30% (validation, errors)
-```
-
-### Speaker Notes
-> "Step 2: Implement. Use Plan Mode to see everything before it runs, or go sequential with TDD. Either works - choose what fits your style."
-
----
-
-## SLIDE 68: Boss Fight - Your Turn!
+## SLIDE 71: Exercise - Boss Fight!
 
 ### Visual
 - **Layout:** Large timer graphic
 - **Action button:** START
-- **Countdown style:** Digital clock
+- **Countdown:** Digital clock style
 
 ### Text on Slide
 ```
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-                    🎮 EXERCISE 5                          
-                    BOSS FIGHT                             
+                    🎮 EXERCISE 5
+                    BOSS FIGHT
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-⏱️ TIME: 10 minutes
+⏱️ TIME: 5 minutes
 
-Build the tagging feature!
+Build POST /api/v1/todos/{todo_id}/tags endpoint!
 
 SUCCESS CRITERIA:
-☐ Tag model with many-to-many relationship
-☐ POST endpoint to add tag
-☐ GET endpoint with tag filter
-☐ DELETE endpoint to remove tag
-☐ Ownership validation (THE 30%!)
-☐ Proper error codes (404, 403, 400)
+☐ TagCreate and TagResponse schemas created
+☐ Service method add_tag_to_todo() implemented
+☐ POST endpoint in src/api/v1/todos.py
+☐ TodoResponse includes tags: List[TagResponse]
+☐ Ownership validation (404 if not found, 403 if not owned)
+☐ Case-insensitive tag creation
+☐ Proper error codes and messages
 
-REMEMBER: AI gives you 70%. YOU add the final 30%!
+REMEMBER:
+AI gives you 70%. YOU add the final 30%!
+(Ownership checks, error handling, edge cases)
 
-                    ⏱️ 10:00
-                    
+                    ⏱️ 5:00
+
             BOSS FIGHT STARTS NOW!
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ```
 
 ### Speaker Notes
-> "This is it! 10 minutes. Build the tagging feature. Use everything you learned. AI gets you 70%, you add the 30%. Timer starts NOW!"
+> "This is it! 5 minutes. Build the tag endpoint. Use everything you learned. AI gets you 70%, you add the 30%. Ownership validation, error handling, edge cases - that's YOUR value. Timer starts NOW!"
 
-**[EXERCISE PLACEHOLDER: 10 minutes - Students complete Boss Fight]**
+**[EXERCISE PLACEHOLDER: 5 minutes - Students complete Boss Fight]**
 
 ---
 
-## SLIDE 69: Boss Fight Complete!
+## SLIDE 72: Boss Fight Complete - Results
 
 ### Visual
-- **Layout:** Victory screen
-- **Confetti/celebration:** Animation
-- **Scoring results:** Space for results
+- **Layout:** Victory screen with results
+- **Confetti:** Celebration animation
+- **Scoring:** Level breakdown
 
 ### Text on Slide
 ```
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-              🎉 BOSS FIGHT COMPLETE! 🎉                    
+              🎉 BOSS FIGHT COMPLETE! 🎉
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-Results:
+RESULTS:
 
-🏆 PLATINUM (<6 min):  ___ participants
-🥇 GOLD (<8 min):      ___ participants
-🥈 SILVER (<10 min):   ___ participants
+🏆 PLATINUM (<3 min):  ___ participants
+🥇 GOLD (<4 min):      ___ participants
+🥈 SILVER (<5 min):    ___ participants
 ✅ CERTIFIED:          Everyone who completed!
 
-Techniques used:
-□ think hard    □ 6-element framework
-□ TDD           □ Subagents
-□ Plan Mode     □ #mentions
-□ Custom Agent
+TECHNIQUES USED:
+□ think hard         □ Custom Agent
+□ 6-element framework □ #mentions
+□ TDD approach       □ Code Review
+□ Ownership validation (THE 30%!)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 YOU DID IT! 🏆
+
+You just built a many-to-many tag endpoint
+using AI assistance + YOUR critical 30%!
 ```
 
 ### Speaker Notes
-> "Time! Who finished? Let's see the results. Platinum if under 6 minutes... Gold under 8... Silver under 10... Everyone who completed is CERTIFIED. You just built a complex many-to-many feature using AI assistance!"
+> "Time! Who finished? Let's see the results. Platinum under 3 minutes... Gold under 4... Silver under 5... Everyone who completed is CERTIFIED. You just built a many-to-many relationship endpoint with ownership validation using AI assistance. You proved your mastery!"
 
 ---
 
-## SLIDE 70: What You Mastered
+## SLIDE 73: What You Mastered Today
 
 ### Visual
 - **Layout:** Complete skill tree, all unlocked
 - **Icons:** All badges earned
-- **Visual:** Full journey map
+- **Journey map:** Full workshop path
 
 ### Text on Slide
 ```
 🏆 WHAT YOU MASTERED TODAY
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 SESSION 1: Security & Superpowers
   ✅ .copilotignore for secrets
   ✅ All 4 AI modes (Ask, Edit, Agent, Plan)
   ✅ All #mention types
+  ✅ Writing Effective AI Rules (7 principles)
   ✅ Custom Instructions
 
 SESSION 2: Context Mastery
@@ -590,24 +675,25 @@ SESSION 2: Context Mastery
   ✅ 6-element framework
 
 SESSION 3: Build Sprint
+  ✅ Checkpoint-based development
   ✅ TDD with AI
   ✅ Full context implementation
-  ✅ Subagents
-  ✅ Plan Mode
+  ✅ Professional workflows
 
 SESSION 4: Mastery
   ✅ Code Review
   ✅ Custom Agents
+  ✅ Memory Bank
   ✅ The 70% Problem
   ✅ BOSS FIGHT COMPLETE!
 ```
 
 ### Speaker Notes
-> "Look at what you mastered. Security. All the modes. Context strategies. Professional workflow. Building at speed. Code review. Custom agents. And you proved it all in the Boss Fight. You're a Copilot Power User."
+> "Look at what you mastered in one day. Security-first development. All the AI modes. Writing effective rules. Context mastery. Professional prompting. Checkpoint-based workflows. TDD. Code Review. Custom Agents. Memory Bank. The 70/30 understanding. And you proved it all in the Boss Fight. You're a Copilot Power User!"
 
 ---
 
-## SLIDE 71: Power User Certification
+## SLIDE 74: Power User Certification
 
 ### Visual
 - **Layout:** Certificate design
@@ -618,7 +704,7 @@ SESSION 4: Mastery
 ```
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-              🏆 POWER USER CERTIFIED 🏆                    
+              🏆 POWER USER CERTIFIED 🏆
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -632,20 +718,26 @@ SESSION 4: Mastery
 
                       Skills Proven:
            ✅ Security-first development
+           ✅ All AI interaction modes
+           ✅ Writing effective AI rules
            ✅ Professional prompting techniques
            ✅ Context mastery
+           ✅ Checkpoint-based workflows
            ✅ Test-driven development with AI
+           ✅ Custom Agents and Memory Bank
            ✅ Complex feature implementation
+
+                  Level: _______________
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ```
 
 ### Speaker Notes
-> "You earned this. Power User Certified. You have security skills, professional prompting, context mastery, TDD with AI, and you proved it by building complex features. Congratulations!"
+> "You earned this. Power User Certified. You have security skills, know all modes, can write effective rules, master context and prompting, use checkpoints, do TDD with AI, build Custom Agents and Memory Banks, and you proved it by building a complex feature. Congratulations!"
 
 ---
 
-## SLIDE 72: Thank You & Next Steps
+## SLIDE 75: Thank You & Next Steps
 
 ### Visual
 - **Layout:** Closing slide with resources
@@ -655,35 +747,39 @@ SESSION 4: Mastery
 ### Text on Slide
 ```
 🙏 THANK YOU!
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 WHAT'S NEXT:
 
-📚 Resources
+📚 RESOURCES
    • Student reference guides (all sessions)
    • Prompt sheets for quick reference
    • knowledge.md - complete Copilot reference
-   • 🌟 GitHub Awesome Copilot (github.com/github/awesome-copilot)
-      → Advanced tips, best practices, community resources
+   • 🌟 GitHub Awesome Copilot
+     (github.com/github/awesome-copilot)
+     → Advanced tips, best practices, community
 
-💪 Practice
+💪 PRACTICE
    • Build features in your own projects
    • Try new techniques daily
-   • Experiment with Custom Agents
+   • Experiment with Custom Agents and Memory Bank
+   • Share what you learn
 
-🤝 Community
+🤝 COMMUNITY
    • Share what you build
    • Help others learn
    • Keep experimenting!
+   • Join the AI-augmented developer movement
 
 Questions? [Your contact info]
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-         From First Prompt to Power User 🚀               
+         From First Prompt to Power User 🚀
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ```
 
 ### Speaker Notes
-> "Thank you for joining today! You have all the resources - reference guides, prompt sheets, the knowledge base. Practice in your own projects, experiment with custom agents, share what you build. You went from first prompt to power user. Now go change how you code. Questions?"
+> "Thank you for joining today! You have all the resources - reference guides, prompt sheets, the knowledge base, GitHub Awesome Copilot for community resources. Practice in your own projects, experiment with custom agents and memory banks, share what you build. You went from first prompt to power user. Now go transform how you code. Questions?"
 
 ---
 
@@ -693,12 +789,11 @@ Questions? [Your contact info]
 |-------|----------|----------|-------------|
 | 15 | Exercise 1 | 3 min | Generate practice project with Agent Mode |
 | 23 | Exercise 2 | 3 min | Mention Bingo - try all #mention types |
-| 37 | Exercise 3 | 5 min | Create PRD for priority feature |
-| 48 | Exercise 4 | 10 min | Build Create Todo with TDD |
-| 51 | Speed Challenge | 3 min | Build Update Todo in 3 minutes |
-| 68 | Exercise 5 (Boss Fight) | 10 min | Complete tagging feature |
+| 34 | Exercise 3 | 2 min | Write your own AI rules |
+| 51 | Exercise 4 | 12 min | Build priority feature with support |
+| 71 | Exercise 5 (Boss Fight) | 5 min | Build tag endpoint (simplified) |
 
-**Total Exercise Time:** ~34 minutes of hands-on practice
+**Total Exercise Time:** ~25 minutes of hands-on practice
 
 ---
 
@@ -733,4 +828,4 @@ Questions? [Your contact info]
 
 ---
 
-*End of Slide Deck Guide*
+*End of Session 4 Slides*

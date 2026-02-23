@@ -1,2 +1,23 @@
 .DS_Store
 .claude
+
+# Virtual environments
+venv/
+.venv*/
+**/venv/
+**/.venv*/
+
+# Implementation files that belong only in copilot-student-v2
+copilot-workshop-student/src/api/v1/todos.py
+copilot-workshop-student/src/database.py
+copilot-workshop-student/src/models/tag.py
+copilot-workshop-student/src/schemas/todo.py
+copilot-workshop-student/src/services/todo_service.py
+copilot-workshop-student/tests/api/
+copilot-workshop-student/tests/conftest.py
+copilot-workshop-student/create_db.py
+copilot-workshop-student/todos.db
+
+# Working notes (optional - keep if useful)
+*-SUMMARY.md
+SESSION-*-GUIDE-*.md

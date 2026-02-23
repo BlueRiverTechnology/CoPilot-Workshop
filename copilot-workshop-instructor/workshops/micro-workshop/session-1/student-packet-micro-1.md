@@ -12,7 +12,8 @@
 - [ ] Configure secure AI development environment
 - [ ] Master all 4 AI interaction modes
 - [ ] Use all #mention types effectively
-- [ ] Understand Custom Instructions
+- [ ] Learn research-backed principles for writing effective AI rules
+- [ ] Write custom rules using best practices
 - [ ] Create first .github/copilot-instructions.md file
 
 ---
@@ -376,62 +377,204 @@ _____________________________________________________________________
 
 ---
 
-## 📋 Custom Instructions - Your AI's Personality
+## 📋 Writing Effective AI Rules - The Context Multiplier
 
-### What Custom Instructions Do
+### The Rules Ecosystem - Where Instructions Live
 
-| Aspect | Description |
-|--------|-------------|
-| **Purpose** | HOW you want AI to behave |
-| **Location** | `.github/copilot-instructions.md` |
-| **Scope** | Applied to ALL interactions automatically |
-| **Examples** | Coding standards, naming conventions, architecture |
+**There's not just one place for AI rules - there's an entire ecosystem!**
 
-### Why This Matters
+| Location | Scope | When Active |
+|----------|-------|-------------|
+| `.github/copilot-instructions.md` | Repo-wide | Always (Chat, Agent, Code Review) |
+| `.github/instructions/*.instructions.md` | Path-specific | Only on matching files |
+| `.github/agents/*.agent.md` | Custom agents | When agent is selected |
+| `AGENTS.md` | Cross-tool | Works with Copilot, Claude, Cursor |
+| VS Code settings | Per-operation | Code gen, test gen, review, commits |
 
-**Without custom instructions:**
-- Repeat context in every prompt
-- Inconsistent code style
-- AI doesn't know your preferences
-
-**With custom instructions:**
-- Set once, applied everywhere
-- Consistent code across all AI interactions
-- AI understands your project
+**Today we focus on repo-wide instructions - the skill applies to all layers!**
 
 ---
 
-## 📋 My First Custom Instructions File
+### Research-Backed Principles - What Makes Rules Work
 
-**Created:** [ ] Yes [ ] No
+**These principles come from GitHub, Anthropic, and AI engineering community research:**
 
-**File location:** `.github/copilot-instructions.md`
+#### Principle 1: Short, Imperative, Self-Contained Statements
 
-**My custom instructions content:**
+**BAD:** "We generally try to follow industry best practices for code quality and maintainability, so please write code that is clean and well-tested."
+
+**GOOD:** "Use type hints on all function signatures."
+
+**Why it works:** Specific, actionable, scannable.
+
+---
+
+#### Principle 2: Tell the AI What TO DO, Not What to Avoid
+
+**BAD:** "Don't use print statements for debugging."
+
+**GOOD:** "Use `logging` module at DEBUG level for diagnostic output."
+
+**Why it works:** LLMs are poor at negations. Positive directives work better.
+
+---
+
+#### Principle 3: Be Specific and Actionable
+
+**BAD:** "Follow good naming conventions."
+
+**GOOD:** "Use camelCase for JavaScript variables and functions. Use PascalCase for classes."
+
+**Why it works:** Zero ambiguity = better compliance.
+
+---
+
+#### Principle 4: Use Structured Markdown (or XML for Claude-based tools)
+
+**For Copilot:** Use distinct headings, bullet points, code examples.
+
+**For Claude-based tools (Claude Code, etc.):** Use XML tags:
+
 ```markdown
-# Project: _______________
+<role>Senior Python developer specializing in FastAPI</role>
 
-## Overview
+<architecture>
+  - 3-tier: API routes → Service layer → Models
+  - All database operations use async/await
+</architecture>
 
-
-## Coding Standards
--
--
--
-
-## Naming Conventions
--
--
-
-## Error Handling
--
--
+<constraints>
+  - Never use raw SQL — always use SQLAlchemy ORM
+  - Include type hints on every function signature
+</constraints>
 ```
 
-**What I included:**
+**Why it works:** Clear boundaries prevent AI from mixing up context, instructions, and examples.
+
+---
+
+#### Principle 5: Include Code Examples Where They Clarify Intent
+
+**Instead of:** "Use proper error handling"
+
+**Show this:**
+```python
+# GOOD - Do this
+async def get_user(user_id: str) -> User:
+    try:
+        return await db.get(User, user_id)
+    except NotFoundError:
+        raise HTTPException(status_code=404, detail="User not found")
+```
+
+**Why it works:** A before/after code snippet removes ambiguity.
+
+---
+
+#### Principle 6: Keep Files Under ~1,000 Lines
+
+**Why it matters:** GitHub explicitly warns that beyond 1,000 lines, quality deteriorates.
+
+**Best practice:** Start minimal. Add iteratively based on what you actually need.
+
+---
+
+#### Principle 7: Iterate Based on What Works
+
+**Why it matters:** Rules writing is empirical.
+
+**Process:**
+1. Start with 5-10 rules
+2. Test them
+3. See if Copilot follows them
+4. Refine
+
+**Remember:** Rules are a living document!
+
+---
+
+## ⚡ Speed Challenge: Write Your Own Rules (2 min)
+
+**Task:** Create `.github/copilot-instructions.md` in your practice project. Write 3-5 custom rules using the principles you just learned.
+
+**Guidelines:**
+- Short imperative statements
+- Positive directives (what TO do)
+- Specific and actionable
+- Organized with clear Markdown headings
+
+**Think:** "What would a new developer on my team need to know to write code that fits this project?"
+
+**My custom rules:**
+
+```markdown
+# Todo API Project
+
+## Coding Standards
+1. _____________________________________________________________
+2. _____________________________________________________________
+3. _____________________________________________________________
+
+## Architecture Patterns
+1. _____________________________________________________________
+2. _____________________________________________________________
+
+## Error Handling
+1. _____________________________________________________________
+```
+
+**Time completed:** ______ minutes
+
+**How I'll verify Copilot is using my rules:**
 _____________________________________________________________________
 
-🏆 **Achievement:** [ ] "Instruction Writer" unlocked
+🏆 **Achievement:** [ ] "Rules Writer" unlocked
+
+---
+
+## 📋 Path-Specific Instructions - Rules That Scope
+
+**Want different rules for different parts of your code?**
+
+**Example:** `.github/instructions/testing.instructions.md`
+
+```yaml
+---
+applyTo: "**/tests/**"
+---
+
+# Testing Guidelines
+
+- Use pytest fixtures for database setup
+- Every test function name starts with test_
+- Use AAA pattern: Arrange, Act, Assert
+- Mock external API calls
+```
+
+**How it works:**
+- Path-specific instructions + repo-wide instructions **stack together**
+- When working on test files, Copilot sees both!
+
+**My notes on path-specific instructions:**
+_____________________________________________________________________
+
+---
+
+## 📋 How Rules Connect to Everything Else
+
+**Rules are the foundation of the professional workflow you'll learn in Session 2:**
+
+**Rules + PRD + Memory Bank = Copilot that truly knows your project**
+
+**Why this matters:**
+- Custom instructions are **always-on context**
+- Saves you from repeating yourself in every prompt
+- Every prompt you write from now on benefits from these rules
+- This is context mastery - what separates AI amateurs from AI professionals
+
+**Verification tip:** Check the **References** section in Copilot Chat responses. It'll show `.github/copilot-instructions.md` when it's reading your rules.
+
+🏆 **Achievement:** [ ] "Context Multiplier" unlocked
 
 ---
 
@@ -441,13 +584,14 @@ _____________________________________________________________________
 
 - [ ] 🛡️ **Fortress Builder** - Security setup complete
 - [ ] 🏗️ **Project Generator** - Created practice project
-- [ ] 🔐 **Secret Keeper** - .copilotignore configured  
+- [ ] 🔐 **Secret Keeper** - .copilotignore configured
 - [ ] ⚡ **Command Guardian** - Understand terminal approval
 - [ ] 🎮 **Mode Master** - All AI modes practiced
 - [ ] 🎯 **Context Master** - #mentions mastered
-- [ ] 📋 **Instruction Writer** - Custom Instructions created
+- [ ] 📋 **Rules Writer** - Custom rules written using research-backed principles
+- [ ] 🔄 **Context Multiplier** - Understand how rules connect to everything
 
-**Total Achievements:** ______ / 7
+**Total Achievements:** ______ / 8
 
 ---
 
@@ -461,7 +605,8 @@ Rate your confidence (1-5):
 | Using Ask Mode | ___ | ___ | ___ |
 | Using Agent Mode | ___ | ___ | ___ |
 | Using #mentions | ___ | ___ | ___ |
-| Custom Instructions | ___ | ___ | ___ |
+| Writing effective AI rules | ___ | ___ | ___ |
+| Understanding rules ecosystem | ___ | ___ | ___ |
 
 **Biggest "aha!" moment:**
 _____________________________________________________________________

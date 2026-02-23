@@ -27,5 +27,6 @@ class Todo(Base):
         default=datetime.utcnow
     )
     
-    # Relationship
+    # Relationships
     owner = relationship("User", back_populates="todos")
+    tags = relationship("Tag", secondary="todo_tags", back_populates="todos")

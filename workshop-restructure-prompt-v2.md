@@ -129,7 +129,7 @@ Many-to-many tagging (new model, association table, schemas, service methods, 3 
 
 ### Missing: How to write good rules/instructions
 
-The current workshop shows students WHAT a `.github/copilot-instructions.md` file looks like and gives them one to copy, but it doesn't teach them HOW to write effective rules for their own projects. This is one of the most transferable skills — every project benefits from well-written Copilot instructions. Students should learn the principles of writing rules that actually shape AI behavior: what to include, what level of specificity works, how to structure them, common anti-patterns, and how to iterate on them.
+The current workshop shows students WHAT a `.github/copilot-instructions.md` file looks like and gives them one to copy, but it doesn't show them HOW to write effective rules for their own projects. This is one of the most transferable skills — every project benefits from well-written Copilot instructions. Students should learn the principles of writing rules that actually shape AI behavior: what to include, what level of specificity works, how to structure them, common anti-patterns, and how to iterate on them.
 
 ### Previous delivery feedback
 
@@ -178,15 +178,6 @@ This session works well. The throwaway practice project generation demo is a goo
    </constraints>
    ```
    Key principle: XML tags work because they give the AI unambiguous section boundaries. Whether you use XML tags or Markdown headings depends on the tool — Copilot prefers Markdown structure, Claude prefers XML — but the principle is the same: **create clear, labeled compartments for different types of information.**
-
-4. **Live demo: Good rules vs bad rules** — Show a side-by-side comparison:
-   - BAD: "Write good, clean code that follows best practices" (too vague, AI already tries to do this)
-   - BAD: "Don't use print statements for debugging" (negation — AI may still use them)
-   - BAD: "Make sure code is well-tested and handles edge cases properly" (aspirational, not actionable)
-   - GOOD: "We use Bazel for Java dependencies, not Maven. Give instructions and code samples that use Bazel." (specific, contextual)
-   - GOOD: "Use `logging` module at DEBUG level for diagnostic output. Never use print()." (specific positive alternative given alongside the prohibition)
-   - GOOD: "All JavaScript uses double quotes and tabs for indentation." (concrete convention — zero ambiguity)
-   These examples come directly from GitHub's own documentation and community best practices.
 
 5. **Live exercise: Write your own rules** — Students write 3-5 custom rules for the Todo API project (not just copy the pre-made file). They should write rules that answer: "What would a new developer on my team need to know to write code that fits this project?" Then they test one rule by giving Copilot a prompt and checking if the output follows their rule. Show them how to verify rules are being used by checking the References section in Copilot Chat responses.
 
@@ -373,7 +364,3 @@ All code should:
 ---
 
 ## Please produce all files listed above. Start with the instructor guides and checkpoint code (the most critical pieces), then slide deck guides, then student packets, then prompt sheets, then reference guides, then curriculum summary and README.
-
-If this is too much for a single response, start with the instructor guides and checkpoint code, and I'll ask for the rest in follow-up messages.
-
-Do you understand what I am asking for?

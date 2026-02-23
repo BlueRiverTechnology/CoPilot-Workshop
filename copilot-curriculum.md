@@ -10,10 +10,10 @@
 ## 🎯 What Is This Workshop?
 
 ### One-Sentence Description:
-A 2-hour intensive hands-on workshop that transforms developers into professional AI-assisted programmers by teaching context mastery, professional workflows, and advanced techniques while building a complete Todo API.
+A 3-hour intensive hands-on workshop that transforms developers into professional AI-assisted programmers by teaching context mastery through effective rules, professional workflows, and checkpoint-based learning while building a complete Todo API.
 
 ### Target Outcome:
-Developers leave with immediately applicable skills that make them faster, more confident, and more effective at AI-assisted development.
+Developers leave with immediately applicable skills that make them faster, more confident, and more effective at AI-assisted development, including the critical ability to write effective Copilot instructions for any project.
 
 ---
 
@@ -21,12 +21,13 @@ Developers leave with immediately applicable skills that make them faster, more 
 
 | Aspect | Details |
 |--------|---------|
-| **Duration** | 2 hours 3 minutes (4 sessions) |
+| **Duration** | 3 hours (4 sessions: 60 min + 30 min + 30 min + 30 min) |
 | **Class Size** | 10-30 students (optimal: 15-20) |
 | **Delivery** | In-person or virtual, instructor-led |
 | **Energy** | High-energy, gamified, hands-on |
-| **Materials** | 18 complete teaching files |
+| **Materials** | 18 complete teaching files + checkpoint branches |
 | **Student Output** | Working Todo API with authentication & tagging |
+| **Safety Net** | Checkpoint branches prevent students from falling behind |
 
 ---
 
@@ -34,12 +35,15 @@ Developers leave with immediately applicable skills that make them faster, more 
 
 ### Core Skills (In Order of Teaching):
 
-### 1. Foundation (Session 1 - 33 min)
+### 1. Foundation & Rules Writing (Session 1 - 60 min)
 - Security-first AI development (`.copilotignore`)
 - AI interaction modes (Ask, Edit, Agent, Plan)
 - Inline AI productivity tools (Ghost text, Inline Chat, Tab completion)
 - Context provision with #mentions (`#file`, `#folder`, `#codebase`, `#problems`)
-- Custom instructions (`.github/copilot-instructions.md`)
+- **Writing Effective Copilot Rules** - The instruction file hierarchy (repo-wide, path-specific, agent-specific)
+- Research-backed principles for effective rules (short imperatives, positive directives, structured markdown)
+- Hands-on exercise: Students write and test their own custom instructions
+- Verification techniques (checking References section to confirm Copilot uses your rules)
 
 ### 2. Context Mastery (Session 2 - 30 min)
 - Professional workflow: Explore → Plan → Code → Commit
@@ -48,19 +52,21 @@ Developers leave with immediately applicable skills that make them faster, more 
 - Thinking modes for complex decisions
 - Requirements planning with Plan mode
 
-### 3. Build & Verify (Session 3 - 30 min)
-- Test-Driven Development with AI
-- Context quality impact (proven through tracking)
-- Workflow automation with prompt files (`.prompt.md`)
-- Subagent verification patterns
-- Professional build practices
+### 3. Checkpoint-Based Build Sprint (Session 3 - 30 min)
+- **Safety-first approach:** Pre-built checkpoint branch (`session-3-start`) with working API
+- Instructor-led TDD demonstration (DELETE endpoint implementation)
+- Hands-on: Students add one feature to proven-working infrastructure
+- Git checkpoint recovery techniques
+- Conceptual introduction to Subagents and Plan Mode
+- Buffer time for troubleshooting without falling behind
 
-### 4. Advanced Techniques (Session 4 - 30 min)
-- Advanced prompting (thinking modes, subagents, specificity)
-- Custom agents (`.agent.md` files)
-- Copilot Code Review (PR reviews on GitHub.com)
-- Parallel work with multiple chat sessions
-- Comprehensive skill application (Boss Fight certification)
+### 4. Advanced Techniques & Simplified Boss Fight (Session 4 - 30 min)
+- Copilot Code Review (PR reviews on GitHub.com and in-editor)
+- Custom agents (`.agent.md` files) and Memory Bank
+- The 70% Problem (AI provides foundation, you add critical refinement)
+- **Simplified Boss Fight:** Build one tag-related endpoint using `session-4-start` checkpoint
+- Pre-built Tag model and association table provided (focus on implementation, not schema design)
+- Certification levels (Platinum/Gold/Silver/Certified) based on completion
 
 ---
 
@@ -76,6 +82,7 @@ Developers leave with immediately applicable skills that make them faster, more 
 #### 2. Standardized Best Practices
 - Teaches industry-standard AI collaboration workflows
 - Professional patterns from top 1% of AI developers
+- **Rules-writing skills transfer to ANY AI-assisted project**
 - Transferable to any AI tool, any language
 
 #### 3. Quality Assurance Built-In
@@ -83,9 +90,11 @@ Developers leave with immediately applicable skills that make them faster, more 
 - Subagent verification patterns
 - Quality checks automated in workflows
 
-#### 4. Evidence-Based Learning
+#### 4. Evidence-Based Learning & Safety Net
 - Students prove techniques work through direct experience
 - Track their own performance metrics
+- **Checkpoint branches ensure no one falls behind**
+- Git-based recovery points for risk-free experimentation
 - Data-driven insights
 
 ---
@@ -278,25 +287,85 @@ Developers leave with immediately applicable skills that make them faster, more 
 
 ## Appendix: Session Breakdown
 
-### Session 1: Security & Superpowers (33 min)
-**Focus:** Foundation - security, modes, inline tools  
-**Output:** Secure environment configured, all tools mastered
+### Session 1: Security, Superpowers & Writing Effective Rules (60 min)
+**Focus:** Foundation - security, modes, inline tools, rules-writing mastery
+**Output:** Secure environment configured, all tools mastered, custom instructions written and tested
 
 ### Session 2: Context Mastery & Planning (30 min)
 **Focus:** Professional workflows and prompting  
 **Output:** Context formula mastered, requirements planned
 
-### Session 3: Build Sprint (30 min)
-**Focus:** TDD and context application  
-**Output:** 3 CRUD features built, context impact proven
+### Session 3: Checkpoint-Based Build Sprint (30 min)
+**Focus:** Safe, instructor-led TDD demonstration + hands-on feature building
+**Output:** Working API verified via checkpoint, one feature added successfully, recovery skills learned
 
-### Session 4: Advanced Tools & Boss Fight (30 min)
-**Focus:** Advanced techniques and synthesis  
-**Output:** Tagging feature built, certification earned
+### Session 4: Advanced Tools & Simplified Boss Fight (30 min)
+**Focus:** Code review, custom agents, focused implementation challenge
+**Output:** One tag endpoint built using checkpoint, certification earned (Platinum/Gold/Silver/Certified)
 
 ---
 
-**Total: 2 hours 3 minutes of transformative learning**
+**Total: 3 hours of transformative learning with built-in safety nets**
+
+---
+
+## Appendix: Checkpoint Branch System
+
+### The Safety Net Philosophy:
+The workshop uses Git checkpoint branches to ensure no student falls behind due to technical issues. This allows risk-free experimentation and learning without the stress of debugging infrastructure problems during timed exercises.
+
+### Three Checkpoint Branches:
+
+#### 1. `main` Branch (Starting Point)
+- Partially scaffolded FastAPI Todo API
+- Complete models (User, Todo) with SQLAlchemy
+- Empty schemas, services, and API routes directories
+- Security setup (`.copilotignore`, `.github/copilot-instructions.md`)
+- PRD and project documentation
+
+#### 2. `session-3-start` Branch (Session 3 Checkpoint)
+- Everything from `main` PLUS:
+- Fully working API with POST, GET, PUT /todos endpoints
+- Complete infrastructure: `database.py`, `conftest.py`, `get_db` dependency
+- TodoCreate, TodoResponse, TodoUpdate Pydantic schemas
+- TodoService with create, get_all, update methods
+- Passing tests for all three endpoints
+- Verified working: `pytest -v` shows all green, `uvicorn src.main:app --reload` runs successfully
+
+#### 3. `session-4-start` Branch (Session 4 Checkpoint)
+- Everything from `session-3-start` PLUS:
+- DELETE /todos/{id} endpoint with tests
+- Tag model and todo_tags association table (many-to-many relationship)
+- Updated Todo model with tags relationship
+- Ready for students to add tag-related endpoints
+
+### When Students Use Checkpoints:
+
+**Session 3:**
+- Students verify their API works before starting
+- If issues arise, `git checkout session-3-start` provides instant recovery
+- Instructor demonstrates TDD using the working checkpoint
+- Students build features on proven infrastructure
+
+**Session 4:**
+- Students start from `session-4-start` for the Boss Fight
+- Tag model already created (focus on implementation, not schema design)
+- Simplified challenge: build one tag endpoint, not three
+
+### Recovery Instructions:
+```bash
+# See available checkpoints
+git branch -a
+
+# Switch to Session 3 checkpoint
+git checkout session-3-start
+
+# Switch to Session 4 checkpoint
+git checkout session-4-start
+
+# Return to starting point (if needed)
+git checkout main
+```
 
 ---
 

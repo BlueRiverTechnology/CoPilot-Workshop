@@ -1,43 +1,53 @@
 # Prompt Sheet: Micro Session 4
 ## Code Review, Custom Agents & Boss Fight 🎮🏆
 
-**Duration:** 33 minutes  
-**Achievement:** 🏆 "Copilot Champion"
+**Copy-paste materials for students**
 
 ---
 
-## Quick Reference
+## 🚦 Checkpoint Verification Commands
 
-| Copilot Feature | How to Use |
-|-----------------|------------|
-| Code Review | Request "Copilot" as reviewer on GitHub PR |
-| In-Editor Review | Ask for review in Copilot Chat |
-| Custom Agents | Create `.github/agents/*.agent.md` files |
-| Plan Mode | Start prompt with `/plan` |
+### Switch to Checkpoint
+```bash
+git checkout session-4-start
+```
+
+### Initialize Database
+```bash
+python create_db.py
+```
+
+### Verify Tests (Should see 10 passing)
+```bash
+pytest tests/api/test_todos.py -v
+```
+
+### Start Server
+```bash
+uvicorn src.main:app --reload
+```
 
 ---
 
 ## 🔍 Code Review Prompts
 
-### In-Editor Review Request
+### Basic In-Editor Review
 
 ```
-Review my recent changes in #file:src/api/v1/todos.py.
+Review my implementation in #file:src/api/v1/todos.py
 
 Check for:
-1. Security issues (auth, validation)
+1. Security issues (auth, validation, ownership checks)
 2. Error handling completeness
-3. Performance concerns
+3. Performance concerns (N+1 queries, missing indexes)
 4. Best practice violations
 
-Be thorough and critical.
+Be thorough and critical. Point out specific line numbers.
 ```
 
 ---
 
-### Andrew's Code Review Pattern
-
-Use this after any AI-generated code:
+### Comprehensive Code Review (Andrew's Pattern)
 
 ```
 Review this implementation with a critical eye:
@@ -69,43 +79,53 @@ List issues in priority order with specific fixes.
 
 ## 🤖 Custom Agent Template
 
-### .github/agents/todo-api.agent.md
+### .github/agents/todo-api-expert.agent.md
 
 ```markdown
 # Todo API Expert Agent
 
-You are an expert in our Todo API codebase. You know:
+You are an expert in our Todo API codebase.
 
 ## Architecture
 - FastAPI with async/await
 - 3-tier architecture: API → Services → Models
-- SQLAlchemy with async sessions
-- Pydantic for validation
+- SQLAlchemy with async sessions (aiosqlite)
+- Pydantic v2 for validation and serialization
 
 ## Key Patterns
-- All endpoints require authentication (get_current_user)
+- All endpoints use fixed owner_id = "default-user" (no JWT auth)
 - Service layer handles business logic
-- Models use UUID primary keys
+- Models use UUID string primary keys
+- All database operations are async
 - Responses use Pydantic schemas
 
 ## File Structure
-- src/api/v1/ - API endpoints
-- src/services/ - Business logic
-- src/models/ - SQLAlchemy models
-- src/schemas/ - Pydantic schemas
-- tests/api/ - API tests
+- src/api/v1/ - API endpoints (FastAPI routers)
+- src/services/ - Business logic (service classes)
+- src/models/ - SQLAlchemy ORM models
+- src/schemas/ - Pydantic request/response schemas
+- tests/api/ - API endpoint tests (pytest-asyncio)
+
+## Database Models
+- User: id (UUID), username, email, hashed_password
+- Todo: id (UUID), title, description, completed, owner_id
+- Tag: id (UUID), name, created_at
+- todo_tags: Association table (todo_id, tag_id)
 
 ## Coding Standards
 - Use async/await for all database operations
-- Return appropriate HTTP status codes
-- Include comprehensive error handling
-- Write tests for all new endpoints
+- Return appropriate HTTP status codes (200, 201, 204, 400, 403, 404, 500)
+- Include comprehensive error handling (try/except with HTTPException)
+- Write tests for all new endpoints (TDD preferred)
+- Follow patterns in existing code
 
-When asked to implement features:
-1. Follow existing patterns in the codebase
-2. Create tests first (TDD approach)
-3. Use the 3-tier architecture
-4. Include proper validation and error handling
+## When Asked to Implement Features
+1. Follow the 3-tier architecture
+2. Create Pydantic schemas first
+3. Implement service layer logic
+4. Add API endpoint with proper error handling
+5. Include ownership validation where applicable
+6. Write tests to verify functionality
 ```
 
 ---
@@ -113,41 +133,73 @@ When asked to implement features:
 ### Using the Custom Agent
 
 ```
-Using #file:.github/agents/todo-api.agent.md context:
+Using context from #file:.github/agents/todo-api-expert.agent.md:
 
-Add a DELETE /api/v1/todos/{id} endpoint that:
-- Requires authentication
-- Checks ownership
-- Returns 204 on success, 404/403 on errors
+Add a GET /api/v1/tags endpoint that:
+- Lists all tags for the current user
+- Returns List[TagResponse]
+- Follows existing patterns
 ```
 
 ---
 
-## 🧠 Memory Bank Prompts
+## 🧠 Memory Bank Setup
 
-### Initialize Memory Bank
+### Add to .github/copilot-instructions.md
 
-Ask Copilot to create your Memory Bank:
+```markdown
+## Memory Bank
 
+This project uses a Memory Bank for persistent context.
+At the start of every task, read the memory-bank/ files
+in this order:
+
+1. memory-bank/projectbrief.md (project goals and scope)
+2. memory-bank/techContext.md (tech stack and setup)
+3. memory-bank/systemPatterns.md (architecture and patterns)
+4. memory-bank/activeContext.md (current focus and recent changes)
+5. memory-bank/progress.md (what works, what's left)
+
+Use this context to inform all responses. If you notice
+the memory bank is outdated based on our conversation,
+suggest updates.
+
+When I say "update memory bank", review ALL memory-bank
+files and update them to reflect the current project state.
+Focus especially on activeContext.md and progress.md.
 ```
-Create a memory-bank/ folder for this project with these files:
-- projectbrief.md
-- productContext.md
-- techContext.md
-- systemPatterns.md
-- activeContext.md
-- progress.md
 
-Use context from #file:.github/copilot-instructions.md
-and #file:PRD.md to populate them.
+---
 
-Each file should be concise with bullet points,
-not long paragraphs.
+### activeContext.md Template
+
+```markdown
+# Active Context
+
+## Current Focus
+Session 4 Boss Fight - implementing tag endpoint
+
+## Recent Changes
+- Session 3: Built full CRUD for todos
+- Checkpoint provides Tag model pre-built
+- DELETE endpoint already exists
+
+## Active Decisions
+- Tags stored in existing Tag model
+- Many-to-many via todo_tags association table
+- Using simplified auth (default-user)
+
+## Next Steps
+- Build POST /todos/{id}/tags endpoint
+- Verify ownership validation
+- Test tag functionality
 ```
 
-### Update Memory Bank
+---
 
-Say this at the end of any work session:
+### Update Memory Bank Command
+
+At the end of any work session, simply say:
 
 ```
 update memory bank
@@ -158,15 +210,6 @@ Or be more specific:
 ```
 Update memory-bank/activeContext.md and memory-bank/progress.md
 to reflect what we accomplished in this session.
-```
-
-### Reference Memory Bank in Prompts
-
-```
-#file:memory-bank/activeContext.md #file:memory-bank/systemPatterns.md
-
-Based on my current context and patterns,
-implement the next feature on my list.
 ```
 
 ---
@@ -202,215 +245,237 @@ Your 30% is why companies hire professionals!
 
 ## 🎮 BOSS FIGHT - Complete Prompts
 
+### Challenge: Build POST /todos/{id}/tags Endpoint
+
+**What's PRE-BUILT in session-4-start:**
+- ✅ Tag model (id, name, created_at)
+- ✅ todo_tags association table
+- ✅ Relationship in Todo model
+- ✅ All CRUD endpoints for todos
+
+**What YOU BUILD:**
+- POST /api/v1/todos/{todo_id}/tags
+- Request: `{ "name": "urgent" }`
+- Create tag if doesn't exist (case-insensitive)
+- Associate with todo
+- Return updated TodoResponse with tags
+- Handle 404 (todo not found), 403 (not owned)
+
+---
+
 ### Scoring
 
-| Time | Level | Description |
-|------|-------|-------------|
-| ≤6 min | 🏆 PLATINUM | Top 1% - Elite |
-| ≤8 min | 🥇 GOLD | Top 10% - Expert |
-| ≤10 min | 🥈 SILVER | Top 25% - Skilled |
-| Completed | ✅ CERTIFIED | Passed! |
+| Time | Level | Bonus |
+|------|-------|-------|
+| ≤3 min | 🏆 PLATINUM | +1 level per bonus |
+| ≤4 min | 🥇 GOLD | +1 level per bonus |
+| ≤5 min | 🥈 SILVER | +1 level per bonus |
+| Completed | ✅ CERTIFIED | +1 level per bonus |
 
-**Bonus:** +1 level for each: think hard, Plan Mode, TDD, Custom Agent
-
----
-
-### Requirements Recap
-
-```
-TODO TAGGING FEATURE
-
-Endpoints:
-- POST /api/v1/todos/{id}/tags - Add tag to todo
-- GET /api/v1/todos?tag=name - Filter todos by tag  
-- DELETE /api/v1/todos/{id}/tags/{tag_id} - Remove tag
-
-Database:
-- Tag model: id, name, user_id, created_at
-- todo_tags association table (many-to-many)
-
-Constraints:
-- Ownership validation required
-- Case-insensitive tags (store lowercase)
-- Proper error handling (404, 403, 400)
-- 3-tier architecture (models, services, API)
-```
+**Bonus Points (+1 level each):**
+- Used 'think hard' for planning
+- Used TDD approach
+- Used Custom Agent
+- Verified ownership validation (the 30%)
 
 ---
 
-### STEP 1: Planning Prompt (think hard)
+### STEP 1: Planning Prompt (think hard) - 30 seconds
 
 ```
-#file:PRD-Tags.md #file:src/models/todo.py
+#file:.github/agents/todo-api-expert.agent.md #file:src/models/tag.py #file:src/models/todo.py
 
-think hard about implementing a many-to-many tagging system for todos.
+think hard about implementing POST /api/v1/todos/{todo_id}/tags
 
 Requirements:
-- POST /api/v1/todos/{id}/tags (add tag to todo)
-- GET /api/v1/todos?tag=name (filter todos by tag)
-- DELETE /api/v1/todos/{id}/tags/{tag_id} (remove tag)
-- Must follow existing 3-tier architecture
-- Ownership validation required
-- Handle 404, 403, 400 errors
+- Add tag to todo (create tag if doesn't exist)
+- Case-insensitive tag lookup
+- Return updated TodoResponse with tags
+- Handle 404 (todo not found), 403 (not owned)
 
-Consider:
-- Database schema (Tag model, join table)
-- Case sensitivity for tag names
-- API design (RESTful endpoints)
-- Service layer methods needed
-
-Give me the complete implementation plan.
+Give me the implementation plan.
 ```
 
 ---
 
-### STEP 2: Plan Mode Implementation
+### STEP 2: Single Comprehensive Prompt - 3 minutes
+
+**Option A: Complete Implementation (Recommended for Speed)**
 
 ```
-/plan Implement the tagging feature for todos:
-1. Create Tag model and todo_tags association table
-2. Create TagCreate and TagResponse schemas
-3. Add service methods (add_tag_to_todo, remove_tag_from_todo, get_todos_by_tag)
-4. Add API endpoints (POST, DELETE, GET with filter)
-5. Include ownership validation and error handling
+#file:.github/agents/todo-api-expert.agent.md #file:PRD.md #file:src/models/tag.py #folder:src/api/v1/
 
-Follow existing patterns in #folder:src/
+[Context]
+Tag model and todo_tags association table already exist in src/models/tag.py.
+Todo model has tags relationship defined.
+Following 3-tier architecture per agent instructions.
+
+[Task]
+Add POST /api/v1/todos/{todo_id}/tags endpoint to associate tags with todos.
+
+[Constraints]
+1. TagCreate schema: { "name": str } (1-50 chars)
+2. Service method add_tag_to_todo(todo_id, tag_name, user_id, db):
+   - Check todo exists and is owned by user (404/403)
+   - Normalize tag name to lowercase
+   - Create tag if doesn't exist (get or create pattern)
+   - Add tag to todo.tags relationship
+   - Return updated Todo object
+3. POST endpoint:
+   - Path param: todo_id (UUID string)
+   - Request body: TagCreate
+   - Require authentication (default-user)
+   - Return TodoResponse with tags included
+4. Update TodoResponse schema to include tags: List[TagResponse]
+5. Error handling: 404 if todo not found, 403 if not owned
+
+[Format]
+Create:
+- src/schemas/tag.py (TagCreate, TagResponse)
+- Add method to src/services/todo_service.py
+- Add endpoint to src/api/v1/todos.py
+- Update src/schemas/todo.py (add tags to TodoResponse)
 ```
 
 ---
 
-### Alternative: Sequential Prompts
+**Option B: TDD Approach (If Time Allows)**
 
-**Models:**
+First create test:
 ```
-#file:src/models/todo.py #file:src/models/base.py
+#file:tests/api/test_todos.py #file:src/models/tag.py
 
 [Context]
-Existing Todo model structure. Using SQLAlchemy async with UUID keys.
+Tag model exists. Need to test POST /todos/{id}/tags endpoint.
 
 [Task]
-Create Tag model and todo_tags association table for many-to-many relationship.
+Create test_add_tag_to_todo in tests/api/test_todos.py
 
 [Constraints]
-- Tag: id (UUID), name (str, 50 chars), user_id (FK), created_at
-- Unique constraint: (user_id, name)
-- todo_tags: todo_id (FK), tag_id (FK), composite PK
-- Add tags relationship to Todo model
+- Test successful tag addition
+- Test 404 if todo not found
+- Test 403 if not owned
+- Test case-insensitive tag creation
 
 [Format]
-Create src/models/tag.py, update src/models/todo.py
+Add test to existing test file, follow pytest-asyncio patterns
 ```
 
-**Schemas:**
+Then implement to pass tests:
 ```
-#file:src/schemas/todo.py
+#file:tests/api/test_todos.py #file:.github/agents/todo-api-expert.agent.md
 
-[Context]
-Existing Pydantic schema patterns.
-
-[Task]
-Create Pydantic schemas for Tag operations.
-
-[Constraints]
-- TagCreate: name (required, 1-50 chars)
-- TagResponse: id, name, user_id, created_at
-- Update TodoResponse to include tags: List[TagResponse]
-
-[Format]
-Create src/schemas/tag.py, update src/schemas/todo.py
-```
-
-**Services:**
-```
-#file:src/services/todo_service.py
-
-[Context]
-Existing service patterns. Using async/await with AsyncSession.
-
-[Task]
-Add tag methods to TodoService:
-1. add_tag_to_todo(todo_id, tag_name, user_id, db)
-2. remove_tag_from_todo(todo_id, tag_id, user_id, db)
-3. get_todos_by_tag(tag_name, user_id, db)
-
-[Constraints]
-- Ownership validation: user must own the todo
-- Tag auto-creation: if tag doesn't exist, create it
-- Case-insensitive tag lookup (store lowercase)
-- Return 404 if todo not found, 403 if not owner
-
-[Format]
-Add methods to src/services/todo_service.py
-```
-
-**API Endpoints:**
-```
-#file:src/api/v1/todos.py #file:.github/copilot-instructions.md
-
-[Context]
-Existing endpoint patterns. FastAPI with async, dependencies.
-
-[Task]
-Add tag endpoints to todos router.
-
-[Constraints]
-- POST /api/v1/todos/{todo_id}/tags - Add tag, return TodoResponse
-- DELETE /api/v1/todos/{todo_id}/tags/{tag_id} - Remove tag, return 204
-- GET /api/v1/todos - Add ?tag=name query param for filtering
-- Require authentication
-- Proper error handling (404, 403, 400)
-
-[Format]
-Update src/api/v1/todos.py
+Implement POST /todos/{id}/tags endpoint to make the test pass.
+Follow the 3-tier architecture pattern.
 ```
 
 ---
 
-### STEP 3: Critical 30% Review
+### STEP 3: Critical 30% Review - 30 seconds
 
 ```
-Review the tagging implementation for the critical 30%:
+Review the tag implementation for production readiness:
 
-1. Ownership validation - Can users only tag THEIR OWN todos?
-2. Case sensitivity - Are tags normalized to lowercase?
-3. Error messages - Are they clear and helpful?
-4. Edge cases:
-   - What if todo doesn't exist?
-   - What if tag already on todo (idempotent)?
-   - What if removing tag that isn't on todo?
-5. Security - Any SQL injection risks?
+1. Ownership validation - Verified?
+2. Case sensitivity - Tags normalized to lowercase?
+3. Idempotency - What if tag already on todo?
+4. Error messages - Clear and helpful?
+5. Edge cases covered?
 
 Fix any issues found.
 ```
 
 ---
 
-### Testing Commands
+### STEP 4: Quick Testing - 30 seconds
 
 ```bash
-# Start server
+# Start server (if not running)
 uvicorn src.main:app --reload
 
-# Create todo
+# Create a todo
 curl -X POST http://localhost:8000/api/v1/todos \
   -H "Content-Type: application/json" \
-  -d '{"title": "Test tagging"}'
+  -d '{"title":"Test Todo"}'
 
-# Add tag
+# Copy the todo_id from response, then add tag
 curl -X POST http://localhost:8000/api/v1/todos/<todo_id>/tags \
   -H "Content-Type: application/json" \
-  -d '{"name": "urgent"}'
+  -d '{"name":"urgent"}'
 
-# Filter by tag
-curl "http://localhost:8000/api/v1/todos?tag=urgent"
+# Verify tags appear in todo
+curl http://localhost:8000/api/v1/todos/<todo_id>
 
-# Remove tag
-curl -X DELETE http://localhost:8000/api/v1/todos/<todo_id>/tags/<tag_id>
+# Test case-insensitivity (should return same todo)
+curl -X POST http://localhost:8000/api/v1/todos/<todo_id>/tags \
+  -H "Content-Type: application/json" \
+  -d '{"name":"URGENT"}'
 ```
 
 ---
 
-## 🏆 Power User Certification
+## 📚 Quick Reference
+
+### Copilot Modes
+
+| Mode | How to Use | Best For |
+|------|-----------|----------|
+| **Ask** | Open Chat | Questions, exploration |
+| **Edit** | Cmd/Ctrl+I | Inline edits |
+| **Agent** | Chat dropdown | Multi-file features |
+| **Plan** | /plan command | Implementation planning |
+
+---
+
+### Context Mentions
+
+```
+#file:path/to/file.py        - Include specific file
+#folder:path/to/folder        - Include folder context
+#file:.github/agents/name.agent.md - Include custom agent
+#file:memory-bank/activeContext.md - Include current context
+#problems                      - Include current errors
+```
+
+---
+
+### Thinking Modes
+
+```
+think         - Basic analysis
+think hard    - Complex problems (USE THIS for Boss Fight planning!)
+think harder  - Very complex problems
+ultrathink    - Maximum reasoning
+```
+
+---
+
+### Workflow
+
+```
+1. Explore → Understand what exists
+2. Plan → Use 'think hard' or /plan
+3. Code → Use Agent Mode with context
+4. Review → Use Code Review
+5. Verify → Test the critical 30%
+6. Ship → Deploy with confidence
+```
+
+---
+
+## 🏆 Session 4 Achievements
+
+- 🚦 **Checkpoint Master** - Verified session-4-start checkpoint
+- 🔍 **Review Master** - Used Copilot Code Review
+- 🤖 **Agent Creator** - Created Custom Agent
+- 🧠 **Memory Architect** - Built Memory Bank
+- ⚠️ **70/30 Understander** - Knows where to add value
+- 🎮 **Boss Fighter** - Completed final challenge
+- 🏆 **COPILOT CHAMPION** - Full workshop complete!
+
+---
+
+## Power User Certification
 
 ```
 ┌─────────────────────────────────────────────┐
@@ -428,6 +493,7 @@ curl -X DELETE http://localhost:8000/api/v1/todos/<todo_id>/tags/<tag_id>
 │   ✅ Test-Driven Development                │
 │   ✅ Subagents & Plan Mode                  │
 │   ✅ Code Review & Custom Agents            │
+│   ✅ Memory Bank pattern                    │
 │   ✅ Boss Fight completion                  │
 │                                             │
 │   Level: _______________                    │
@@ -435,17 +501,6 @@ curl -X DELETE http://localhost:8000/api/v1/todos/<todo_id>/tags/<tag_id>
 │                                             │
 └─────────────────────────────────────────────┘
 ```
-
----
-
-## Session 4 Achievements
-
-- 🔍 **Review Master** - Used Copilot Code Review
-- 🤖 **Agent Creator** - Created Custom Agent
-- 🧠 **Memory Architect** - Built a Memory Bank for persistent context
-- ⚠️ **70/30 Understander** - Knows where to add value
-- 🎮 **Boss Fighter** - Completed final challenge
-- 🏆 **COPILOT CHAMPION** - Full workshop complete!
 
 ---
 

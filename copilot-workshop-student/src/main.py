@@ -5,6 +5,7 @@ Students will add API routes in Session 2-3.
 """
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from src.api.v1 import todos_router
 
 # Initialize FastAPI app
 app = FastAPI(
@@ -22,8 +23,8 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Students will add routers here in Session 3
-# Example: app.include_router(todos_router, prefix="/api/v1", tags=["todos"])
+# Register routers
+app.include_router(todos_router, prefix="/api/v1", tags=["todos"])
 
 
 @app.get("/")

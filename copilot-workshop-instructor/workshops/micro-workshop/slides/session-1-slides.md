@@ -835,44 +835,524 @@ BONUS:
 
 ---
 
-## SLIDE 24: Custom Instructions
+## SLIDE 24: Writing Effective AI Rules - The Context Multiplier
 
 ### Visual
-- **Layout:** File path + content preview
-- **Icon:** Settings/configuration gear
-- **Style:** Code file appearance
+- **Layout:** Section title with emphasis
+- **Icon:** Lightbulb or brain icon
+- **Style:** Professional, teaching moment
 
 ### Text on Slide
 ```
-⚙️ CUSTOM INSTRUCTIONS
+📋 WRITING EFFECTIVE AI RULES
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-Teach AI YOUR project's patterns once.
-Every conversation uses them automatically.
+The skill that separates AI amateurs from professionals
 
-FILE: .github/copilot-instructions.md
-┌─────────────────────────────────────────────────────────┐
-│ # Project Custom Instructions                           │
-│                                                         │
-│ ## Architecture                                         │
-│ - Use FastAPI with async/await                          │
-│ - 3-tier: API → Services → Models                       │
-│ - SQLAlchemy for database operations                    │
-│                                                         │
-│ ## Coding Standards                                     │
-│ - All functions need type hints                         │
-│ - Include docstrings for public methods                 │
-│ - Use Pydantic for validation                           │
-│                                                         │
-│ ## Testing                                              │
-│ - pytest with async support                             │
-│ - Test files in tests/ mirror src/ structure            │
-└─────────────────────────────────────────────────────────┘
+Custom instructions = always-on context
+Write once, Copilot follows automatically
 
-✨ AI now follows YOUR rules by default
+Next 10 minutes: Learn the research-backed principles
+that make AI rules actually work
 ```
 
 ### Speaker Notes
-> "Custom instructions are project-wide rules. Create .github/copilot-instructions.md and every Copilot conversation automatically follows these patterns. Write your architecture patterns, coding standards, testing requirements - AI remembers."
+> "Next skill is a game-changer: writing rules that actually shape AI behavior. Custom instructions are always-on context that multiplies your productivity. Instead of repeating guidelines in every prompt, you write them once and Copilot follows them automatically."
+
+---
+
+## SLIDE 25: The Rules Ecosystem - 5 Layers
+
+### Visual
+- **Layout:** Hierarchical diagram showing all 5 layers
+- **Icons:** Folder icons for each location
+- **Color coding:** Different color for each layer
+
+### Text on Slide
+```
+THE RULES ECOSYSTEM - WHERE INSTRUCTIONS LIVE
+
+┌────────────────────────────────────────────────────────┐
+│  LAYER 1: .github/copilot-instructions.md             │
+│           → Repository-wide, always active             │
+│           → Works in Chat, Agent Mode, Code Review     │
+├────────────────────────────────────────────────────────┤
+│  LAYER 2: .github/instructions/*.instructions.md      │
+│           → Path-specific (frontmatter: applyTo)       │
+│           → Only active on matching files              │
+├────────────────────────────────────────────────────────┤
+│  LAYER 3: .github/agents/*.agent.md                   │
+│           → Custom agent definitions (Session 4)       │
+│           → Specialized AI personas                    │
+├────────────────────────────────────────────────────────┤
+│  LAYER 4: AGENTS.md                                   │
+│           → Open standard (Linux Foundation)           │
+│           → Works across Copilot, Claude, Cursor       │
+├────────────────────────────────────────────────────────┤
+│  LAYER 5: VS Code Settings                            │
+│           → Per-operation instructions                 │
+│           → Code gen, test gen, review, commits        │
+└────────────────────────────────────────────────────────┘
+
+Today: Focus on repo-wide rules
+Skills transfer to ALL layers
+```
+
+### Speaker Notes
+> "There's not just one place for AI rules - there's an entire ecosystem. Layer 1 is repo-wide instructions, always active. Layer 2 is path-specific. Layer 3 is custom agents we'll cover in Session 4. Layer 4 is the emerging AGENTS.md open standard. Layer 5 is VS Code settings. Today we focus on repo-wide, but these skills apply to all layers."
+
+---
+
+## SLIDE 26: 7 Research-Backed Principles
+
+### Visual
+- **Layout:** Numbered list with emphasis
+- **Icons:** Checkmarks for each principle
+- **Source citation:** GitHub, Anthropic research
+
+### Text on Slide
+```
+7 RESEARCH-BACKED PRINCIPLES
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Based on GitHub, Anthropic, and AI engineering research:
+
+1. Short, imperative, self-contained statements
+2. Tell AI what TO DO (not what to avoid)
+3. Be specific and actionable
+4. Use structured Markdown (or XML for Claude tools)
+5. Include code examples where they clarify
+6. Keep files under ~1,000 lines
+7. Iterate based on what works
+
+These aren't opinions - they're proven patterns!
+```
+
+### Speaker Notes
+> "Not all rules are equal. Research from GitHub, Anthropic, and the AI engineering community shows clear patterns for what works. Let's go through each principle with examples."
+
+---
+
+## SLIDE 27: Principle 1 - Short & Self-Contained
+
+### Visual
+- **Layout:** Side-by-side comparison (BAD vs GOOD)
+- **Color coding:** Red for bad, green for good
+- **Highlighting:** Key differences
+
+### Text on Slide
+```
+PRINCIPLE 1: SHORT, IMPERATIVE, SELF-CONTAINED
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+❌ BAD:
+"We generally try to follow industry best practices for
+code quality and maintainability, so please write code
+that is clean and well-tested."
+
+→ Vague, wordy, no clear action
+
+✅ GOOD:
+"Use type hints on all function signatures."
+
+→ Specific, scannable, actionable
+
+GitHub's own docs: "Short, self-contained statements
+that add context" - not paragraphs, not essays.
+```
+
+### Speaker Notes
+> "GitHub's research says instructions should be short, self-contained statements. Not paragraphs. Compare these two. The bad one is vague - what are 'best practices'? The good one is crystal clear - add type hints. Specific, actionable, scannable."
+
+---
+
+## SLIDE 28: Principle 2 - Positive Directives
+
+### Visual
+- **Layout:** Before/after comparison
+- **Brain icon:** Showing how AI processes
+- **Emphasis:** "Tell what TO DO"
+
+### Text on Slide
+```
+PRINCIPLE 2: WHAT TO DO, NOT WHAT TO AVOID
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+LLMs are poor at processing negations.
+Positive directives work better.
+
+❌ BAD:
+"Don't use print statements for debugging."
+
+→ Tells what NOT to do, but not the alternative
+
+✅ GOOD:
+"Use logging module at DEBUG level for diagnostic output."
+
+→ Tells the CORRECT alternative approach
+
+Give AI the right path, not just the wrong one!
+```
+
+### Speaker Notes
+> "LLMs struggle with negations. Instead of saying what NOT to do, tell AI what TO do instead. The bad example says don't use print - but what should you use? The good example provides the correct alternative: use logging at DEBUG level. Give AI the right path!"
+
+---
+
+## SLIDE 29: Principle 3 - Specific and Actionable
+
+### Visual
+- **Layout:** Two examples with comparisons
+- **Target icon:** Precision matters
+- **Highlighting:** Concrete vs vague
+
+### Text on Slide
+```
+PRINCIPLE 3: BE SPECIFIC AND ACTIONABLE
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Vague aspirational goals don't work. Concrete patterns do.
+
+❌ BAD:
+"Follow good naming conventions."
+
+✅ GOOD:
+"Use camelCase for JavaScript variables and functions.
+Use PascalCase for classes."
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+❌ BAD:
+"Make sure code is well-tested."
+
+✅ GOOD:
+"Every service method must have a corresponding test
+file in tests/services/."
+
+Zero ambiguity = better compliance
+```
+
+### Speaker Notes
+> "Be specific. 'Good naming conventions' means different things to different people. Instead, specify exactly: camelCase for variables, PascalCase for classes. Similarly, 'well-tested' is vague. Instead: every service method needs a test file. Zero ambiguity equals better compliance."
+
+---
+
+## SLIDE 30: Principle 4 - Structured Markdown
+
+### Visual
+- **Layout:** Code example with structure
+- **Markdown/XML comparison:** Both shown
+- **Tree structure:** Showing organization
+
+### Text on Slide
+```
+PRINCIPLE 4: USE STRUCTURED MARKDOWN (OR XML)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Copilot parses structured content better than prose.
+Use distinct headings, bullet points, code examples.
+
+FOR COPILOT (Markdown):
+## Architecture
+- 3-tier: API → Services → Models
+- All database ops use async/await
+
+## Constraints
+- Never use raw SQL
+- All endpoints return proper HTTP codes
+
+FOR CLAUDE-BASED TOOLS (XML):
+<architecture>
+  3-tier: API → Services → Models
+  All database ops use async/await
+</architecture>
+
+<constraints>
+  Never use raw SQL
+  All endpoints return proper HTTP codes
+</constraints>
+
+Clear boundaries prevent context mixing!
+```
+
+### Speaker Notes
+> "Structure matters. Copilot parses Markdown structure better than prose paragraphs. Use headings, bullets, code blocks. For Claude-based tools like Claude Code, Anthropic recommends XML tags. Either way, the principle is the same: create clear, labeled compartments for different types of information."
+
+---
+
+## SLIDE 31: Principle 5 - Code Examples
+
+### Visual
+- **Layout:** Before/after code comparison
+- **Syntax highlighting:** Clear code display
+- **Callout:** "Show, don't just tell"
+
+### Text on Slide
+```
+PRINCIPLE 5: CODE EXAMPLES REMOVE AMBIGUITY
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Instead of: "Use proper error handling"
+
+Show the pattern:
+
+# GOOD - Do this
+async def get_user(user_id: str) -> User:
+    try:
+        return await db.get(User, user_id)
+    except NotFoundError:
+        raise HTTPException(
+            status_code=404,
+            detail="User not found"
+        )
+
+A before/after code snippet is worth 1000 words!
+Show the pattern, don't just describe it.
+```
+
+### Speaker Notes
+> "Code examples remove all ambiguity. Instead of saying 'use proper error handling,' show exactly what that looks like. This snippet shows: async function, type hints, try/except, HTTPException with status code and message. No room for interpretation. Show the pattern!"
+
+---
+
+## SLIDE 32: Principles 6 & 7 - Keep Lean & Iterate
+
+### Visual
+- **Layout:** Two principles side-by-side
+- **Icons:** File size limit, iteration cycle
+- **Warning:** About bloat
+
+### Text on Slide
+```
+PRINCIPLE 6: KEEP FILES UNDER ~1,000 LINES
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+GitHub warning: Beyond 1,000 lines, quality deteriorates
+
+Start minimal (5-10 rules)
+Add iteratively based on actual needs
+Don't build a 500-line manifesto!
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+PRINCIPLE 7: ITERATE BASED ON WHAT WORKS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Rules writing is empirical, not theoretical
+
+1. Start with 5-10 rules
+2. Test them - Does Copilot follow?
+3. Refine based on results
+4. Add more as patterns emerge
+
+Rules are a LIVING document!
+```
+
+### Speaker Notes
+> "Two final principles. First: GitHub explicitly warns that beyond 1,000 lines, quality deteriorates. Start minimal with 5-10 rules. Don't write a massive manifesto upfront. Second: Rules writing is empirical. Test them, see if Copilot follows, refine based on results. This is iterative, not one-and-done. Rules are a living document that evolves with your project!"
+
+---
+
+## SLIDE 33: Good Rules vs Bad Rules
+
+### Visual
+- **Layout:** Two-column comparison table
+- **Color coding:** Red (bad) vs green (good)
+- **Examples:** Real-world rules
+
+### Text on Slide
+```
+GOOD RULES VS BAD RULES - EXAMPLES
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+❌ BAD RULES                    ✅ GOOD RULES
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Write clean code                Use async/await for all
+                                database operations
+
+Don't make it slow              Query with .limit() for
+                                pagination endpoints
+
+Be secure                       Validate user owns resource
+                                before modification
+
+Follow best practices           3-tier architecture:
+                                API → Services → Models
+
+Make it testable                Test files mirror src/
+                                structure in tests/
+
+Why good wins: Specific, actionable, zero ambiguity!
+```
+
+### Speaker Notes
+> "Let's compare bad and good rules. 'Write clean code' - what does that mean? Instead: 'Use async/await for all database operations.' 'Don't make it slow' - vague. Instead: 'Query with .limit() for pagination.' 'Be secure' - how? Instead: 'Validate user owns resource before modification.' See the pattern? Good rules are specific, actionable, with zero ambiguity!"
+
+---
+
+## SLIDE 34: Exercise - Write Your Own Rules
+
+### Visual
+- **Layout:** Exercise card with timer
+- **Checklist:** Success criteria
+- **Example:** Starter template
+
+### Text on Slide
+```
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+                    🎮 EXERCISE 3
+            Write Your Own AI Rules
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+⏱️ TIME: 2 minutes
+
+TASK:
+Create .github/copilot-instructions.md
+Write 3-5 custom rules for your practice project
+
+USE THE 7 PRINCIPLES:
+☐ Short, imperative statements
+☐ Positive directives (what TO do)
+☐ Specific and actionable
+☐ Organized with clear headings
+☐ Include code example (optional)
+
+Ask yourself: "What would a new developer need to know
+to write code that fits this project?"
+
+Don't just copy examples - write YOUR rules!
+
+🏆 Achievement: "Instruction Writer"
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+```
+
+### Speaker Notes
+> "Your turn! Create .github/copilot-instructions.md in your practice project. Write 3-5 rules using the principles we just learned. Don't just copy mine - think about YOUR project. What patterns do you want AI to follow? You have 2 minutes. Go!"
+
+**[EXERCISE PLACEHOLDER: 2 minutes - Students write custom rules]**
+
+---
+
+## SLIDE 35: Path-Specific Instructions
+
+### Visual
+- **Layout:** File example with frontmatter
+- **Diagram:** Showing how rules stack
+- **Icon:** Folder with targeting
+
+### Text on Slide
+```
+PATH-SPECIFIC INSTRUCTIONS - RULES THAT SCOPE
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Want different rules for different parts of your code?
+
+.github/instructions/testing.instructions.md
+┌─────────────────────────────────────────────────────────┐
+│ ---                                                     │
+│ applyTo: "**/tests/**"                                  │
+│ ---                                                     │
+│                                                         │
+│ # Testing Guidelines                                    │
+│                                                         │
+│ - Use pytest fixtures for database setup                │
+│ - Every test function name starts with test_            │
+│ - Use AAA pattern: Arrange, Act, Assert                 │
+│ - Mock external API calls                               │
+└─────────────────────────────────────────────────────────┘
+
+Path-specific + repo-wide instructions STACK!
+When working on test files, Copilot sees both.
+
+Perfect for teams: different rules for API, tests, docs!
+```
+
+### Speaker Notes
+> "Advanced feature: path-specific instructions. Use frontmatter to scope rules to specific file paths. This example applies only to files in tests/ directories. The magic? Path-specific and repo-wide instructions stack together. When working on test files, Copilot sees both sets of rules. Perfect for teams with different standards for API code vs tests vs documentation!"
+
+---
+
+## SLIDE 36: How Rules Connect to Everything
+
+### Visual
+- **Layout:** Connection diagram
+- **Flow:** Rules → PRD → Memory Bank → Copilot
+- **Emphasis:** Context mastery
+
+### Text on Slide
+```
+HOW RULES FIT THE BIGGER PICTURE
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Rules are the foundation of professional workflow:
+
+┌─────────────────────────────────────────────────────┐
+│                                                     │
+│  RULES + PRD + MEMORY BANK                          │
+│           ↓                                         │
+│  Copilot that truly KNOWS your project              │
+│                                                     │
+└─────────────────────────────────────────────────────┘
+
+Custom instructions = always-on context
+Saves you from repeating yourself
+Every prompt benefits from these rules
+
+This is context mastery
+This separates amateurs from professionals
+
+Verify usage in Chat: Check "References" section
+Will show .github/copilot-instructions.md when active
+```
+
+### Speaker Notes
+> "Rules are the foundation. In Session 2, you'll learn about PRDs and Memory Banks. Together: Rules + PRD + Memory Bank equals Copilot that truly knows your project. Custom instructions are always-on context that saves you from repeating yourself in every prompt. This is what separates AI amateurs from professionals. You can verify Copilot is using your rules by checking the References section in chat responses!"
+
+---
+
+## SLIDE 37: Session 1 Complete!
+
+### Visual
+- **Layout:** Achievement card with checkmarks
+- **Confetti/celebration effect:** Optional animation
+- **Trophy icon:** Session 1 badge
+
+### Text on Slide
+```
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+           🏆 SESSION 1 COMPLETE! 🏆
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+You've mastered:
+
+✅ Security Configuration
+   .copilotignore protecting your secrets
+
+✅ All 4 AI Modes
+   Ask, Edit, Agent, Plan
+
+✅ #mention Types
+   #file, #folder, #problems, #terminalSelection
+
+✅ Writing Effective AI Rules
+   7 research-backed principles
+
+✅ Custom Instructions Created
+   .github/copilot-instructions.md
+
+✅ First Project Generated
+   6 files from one prompt!
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Up Next: SESSION 2 - Context Mastery & Professional Prompting 🧠
+
+[ 3 minute break ]
+```
+
+### Speaker Notes
+> "Session 1 complete! You've got security configured, you know all four modes, you can use every mention type, you've learned how to write effective AI rules using research-backed principles, and you've generated your first project. Take a 3-minute break, then we'll learn to think like professionals."
 
 ---
 

@@ -1,4 +1,4 @@
-# 📍 SESSION 3: BUILD SPRINT (Slides 41-58)
+# 📍 SESSION 3: BUILD SPRINT (Slides 41-56)
 
 ---
 
@@ -14,580 +14,604 @@
 SESSION 3
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-🚀 BUILD SPRINT - CONTEXT EDITION
+🚀 BUILD SPRINT - PROFESSIONAL WORKFLOWS
 
-"Prove that context quality matters"
+"Build on proven foundations, like the pros"
 
 Duration: 30 minutes
 ```
 
 ### Speaker Notes
-> "Session 3: Build Sprint! You learned the tools. You learned the thinking. Now you PROVE it works by building 3 complete CRUD features. This is where context mastery becomes real productivity."
+> "Session 3: Build Sprint! You learned the tools, you learned the thinking. Now you build like professionals - starting with working code, adding features incrementally, keeping the system working. This is real-world development with AI."
 
 ---
 
-## SLIDE 42: The Build Challenge
+## SLIDE 42: The Professional Approach
 
 ### Visual
-- **Layout:** Challenge card with scoring
-- **Timer graphic:** Showing urgency
-- **Trophy icons:** For achievement levels
+- **Layout:** Comparison diagram (Amateur vs Professional)
+- **Icons:** Warning vs Checkmark
+- **Emphasis:** "Start with working code"
 
 ### Text on Slide
 ```
-🎮 THE BUILD CHALLENGE
+THE PROFESSIONAL APPROACH
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-Next 30 minutes: Build 3 complete CRUD features
+❌ AMATEUR APPROACH:
+   Build everything from scratch
+   Hope it all works together
+   Fix when it breaks
 
-┌─────────────────────────────────────────────────────────┐
-│  FEATURE 1: Create Todo (TDD Approach)                  │
-│             Tests first, then implementation            │
-│             ~10 minutes                                 │
-├─────────────────────────────────────────────────────────┤
-│  FEATURE 2: List Todos (Full Context Power)             │
-│             One prompt, full implementation             │
-│             ~7 minutes                                  │
-├─────────────────────────────────────────────────────────┤
-│  FEATURE 3: Update Todo (Speed Challenge)               │
-│             Can you do it in 3 minutes? ⚡              │
-│             ~3 minutes                                  │
-└─────────────────────────────────────────────────────────┘
+✅ PROFESSIONAL APPROACH:
+   Start with proven, working code
+   Add features incrementally
+   Test each change
+   Keep the system working at all times
 
-📊 Track: Time, iterations, success rate
-🏆 Achievement: "Build Master"
+Today: You start with a FULLY WORKING Todo API!
 ```
 
 ### Speaker Notes
-> "Three features, three approaches. Feature 1: TDD - tests first, methodical. Feature 2: Full context power - one prompt does everything. Feature 3: Speed challenge - can you build in 3 minutes? We're proving context quality matters."
+> "Here's what's different today. You're NOT starting from scratch. Professionals don't rebuild infrastructure every time. They start with proven, working code, add features incrementally, test each change, and keep the system working. That's what you're about to experience!"
 
 ---
 
-## SLIDE 43: TDD with AI
+## SLIDE 43: Checkpoint Verification
 
 ### Visual
-- **Layout:** TDD cycle diagram (Red → Green → Refactor)
-- **AI integration:** Showing AI at each step
-- **Icons:** Test tube, code, check mark
+- **Layout:** Terminal output preview
+- **Checkmarks:** Green success indicators
+- **Step-by-step:** Numbered verification steps
 
 ### Text on Slide
 ```
-🧪 TDD WITH AI
+CHECKPOINT VERIFICATION
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-Test-Driven Development workflow:
+First: Verify you have the working API
 
-        ┌──────────────────────────────────────────┐
-        │                                          │
-        │   1. WRITE TESTS (they fail) 🔴          │
-        │          ↓                               │
-        │   2. IMPLEMENT CODE (tests pass) 🟢      │
-        │          ↓                               │
-        │   3. REFACTOR (improve quality) ♻️       │
-        │          ↓                               │
-        │   4. REPEAT                              │
-        │                                          │
-        └──────────────────────────────────────────┘
+Run these commands:
+┌─────────────────────────────────────────────────────────┐
+│ # Switch to session-3-start checkpoint                  │
+│ git checkout session-3-start                            │
+│                                                         │
+│ # Create database                                       │
+│ python create_db.py                                     │
+│                                                         │
+│ # Run tests                                             │
+│ pytest tests/api/test_todos.py -v                       │
+└─────────────────────────────────────────────────────────┘
+
+Expected: 8 PASSED tests ✅
+
+This is your safety net - working code you can always
+return to with git reset!
+```
+
+### Speaker Notes
+> "First, everyone verify you have the working API. Run these three commands: switch to the checkpoint branch, create the database, run tests. You should see 8 green passing tests. This is your safety net. If anything breaks today, you can always git reset back to this working state."
+
+---
+
+## SLIDE 44: What's Already Built
+
+### Visual
+- **Layout:** File tree with checkmarks
+- **Icons:** Folder and file icons
+- **Color coding:** Green for complete
+
+### Text on Slide
+```
+WHAT'S ALREADY BUILT FOR YOU
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+src/
+├── database.py              ✅ Async DB setup
+├── schemas/
+│   └── todo.py             ✅ TodoCreate, TodoUpdate, TodoResponse
+├── services/
+│   └── todo_service.py     ✅ Business logic (create, get_all, update)
+├── api/v1/
+│   └── todos.py            ✅ 3 endpoints (POST, GET, PUT)
+└── main.py                 ✅ Router registration
+
+tests/
+├── conftest.py             ✅ Test fixtures
+└── api/
+    └── test_todos.py       ✅ 8 passing tests
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+3-tier architecture in action:
+  API layer → Service layer → Model layer
+
+You're about to see how pros ADD to this foundation!
+```
+
+### Speaker Notes
+> "Quick tour of what exists. Complete 3-tier architecture: API routes, service layer with business logic, model layer for database. You have POST to create todos, GET to list them, PUT to update. All tested, all working. You're about to see how professionals add to this foundation!"
+
+---
+
+## SLIDE 45: TDD with AI - The Concept
+
+### Visual
+- **Layout:** Circular workflow diagram
+- **Icons:** Test tube, code, checkmark, repeat
+- **Color flow:** Red → Green → Refactor cycle
+
+### Text on Slide
+```
+🧪 TEST-DRIVEN DEVELOPMENT (TDD) WITH AI
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+The workflow:
+
+     ┌──────────────────────────────────┐
+     │                                  │
+     │   1. WRITE TESTS (they fail) 🔴  │
+     │          ↓                       │
+     │   2. IMPLEMENT CODE (pass) 🟢    │
+     │          ↓                       │
+     │   3. REFACTOR (improve) ♻️       │
+     │          ↓                       │
+     │   4. REPEAT                      │
+     │                                  │
+     └──────────────────────────────────┘
 
 WHY TDD + AI WORKS:
 • Tests give AI clear success criteria
 • Less ambiguity = better code
 • Automatic verification
+• Regression protection
 • Built-in documentation
 ```
 
 ### Speaker Notes
-> "TDD with AI is powerful. Write tests first - they define what success looks like. AI implements to make tests pass. You run tests to verify. This works because tests give AI crystal-clear success criteria."
+> "TDD with AI is powerful. Write tests first - they define what success looks like. AI implements code to make tests pass. You verify with tests. This works because tests give AI crystal-clear success criteria. No ambiguity about what 'done' means."
 
 ---
 
-## SLIDE 44: Feature 1 - Write Tests First
+## SLIDE 46: Demo Feature - DELETE Endpoint
 
 ### Visual
-- **Layout:** Prompt in code block
-- **Highlighting:** Key TDD elements
-- **Step indicator:** Step 1 of 3
+- **Layout:** Feature card with requirements
+- **Icon:** Demo/presentation icon
+- **Emphasis:** "Watch and learn"
 
 ### Text on Slide
 ```
-🧪 FEATURE 1: CREATE TODO - WRITE TESTS
+DEMO: DELETE ENDPOINT USING TDD
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-STEP 1: Write tests FIRST (Agent Mode)
+YOU'RE WATCHING (not coding yet!)
 
-┌─────────────────────────────────────────────────────────┐
-│ #file:PRD.md #folder:src/models/                        │
-│                                                         │
-│ [Context]                                               │
-│ Working on todo API per PRD. Models in src/models/.     │
-│                                                         │
-│ [Task]                                                  │
-│ Create tests/api/test_todos.py for POST /api/v1/todos   │
-│                                                         │
-│ [Constraints]                                           │
-│ - Use pytest with async support                         │
-│ - Test: successful creation, empty title, title too long│
-│ - DON'T implement endpoint yet                          │
-│ - Tests should FAIL initially (TDD)                     │
-│                                                         │
-│ [Format]                                                │
-│ Create tests/api/test_todos.py                          │
-└─────────────────────────────────────────────────────────┘
+Feature: DELETE /api/v1/todos/{id}
+
+Requirements:
+• Delete a specific todo by ID
+• Return 204 No Content on success
+• Return 404 if todo doesn't exist
+• Verify todo is actually removed
+
+Watch the 4-step TDD workflow:
+  1. Write tests (Ask Mode for planning)
+  2. Run tests - watch them FAIL
+  3. Implement code (Agent Mode)
+  4. Run tests - watch them PASS
+
+Take notes on the workflow!
 ```
 
 ### Speaker Notes
-> "Step 1: Write tests. Notice I explicitly say 'DON'T implement yet' and 'Tests should FAIL'. We're defining success criteria before writing any implementation code."
+> "Watch me build a DELETE endpoint using TDD. You're watching, not coding yet. Take notes on the workflow. I'll show you all four steps: write tests, watch them fail, implement, watch them pass. This is professional TDD with AI!"
 
 ---
 
-## SLIDE 45: Feature 1 - Verify Failure
+## SLIDE 47: Step 1 - Write Tests First
 
 ### Visual
-- **Layout:** Terminal output showing failed tests
-- **Red highlighting:** Test failures
-- **Checkmark:** This is expected!
+- **Layout:** Prompt example with highlighting
+- **Mode indicator:** Ask Mode selected
+- **Emphasis:** "Tests BEFORE code"
 
 ### Text on Slide
 ```
-🔴 STEP 2: RUN TESTS - VERIFY FAILURE
+STEP 1: WRITE TESTS FIRST
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Using Ask Mode (not Agent!) to review first:
+
+┌─────────────────────────────────────────────────────────┐
+│ I need to write tests for DELETE /api/v1/todos/{id}    │
+│                                                         │
+│ The test should:                                        │
+│ 1. Create a todo first                                  │
+│ 2. Delete it via DELETE /api/v1/todos/{id}              │
+│ 3. Verify 204 No Content response                       │
+│ 4. Verify todo is gone (GET returns empty)              │
+│                                                         │
+│ Also test:                                              │
+│ - Deleting non-existent todo returns 404                │
+│                                                         │
+│ Add tests to tests/api/test_todos.py following         │
+│ existing patterns.                                      │
+└─────────────────────────────────────────────────────────┘
+
+WHY ASK MODE?
+Review test code before creating files
+Professional judgment: when to review vs auto-execute
+```
+
+### Speaker Notes
+> "Step 1: Write tests. Notice I'm using Ask Mode, not Agent Mode. Why? Because I want to review the test code before creating files. Agent Mode would auto-create. Ask Mode shows me first. This is professional judgment - knowing when to review versus when to auto-execute."
+
+---
+
+## SLIDE 48: Step 2 - Verify Tests Fail
+
+### Visual
+- **Layout:** Terminal output showing failures
+- **Color:** Red highlighting on FAILED
+- **Checkmark:** "This is good!"
+
+### Text on Slide
+```
+STEP 2: RUN TESTS - VERIFY FAILURE
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 Run the tests (they should fail!):
 
 ┌─────────────────────────────────────────────────────────┐
-│ $ pytest tests/api/test_todos.py -v                     │
+│ $ pytest tests/api/test_todos.py::test_delete_todo -v  │
 │                                                         │
-│ test_create_todo_success FAILED                         │
-│ test_create_todo_empty_title FAILED                     │
-│ test_create_todo_title_too_long FAILED                  │
+│ test_delete_todo FAILED                                 │
+│ test_delete_todo_not_found FAILED                       │
 │                                                         │
-│ ========== 3 failed in 0.42s ==========                 │
+│ 404: Not Found (endpoint doesn't exist yet)             │
+│                                                         │
+│ ========== 2 failed in 0.42s ==========                 │
 └─────────────────────────────────────────────────────────┘
 
-✅ PERFECT! This is exactly what we want.
+✅ PERFECT! This is exactly what we want!
 
 The tests define WHAT we need.
 Now we implement to make them pass.
 ```
 
 ### Speaker Notes
-> "Run the tests. They fail. Perfect! That's TDD working correctly. The tests now define exactly what our implementation needs to do. No ambiguity."
+> "Step 2: Run the tests. They fail. Perfect! That's TDD working correctly. The endpoint doesn't exist yet, so we get 404 errors. The tests now define exactly what our implementation needs to do. This is test-first development!"
 
 ---
 
-## SLIDE 46: Feature 1 - Implement
+## SLIDE 49: Step 3 - Implement to Pass
 
 ### Visual
-- **Layout:** Implementation prompt
-- **Highlighting:** Test file referenced for context
-- **Step indicator:** Step 3 of 3
+- **Layout:** Comprehensive prompt example
+- **Highlighting:** Context, Task, Constraints sections
+- **Mode:** Agent Mode indicator
 
 ### Text on Slide
 ```
-🟢 STEP 3: IMPLEMENT TO PASS TESTS
+STEP 3: IMPLEMENT TO MAKE TESTS PASS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-Give AI the tests as context:
+Using Agent Mode with full context:
 
 ┌─────────────────────────────────────────────────────────┐
-│ #file:PRD.md #file:tests/api/test_todos.py              │
-│ #file:src/models/todo.py                                │
+│ #file:tests/api/test_todos.py #file:src/services/     │
+│ todo_service.py #file:src/api/v1/todos.py              │
 │                                                         │
 │ [Context]                                               │
-│ Tests in test_todos.py define success criteria.         │
-│ Todo model exists. Following 3-tier architecture.       │
+│ Working on Todo API, 3-tier architecture.               │
+│ Tests in test_todos.py define DELETE requirements.      │
 │                                                         │
 │ [Task]                                                  │
-│ Implement POST /api/v1/todos to make all tests pass     │
+│ Implement DELETE /api/v1/todos/{id} to pass tests.      │
 │                                                         │
 │ [Constraints]                                           │
-│ - Create: Pydantic schemas, Service layer, API route    │
-│ - Handle all test cases                                 │
-│ - Use async/await patterns                              │
+│ Two layers:                                             │
+│ 1. Service: delete_todo(todo_id, owner_id, db)          │
+│    - Return False if not found                          │
+│    - Delete and commit, return True                     │
+│ 2. API: DELETE "/{todo_id}" endpoint                    │
+│    - 404 if False, 204 if True                          │
 │                                                         │
 │ [Format]                                                │
-│ Create all 3 files, register router in main.py          │
+│ Update src/services/todo_service.py and                │
+│ src/api/v1/todos.py                                     │
 └─────────────────────────────────────────────────────────┘
 ```
 
 ### Speaker Notes
-> "Step 3: Implement. Notice I give AI the TESTS as context. AI can see exactly what success looks like. The tests define the contract, AI writes the implementation."
+> "Step 3: Implement. See my prompt structure? #file mentions give AI the tests (success criteria) plus existing code patterns. Context explains what we're doing. Task is clear. Constraints specify exact implementation, layer by layer. This is the Session 2 framework in action. AI has everything it needs!"
 
 ---
 
-## SLIDE 47: Feature 1 - Verify Success
+## SLIDE 50: Step 4 - Verify Tests Pass
 
 ### Visual
-- **Layout:** Terminal output showing passing tests
-- **Green highlighting:** All tests pass
-- **Celebration icon:** Checkmark/trophy
+- **Layout:** Terminal output showing success
+- **Color:** Green highlighting on PASSED
+- **Celebration:** Checkmark/trophy
 
 ### Text on Slide
 ```
-✅ RUN TESTS - VERIFY SUCCESS
+STEP 4: RUN TESTS - VERIFY SUCCESS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 ┌─────────────────────────────────────────────────────────┐
 │ $ pytest tests/api/test_todos.py -v                     │
 │                                                         │
-│ test_create_todo_success PASSED                         │
-│ test_create_todo_empty_title PASSED                     │
-│ test_create_todo_title_too_long PASSED                  │
+│ test_create_todo PASSED                                 │
+│ test_create_todo_minimal PASSED                         │
+│ test_get_todos_empty PASSED                             │
+│ test_get_todos PASSED                                   │
+│ test_update_todo PASSED                                 │
+│ test_update_todo_partial PASSED                         │
+│ test_update_todo_not_found PASSED                       │
+│ test_create_todo_validation PASSED                      │
+│ test_delete_todo PASSED               ← NEW!            │
+│ test_delete_todo_not_found PASSED     ← NEW!            │
 │                                                         │
-│ ========== 3 passed in 0.58s ==========                 │
+│ ========== 10 passed in 0.58s ==========                │
 └─────────────────────────────────────────────────────────┘
 
-🎉 ALL TESTS PASS!
+🎉 ALL TESTS PASS! Including old ones (regression protection)
 
-That's TDD with AI:
-  Write test → Watch fail → Implement → Watch pass
-
-Time: ~10 minutes for complete CRUD feature
+That's TDD: Write test → Fail → Implement → Pass
 ```
 
 ### Speaker Notes
-> "Run tests again. All pass. That's TDD with AI. Write test, watch fail, implement, watch pass. You now have a tested, working feature with automatic verification."
+> "Step 4: Run tests again. All green! 10 tests pass, including the 8 old ones. That's regression protection - we didn't break existing functionality. That's TDD with AI: Write test, watch fail, implement, watch pass. You now have a tested, working DELETE endpoint with automatic verification!"
 
 ---
 
-## SLIDE 48: Exercise - TDD Feature 1
+## SLIDE 51: Your Turn - Build Priority Feature
 
 ### Visual
-- **Layout:** Exercise card with timer
-- **Steps:** Clear numbered steps
-- **Checkboxes:** For completion tracking
+- **Layout:** Exercise card with full requirements
+- **Timer:** Prominent 12-minute indicator
+- **Support:** "You'll have help" callout
 
 ### Text on Slide
 ```
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-                    🎮 EXERCISE 4                          
-              Build Create Todo (TDD)                      
+                    🎮 EXERCISE 4
+            Build the Priority Feature
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-⏱️ TIME: 10 minutes
+⏱️ TIME: 12 minutes
 
-STEPS:
-1. Write tests (prompt from slide 44)
-2. Run tests - verify they FAIL
-3. Implement (prompt from slide 46)
-4. Run tests - verify they PASS
-5. Start dev server: uvicorn src.main:app --reload
+FEATURE: Add priority field to todos
+
+REQUIREMENTS:
+• Priority is integer: 1 (low), 2 (medium), 3 (high)
+• Default priority is 2 (medium)
+• Can be set when creating a todo
+• Can be updated
+• Returned in responses
+
+APPROACH: Use Session 2 full context formula
+ONE comprehensive prompt with all context!
+
+I'll help if you get stuck! You've got this! 💪
+
+🏆 Achievement: "Feature Builder"
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+```
+
+### Speaker Notes
+> "Your turn! Build a priority feature. You have 12 minutes and I'll help if you get stuck. Add a priority field to todos - integer 1-3 for low/medium/high. Use the Session 2 full context formula: one comprehensive prompt with Context, Task, Constraints, and Format. You've got this!"
+
+**[EXERCISE PLACEHOLDER: 12 minutes - Students build priority feature with support]**
+
+---
+
+## SLIDE 52: Verification - Did It Work?
+
+### Visual
+- **Layout:** Verification checklist
+- **Terminal examples:** Test commands
+- **Success criteria:** Clear checkboxes
+
+### Text on Slide
+```
+VERIFICATION - DID IT WORK?
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+How to verify your priority feature:
+
+┌─────────────────────────────────────────────────────────┐
+│ # Run the test suite                                    │
+│ pytest tests/api/test_todos.py -v                       │
+│                                                         │
+│ # Start the dev server                                  │
+│ uvicorn src.main:app --reload                           │
+│                                                         │
+│ # Test via curl                                         │
+│ curl -X POST http://localhost:8000/api/v1/todos \      │
+│   -H "Content-Type: application/json" \                │
+│   -d '{"title": "High priority", "priority": 3}'        │
+└─────────────────────────────────────────────────────────┘
 
 SUCCESS CRITERIA:
-☐ Tests created in tests/api/
-☐ All 3 test cases fail initially
-☐ Implementation creates 3 layers
-☐ All tests pass after implementation
-☐ Server runs at localhost:8000
-
-🏆 Achievement: "TDD Master"
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+☐ Database schema updated (priority column)
+☐ TodoCreate accepts priority (default 2)
+☐ TodoResponse includes priority
+☐ Tests pass
+☐ Manual testing works
 ```
 
 ### Speaker Notes
-> "Your turn! Build the Create Todo feature using TDD. Write tests first, verify they fail, implement, verify they pass. You have 10 minutes. This is real-world TDD with AI assistance."
-
-**[EXERCISE PLACEHOLDER: 10 minutes - Students build Create Todo with TDD]**
+> "Time's up! Let's verify. Run your tests. Start the dev server. Test manually with curl. Did your priority field work? Can you create todos with priority? Is it in responses? Tests passing?"
 
 ---
 
-## SLIDE 49: Feature 2 - Full Context Power
+## SLIDE 53: Reflection - TDD vs Full Context
 
 ### Visual
-- **Layout:** Single comprehensive prompt
-- **Highlighting:** All context elements
-- **Timer:** Showing speed
+- **Layout:** Comparison table
+- **Icons:** Test tube vs Lightning bolt
+- **When to use:** Decision guide
 
 ### Text on Slide
 ```
-⚡ FEATURE 2: LIST TODOS - FULL CONTEXT POWER
+REFLECTION: TDD VS FULL CONTEXT
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-One prompt. All layers. Watch this...
+You've experienced both approaches. When to use each?
 
-┌─────────────────────────────────────────────────────────┐
-│ #file:PRD.md #folder:src/api/ #folder:src/services/     │
-│                                                         │
-│ [Context]                                               │
-│ Working on todo API per PRD. Existing patterns in       │
-│ src/api/ and src/services/ from Feature 1.              │
-│                                                         │
-│ [Task]                                                  │
-│ Add GET /api/v1/todos endpoint to list all todos        │
-│                                                         │
-│ [Constraints]                                           │
-│ - Pagination: skip and limit query params               │
-│ - Filtering: completed (optional) query param           │
-│ - Only return user's todos                              │
-│ - Return List[TodoResponse]                             │
-│ - Add get_all() to TodoService                          │
-│                                                         │
-│ [Format]                                                │
-│ Update todo_service.py and todos.py                     │
-└─────────────────────────────────────────────────────────┘
+┌───────────────────────────┬───────────────────────────┐
+│   🧪 TDD APPROACH         │   ⚡ FULL CONTEXT         │
+├───────────────────────────┼───────────────────────────┤
+│ WHEN TO USE:              │ WHEN TO USE:              │
+│ • Complex business logic  │ • Clear requirements      │
+│ • Critical functionality  │ • Standard patterns       │
+│ • Need verification       │ • Speed is priority       │
+│ • Learning codebase       │ • Low-risk changes        │
+│                           │                           │
+│ BENEFITS:                 │ BENEFITS:                 │
+│ • Automatic verification  │ • Faster implementation   │
+│ • Regression protection   │ • Less setup overhead     │
+│ • Clear success criteria  │ • Good for simple features│
+│                           │                           │
+│ TIME: ~10 min for feature │ TIME: ~5-7 min for feature│
+└───────────────────────────┴───────────────────────────┘
+
+Both are valid! Choose based on situation.
 ```
 
 ### Speaker Notes
-> "Feature 2: Full context power. One prompt, everything specified. Notice the context - PRD for requirements, existing folders for patterns. Constraints are crystal clear. One prompt, complete feature."
+> "Reflection time. You've experienced both TDD and full-context approaches. When should you use each? TDD for complex logic, critical functionality, when you need verification. Full context for clear requirements, standard patterns, when speed matters. Both are valid professional approaches. Choose based on the situation!"
 
 ---
 
-## SLIDE 50: Feature 2 - Verify
-
-### Visual
-- **Layout:** curl commands and responses
-- **Terminal style:** Command outputs
-- **Green checkmarks:** Working endpoints
-
-### Text on Slide
-```
-✅ VERIFY FEATURE 2
-
-Test your endpoints:
-
-┌─────────────────────────────────────────────────────────┐
-│ # List all todos                                        │
-│ $ curl http://localhost:8000/api/v1/todos               │
-│ → [{"id": "...", "title": "...", "completed": false}]   │
-│                                                         │
-│ # With pagination                                       │
-│ $ curl "http://localhost:8000/api/v1/todos?limit=10"    │
-│ → First 10 todos                                        │
-│                                                         │
-│ # Filter by completed                                   │
-│ $ curl "http://localhost:8000/api/v1/todos?completed=true"
-│ → Only completed todos                                  │
-└─────────────────────────────────────────────────────────┘
-
-⏱️ Time: ~3-5 minutes (vs 10+ without good context)
-```
-
-### Speaker Notes
-> "Test it. All endpoints working. Pagination works. Filtering works. That was 3-5 minutes for a complete feature because we gave AI perfect context upfront."
-
----
-
-## SLIDE 51: Feature 3 - Speed Challenge
-
-### Visual
-- **Layout:** Challenge card with timer
-- **Racing theme:** Speed lines, stopwatch
-- **Competitive element:** Can you beat 3 minutes?
-
-### Text on Slide
-```
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-                🏎️ SPEED CHALLENGE 🏎️                      
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-⏱️ CAN YOU BUILD IN 3 MINUTES?
-
-Feature: PUT /api/v1/todos/{id}
-
-Requirements:
-• Update title, description, completed
-• Only if user owns the todo
-• Return 404 if not found, 403 if not owner
-• Return updated TodoResponse
-
-YOUR APPROACH:
-• TDD? Full context? Both?
-• Use what you learned!
-• Pair up, help each other!
-
-🏆 Fastest completion wins!
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-```
-
-### Speaker Notes
-> "Speed challenge! Build PUT endpoint in 3 minutes. You decide the approach - TDD, full context, or both. Use everything you've learned. Pair up if you want. Fastest completion wins. Timer starts NOW!"
-
-**[EXERCISE PLACEHOLDER: 3 minutes - Students build Update Todo speed challenge]**
-
----
-
-## SLIDE 52: Subagents - Parallel Work
+## SLIDE 54: Subagents - Parallel AI Work
 
 ### Visual
 - **Layout:** Diagram showing main agent + parallel subagents
-- **Arrows:** Showing parallel execution
-- **Icons:** Multiple robot icons working simultaneously
+- **Arrows:** Parallel execution flow
+- **Icons:** Multiple robot icons working
 
 ### Text on Slide
 ```
 🤖 SUBAGENTS - PARALLEL VERIFICATION
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 Copilot can spawn parallel agents for complex tasks:
 
-┌─────────────────────────────────────────────────────────┐
-│                                                         │
-│        MAIN AGENT (you're working with)                 │
-│                    │                                    │
-│           ┌───────┴───────┐                            │
-│           ↓               ↓                            │
-│    ┌──────────────┐ ┌──────────────┐                   │
-│    │  SUBAGENT 1  │ │  SUBAGENT 2  │                   │
-│    │              │ │              │                   │
-│    │  Code Review │ │  Run Tests   │                   │
-│    │  (parallel)  │ │  (parallel)  │                   │
-│    └──────────────┘ └──────────────┘                   │
-│           ↓               ↓                            │
-│           └───────┬───────┘                            │
-│                   ↓                                    │
-│         Results merged back                            │
-│                                                         │
-└─────────────────────────────────────────────────────────┘
+        MAIN AGENT (you're working with)
+                    │
+           ┌───────┴───────┐
+           ↓               ↓
+    ┌──────────────┐ ┌──────────────┐
+    │  SUBAGENT 1  │ │  SUBAGENT 2  │
+    │ Code Review  │ │  Run Tests   │
+    │  (parallel)  │ │  (parallel)  │
+    └──────────────┘ └──────────────┘
+           ↓               ↓
+           └───────┬───────┘
+                   ↓
+         Results merged back
+
+Request explicitly:
+"Launch a subagent to review src/api/ for security
+issues while I continue with the next feature."
+
+PERFECT FOR: Code review, tests, docs, independent tasks
 ```
 
 ### Speaker Notes
-> "Subagents are parallel workers. Copilot can spawn them automatically for complex tasks, or you can request them. One agent reviews code while another runs tests. Parallel AI work!"
+> "Advanced feature: Subagents. Copilot can spawn parallel agents for complex tasks. One agent reviews code while another runs tests. You can request them explicitly: 'Launch a subagent to review this while I continue.' Perfect for code review, running tests, generating docs - any independent work that can happen in parallel!"
 
 ---
 
-## SLIDE 53: Using Subagents
+## SLIDE 55: Session 3 Wins
 
 ### Visual
-- **Layout:** Prompt example for spawning subagent
-- **Highlight:** Explicit request for parallel work
+- **Layout:** Achievement summary
+- **Metrics:** Time saved, features built
+- **Comparison:** Before/after
 
 ### Text on Slide
 ```
-⚡ SPAWNING SUBAGENTS
+📊 SESSION 3 WINS - WHAT YOU BUILT
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-Request parallel work explicitly:
+In 30 minutes, you:
 
-┌─────────────────────────────────────────────────────────┐
-│ "Launch a subagent to review all the code we created    │
-│  in src/api/v1/todos.py and src/services/ for:          │
-│                                                         │
-│  - Error handling completeness                          │
-│  - Async/await correctness                              │
-│  - Security issues                                      │
-│                                                         │
-│  While that runs, I'll continue with the next task."    │
-└─────────────────────────────────────────────────────────┘
+✅ STARTED WITH WORKING CODE
+   Checkpoint-based development (session-3-start)
 
-PERFECT FOR:
-• Code review while building
-• Running tests in parallel
-• Documentation generation
-• Multiple independent tasks
+✅ LEARNED TDD WITH AI
+   Watched DELETE endpoint demo (4 steps)
+
+✅ BUILT A COMPLETE FEATURE
+   Priority field (12 minutes with support)
+
+✅ EXPERIENCED PROFESSIONAL WORKFLOWS
+   Incremental development, testing, safety nets
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+KEY INSIGHTS:
+• Start with working code (checkpoints)
+• TDD gives verification confidence
+• Full context gives speed
+• Choose approach based on situation
+• Keep system working at all times
+
+This is how professionals work with AI!
 ```
 
 ### Speaker Notes
-> "Request subagents explicitly. 'Launch a subagent to review this while I continue.' The subagent works in parallel and reports back when done. Perfect for code review while you keep building."
-
----
-
-## SLIDE 54: Plan Mode
-
-### Visual
-- **Layout:** Plan Mode output example
-- **Step-by-step:** Showing plan before execution
-- **Button:** "Start Implementation"
-
-### Text on Slide
-```
-📋 PLAN MODE - SEE BEFORE YOU BUILD
-
-Use /plan for complex implementations:
-
-┌─────────────────────────────────────────────────────────┐
-│ /plan Implement tagging feature for todos:              │
-│                                                         │
-│ 1. Create Tag model with association table              │
-│ 2. Create TagCreate and TagResponse schemas             │
-│ 3. Add service methods for add/remove tags              │
-│ 4. Add API endpoints                                    │
-│ 5. Include tests                                        │
-└─────────────────────────────────────────────────────────┘
-
-RESULT:
-┌─────────────────────────────────────────────────────────┐
-│ 📋 IMPLEMENTATION PLAN                                  │
-│                                                         │
-│ Step 1: Create src/models/tag.py with...                │
-│ Step 2: Update src/schemas/...                          │
-│ Step 3: Add methods to...                               │
-│ ...                                                     │
-│                                                         │
-│         [Start Implementation]                          │
-└─────────────────────────────────────────────────────────┘
-```
-
-### Speaker Notes
-> "Plan Mode shows you the full implementation plan before any code is written. Review the plan, adjust if needed, then click 'Start Implementation' to hand off to Agent Mode. Full visibility before execution."
-
----
-
-## SLIDE 55: Session 3 Results
-
-### Visual
-- **Layout:** Results tracking card
-- **Metrics:** Time, iterations, success rate
-- **Comparison:** Showing improvement
-
-### Text on Slide
-```
-📊 SESSION 3 RESULTS
-
-What you built in 30 minutes:
-
-┌─────────────────────────────────────────────────────────┐
-│  FEATURE           │  TIME    │  APPROACH              │
-├────────────────────┼──────────┼────────────────────────┤
-│  Create Todo       │  ~10 min │  TDD (tests first)     │
-│  List Todos        │  ~5 min  │  Full context          │
-│  Update Todo       │  ~3 min  │  Speed challenge       │
-└────────────────────┴──────────┴────────────────────────┘
-
-TOTAL: 3 complete CRUD operations in ~18 minutes
-
-KEY INSIGHT:
-• TDD: More setup, but automatic verification
-• Full Context: Fastest for clear requirements
-• Both work - choose based on situation
-```
-
-### Speaker Notes
-> "Look at what you built. Three CRUD operations in under 20 minutes. TDD gives you verification. Full context gives you speed. Both work - you choose based on the situation."
+> "Look at what you accomplished. You started with working code from a checkpoint. You learned TDD by watching the demo. You built a complete priority feature in 12 minutes. You experienced professional workflows: incremental development, testing, safety nets. This is how professionals work with AI!"
 
 ---
 
 ## SLIDE 56: Session 3 Complete!
 
 ### Visual
-- **Layout:** Achievement summary
+- **Layout:** Achievement card
 - **Trophy:** Build Master badge
 - **Progress:** 3 of 4 sessions done
 
 ### Text on Slide
 ```
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-           🏆 SESSION 3 COMPLETE! 🏆                       
+           🏆 SESSION 3 COMPLETE! 🏆
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 You've mastered:
+
+✅ Checkpoint-Based Development
+   Start with working code, stay working
 
 ✅ TDD with AI
    Tests first, implementation to pass
 
 ✅ Full Context Implementation
-   One prompt, complete features
+   Comprehensive prompts for speed
 
-✅ Speed Building
-   3 CRUD operations in 20 minutes
+✅ Professional Workflows
+   Incremental, tested, safe
 
 ✅ Subagents
-   Parallel verification and tasks
-
-✅ Plan Mode
-   See the plan before building
+   Parallel AI work
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-Up Next: SESSION 4 - BOSS FIGHT! Prove everything! 🎮
+Up Next: SESSION 4 - BOSS FIGHT! 🎮
+Code Review, Custom Agents, Memory Bank, and
+the ultimate challenge to prove mastery!
 
 [ 3 minute break ]
 ```
 
 ### Speaker Notes
-> "Session 3 complete! You can now build features fast with TDD, full context, subagents, and plan mode. One more session - the Boss Fight where you prove everything you've learned. Break time!"
+> "Session 3 complete! You can now work from checkpoints, use TDD with AI, build features fast with full context, and leverage subagents for parallel work. One more session - the Boss Fight where you prove everything you've learned. Three-minute break!"
 
 ---
-

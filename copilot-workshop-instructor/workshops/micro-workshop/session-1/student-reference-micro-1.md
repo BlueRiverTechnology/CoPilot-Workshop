@@ -891,66 +891,597 @@ How do I add WebSocket support?"
 
 ---
 
-## 9. Custom Instructions - Your AI's Personality
+## 9. Writing Effective AI Rules - Complete Guide
 
 ### What Are Custom Instructions?
 
-Custom instructions tell Copilot HOW you want code written. They're automatically included in every interaction.
+Custom instructions are **always-on context** that tells Copilot HOW you want code written. They're automatically included in every interaction, multiplying your productivity by eliminating the need to repeat guidelines in every prompt.
 
-**Location:** `.github/copilot-instructions.md`
+**This is one of the most transferable skills—every project benefits from well-written AI rules.**
 
-**Scope:** Entire repository
+---
 
-### Creating Effective Instructions
+### The Complete Rules Ecosystem
 
-**Recommended sections:**
+There are now **multiple layers** of instruction files. Understanding this hierarchy is crucial:
+
+```
+📁 Your Project
+├── .github/
+│   ├── copilot-instructions.md          ← REPO-WIDE (always active)
+│   ├── instructions/
+│   │   ├── testing.instructions.md      ← PATH-SPECIFIC (tests/** only)
+│   │   ├── api.instructions.md          ← PATH-SPECIFIC (api/** only)
+│   │   └── services.instructions.md     ← PATH-SPECIFIC (services/** only)
+│   └── agents/
+│       └── code-reviewer.agent.md       ← CUSTOM AGENT (Session 4)
+├── AGENTS.md                             ← CROSS-TOOL (Copilot, Claude, Cursor)
+└── VS Code Settings
+    ├── Code generation instructions
+    ├── Test generation instructions
+    ├── Review instructions
+    └── Commit message instructions
+```
+
+**The hierarchy:**
+
+1. **`.github/copilot-instructions.md`** - Repository-wide, always active. Works in Chat, Agent Mode, and Code Review.
+2. **`.github/instructions/*.instructions.md`** - Path-specific rules with `applyTo` glob frontmatter. Only active when working on matching files.
+3. **`.github/agents/*.agent.md`** - Custom agent definitions (covered in Session 4).
+4. **`AGENTS.md`** - Emerging open standard from Linux Foundation. Works across Copilot, Claude Code, Cursor, and other AI tools.
+5. **VS Code settings** - Per-operation instructions (code generation, test generation, review, commit messages).
+
+**The skill you learn for one layer applies to ALL layers.**
+
+---
+
+### Research-Backed Principles - What Makes Rules Work
+
+Not all rules are equal. Research from GitHub, Anthropic, and the AI engineering community shows clear patterns for what works.
+
+---
+
+#### Principle 1: Short, Imperative, Self-Contained Statements
+
+**Source:** GitHub's official documentation
+
+GitHub's own docs say instructions should be "short, self-contained statements that add context." Not paragraphs. Not essays.
+
+**BAD:**
+```markdown
+We generally try to follow industry best practices for code quality and
+maintainability, so please write code that is clean and well-tested. We
+also prefer using modern Python features when appropriate and avoiding
+deprecated patterns.
+```
+
+**GOOD:**
+```markdown
+- Use type hints on all function signatures
+- Write pytest tests for every service method
+- Use Python 3.11+ features (match/case, type unions with |)
+```
+
+**Why it works:**
+- Specific, actionable, scannable
+- AI can quickly parse discrete rules
+- Each statement stands alone
+
+---
+
+#### Principle 2: Tell the AI What TO DO, Not What to Avoid
+
+**Source:** AI engineering community best practices
+
+LLMs are poor at negations. Positive directives work better than negative prohibitions.
+
+**BAD:**
+```markdown
+- Don't use print statements for debugging
+- Avoid using global variables
+- Don't hardcode configuration values
+```
+
+**GOOD:**
+```markdown
+- Use `logging` module at DEBUG level for diagnostic output
+- Pass configuration through dependency injection
+- Load configuration from environment variables via python-dotenv
+```
+
+**Why it works:**
+- The GOOD version tells AI the correct alternative
+- Provides a pattern to follow, not just something to avoid
+- Reduces ambiguity about what to do instead
+
+---
+
+#### Principle 3: Be Specific and Actionable
+
+**Source:** GitHub documentation and practical experience
+
+Vague aspirational goals don't work. Concrete patterns do.
+
+**BAD:**
+```markdown
+- Follow good naming conventions
+- Make sure code is well-tested
+- Use proper error handling
+```
+
+**GOOD:**
+```markdown
+- Use camelCase for JavaScript variables and functions. Use PascalCase for classes.
+- Every service method must have a corresponding test file in tests/services/
+- Use HTTPException for API errors with proper status codes (400/401/403/404/500)
+```
+
+**Why it works:**
+- Zero ambiguity = better compliance
+- AI knows exactly what pattern to follow
+- Reduces variation in generated code
+
+---
+
+#### Principle 4: Use Structured Markdown (or XML for Claude-based tools)
+
+**Source:** GitHub and Anthropic best practices
+
+Copilot parses structured content better than prose. Use distinct headings, bullet points, code examples.
+
+**For GitHub Copilot (Markdown structure):**
 
 ```markdown
-# Project Overview
-Brief description, tech stack, purpose
+# Project: Todo API
 
-# Coding Standards
-- Type hints on all functions
-- Google-style docstrings
-- async/await for I/O operations
-- Max line length: 100 chars
-- PEP 8 compliant
+## Architecture Patterns
+- 3-tier structure: API routes → Service layer → Models
+- All database operations in service layer
+- Pydantic v2 for all request/response schemas
 
-# Architecture Patterns
-- 3-tier: API → Service → Repository
-- Dependency injection
-- Repository pattern for data access
+## Coding Standards
+- Use type hints on every function signature
+- Write Google-style docstrings
+- Follow PEP 8, max line length 100
 
-# Error Handling
+## Error Handling
 - Use HTTPException for API errors
 - Log all errors before raising
-- Never expose internal errors to clients
-
-# Naming Conventions
-- Files: snake_case
-- Classes: PascalCase
-- Functions: snake_case
-- Constants: UPPER_SNAKE_CASE
+- Never expose internal error details to clients
 ```
 
-### Path-Specific Instructions
+**For Claude-based tools (XML tags):**
 
-For different rules in different parts of your codebase:
+Anthropic specifically recommends using XML tags to structure instructions. XML tags create clear boundaries that prevent the AI from mixing up context, instructions, and examples.
 
+```markdown
+<role>Senior Python developer specializing in FastAPI</role>
+
+<architecture>
+  - 3-tier: API routes → Service layer → Models
+  - All database operations use async/await
+  - Pydantic v2 for all request/response schemas
+</architecture>
+
+<coding_standards>
+  - Use type hints on every function signature
+  - Write Google-style docstrings
+  - Follow PEP 8, max line length 100
+  - Use async/await for all I/O operations
+</coding_standards>
+
+<constraints>
+  - Never use raw SQL — always use SQLAlchemy ORM
+  - All endpoints return proper HTTP status codes (400/401/403/404/500)
+  - Log all errors before raising exceptions
+  - Never expose internal error details to clients
+</constraints>
+
+<testing>
+  - Every service method must have a test in tests/services/
+  - Use pytest fixtures for database setup
+  - AAA pattern: Arrange, Act, Assert
+  - Mock external API calls
+</testing>
+```
+
+**Key principle:** Whether you use XML tags or Markdown headings depends on the tool—Copilot prefers Markdown structure, Claude prefers XML—but the principle is the same: **Create clear, labeled compartments for different types of information.**
+
+**Why it works:**
+- AI can quickly locate relevant sections
+- Clear separation between different concerns
+- Reduces context bleed between topics
+
+---
+
+#### Principle 5: Include Code Examples Where They Clarify Intent
+
+**Source:** Practical experience and prompt engineering best practices
+
+A before/after code snippet removes ambiguity. Show the pattern, don't just describe it.
+
+**Instead of:** "Use proper error handling"
+
+**Show this:**
+
+```markdown
+## Error Handling Pattern
+
+Use HTTPException for API errors with proper status codes:
+
+```python
+# GOOD - Do this
+async def get_user(user_id: str) -> User:
+    try:
+        return await db.get(User, user_id)
+    except NotFoundError:
+        raise HTTPException(status_code=404, detail="User not found")
+    except DatabaseError as e:
+        logger.error(f"Database error fetching user {user_id}: {e}")
+        raise HTTPException(status_code=500, detail="Internal server error")
+
+# BAD - Don't do this
+async def get_user(user_id: str):
+    user = await db.get(User, user_id)  # Can raise unhandled exceptions
+    return user
+```
+```
+
+**Why it works:**
+- Concrete example is unambiguous
+- Shows exact pattern to follow
+- BAD example clarifies what to avoid
+
+---
+
+#### Principle 6: Keep Files Under ~1,000 Lines
+
+**Source:** GitHub official documentation
+
+GitHub explicitly warns: beyond 1,000 lines, quality deteriorates.
+
+**Why it matters:**
+- AI models have token limits
+- Long files dilute important instructions
+- Parsing quality degrades with length
+
+**Best practice:**
+- Start with 5-10 rules
+- Add iteratively based on actual needs
+- If file grows large, split into path-specific instructions
+
+---
+
+#### Principle 7: Iterate Based on What Works
+
+**Source:** Empirical best practice
+
+Rules writing is empirical, not theoretical. You must test and refine.
+
+**The process:**
+
+1. **Start minimal:** Write 5-10 core rules
+2. **Test them:** Use Copilot on real tasks
+3. **Check compliance:** Does Copilot follow your rules?
+4. **Verify usage:** Check References section in Copilot Chat
+5. **Refine:** Add rules where Copilot deviates from your preferences
+6. **Remove:** Delete rules that Copilot ignores or doesn't need
+
+**This is the most important principle: Rules are a living document.**
+
+---
+
+### How to Verify Copilot is Using Your Rules
+
+**Method 1: Check References Section**
+
+In Copilot Chat responses, look for the References section at the bottom. It will show `.github/copilot-instructions.md` when Copilot reads your rules.
+
+**Method 2: Test Compliance**
+
+Give Copilot a task and check if the output follows your rules:
+- Did it use type hints? (if your rule says to)
+- Did it use async/await? (if your rule says to)
+- Did it follow your naming conventions?
+
+**Method 3: Ask Copilot Directly**
+
+```
+@workspace What coding standards should I follow in this project?
+```
+
+Copilot should reference your custom instructions.
+
+---
+
+### Path-Specific Instructions - Advanced Rules Scoping
+
+**Why use path-specific instructions?**
+
+Different parts of your codebase have different requirements:
+- **API routes:** Need endpoint docs, status codes, validation
+- **Tests:** Need AAA pattern, fixtures, mocking
+- **Services:** Need business logic patterns, error handling
+- **Documentation:** Need clear writing, consistent formatting
+
+**How to create path-specific instructions:**
+
+**File structure:**
 ```
 .github/instructions/
-├── api.instructions.md      # For routes/
-├── tests.instructions.md    # For tests/
-└── docs.instructions.md     # For documentation
+├── api.instructions.md
+├── testing.instructions.md
+├── services.instructions.md
+└── documentation.instructions.md
 ```
 
-Each file uses YAML frontmatter to specify paths:
+**Example: `.github/instructions/testing.instructions.md`**
+
 ```yaml
 ---
-applyTo: "routes/**/*.py"
+applyTo: "**/tests/**"
 ---
-# API-specific instructions here
+
+# Testing Guidelines
+
+## Test Structure
+- Every test function name starts with `test_`
+- Use AAA pattern: Arrange, Act, Assert
+- One assertion per test when possible
+
+## Fixtures
+- Use pytest fixtures for database setup
+- Define fixtures in conftest.py
+- Use scope="function" for test isolation
+
+## Mocking
+- Mock external API calls
+- Use pytest-mock for all mocking
+- Never make real external API calls in tests
+
+## Coverage
+- Aim for 80%+ code coverage
+- Test happy path and error cases
+- Include edge cases and boundary conditions
 ```
+
+**How it works:**
+
+- Path-specific instructions **stack with** repo-wide instructions
+- When working on test files, Copilot sees **both** `.github/copilot-instructions.md` **and** `.github/instructions/testing.instructions.md`
+- Use glob patterns in `applyTo`: `"**/*.py"`, `"**/tests/**"`, `"src/api/**"`
+
+**Examples of glob patterns:**
+
+```yaml
+applyTo: "**/*.py"              # All Python files
+applyTo: "**/tests/**"          # All files in tests directories
+applyTo: "src/api/**/*.py"      # Python files in src/api
+applyTo: "**/*.{ts,tsx}"        # TypeScript files
+applyTo: "**/README.md"         # All README files
+```
+
+---
+
+### The AGENTS.md Cross-Tool Standard
+
+**What is it?**
+
+An emerging open standard from the Linux Foundation for AI instructions that work across multiple tools.
+
+**Location:** `AGENTS.md` in project root
+
+**Why use it?**
+
+- Works with Copilot, Claude Code, Cursor, and other AI tools
+- Team members can use different tools with same context
+- Future-proof as AI tooling evolves
+
+**Example AGENTS.md:**
+
+```markdown
+# Agents
+
+This project uses AI-assisted development. These guidelines apply to all AI tools.
+
+## Role
+Senior Python developer specializing in FastAPI and async web applications.
+
+## Architecture
+- 3-tier structure: API routes → Service layer → SQLAlchemy models
+- All database operations use async/await with SQLAlchemy
+- Pydantic v2 for request/response validation
+
+## Coding Standards
+- Type hints required on all function signatures
+- Google-style docstrings for all public functions
+- PEP 8 compliant, max line length 100
+- async/await for all I/O operations
+
+## Error Handling
+- Use HTTPException for API errors with proper status codes
+- Log all errors before raising
+- Never expose internal error details to API clients
+
+## Testing
+- pytest for all tests
+- AAA pattern: Arrange, Act, Assert
+- Fixtures in conftest.py
+- Mock external dependencies
+```
+
+**When to use AGENTS.md vs .github/copilot-instructions.md:**
+
+- **Use `.github/copilot-instructions.md`** for GitHub Copilot-specific features
+- **Use `AGENTS.md`** for cross-tool compatibility
+- **Use both** if your team uses multiple AI tools
+
+---
+
+### How Rules Connect to Everything Else
+
+**Rules are the foundation of the professional workflow you'll learn in Session 2:**
+
+**Rules + PRD + Memory Bank = Copilot that truly knows your project**
+
+**The progression:**
+
+1. **Session 1:** Custom instructions (always-on context)
+2. **Session 2:** PRD files (feature-specific context)
+3. **Session 4:** Memory Bank (project knowledge repository)
+
+**Why this matters:**
+
+- Custom instructions are **always-on context** that saves you from repeating yourself
+- Every prompt you write from now on benefits from these rules
+- This is context mastery—what separates AI amateurs from AI professionals
+
+**The professional workflow:**
+
+```
+1. Write effective rules (Session 1) → AI knows your standards
+2. Create PRDs (Session 2) → AI knows your features
+3. Build Memory Bank (Session 4) → AI knows your decisions
+4. Use #mentions and @workspace → AI has perfect context
+5. Write concise prompts → AI delivers exactly what you need
+```
+
+**This is the path to 2-5x productivity gains.**
+
+---
+
+### Common Anti-Patterns to Avoid
+
+**1. Writing essays instead of rules**
+
+```markdown
+❌ BAD:
+We believe that code quality is very important and we generally try to
+maintain high standards across the codebase. When writing new code, please
+keep in mind that readability matters and future developers will need to
+understand what you've written.
+
+✅ GOOD:
+- Write self-documenting code with clear variable names
+- Add docstrings to all public functions
+- Use type hints for function signatures
+```
+
+**2. Negative prohibitions without alternatives**
+
+```markdown
+❌ BAD:
+- Don't use print for debugging
+- Avoid global variables
+- Don't hardcode values
+
+✅ GOOD:
+- Use `logging` module at DEBUG level for diagnostics
+- Pass configuration through dependency injection
+- Load config from environment variables via python-dotenv
+```
+
+**3. Vague aspirational statements**
+
+```markdown
+❌ BAD:
+- Follow best practices
+- Write clean code
+- Be consistent
+
+✅ GOOD:
+- Use async/await for all I/O operations
+- Follow PEP 8 style guide, max line length 100
+- Use snake_case for functions, PascalCase for classes
+```
+
+**4. Including instructions that AI already knows**
+
+```markdown
+❌ BAD:
+- Python functions start with def
+- Classes use class keyword
+- Variables store values
+
+✅ GOOD:
+- Use Pydantic v2 BaseModel for all schemas
+- Use UUID strings for primary keys (not integers)
+- Fixed owner_id = "default-user" for simplified auth
+```
+
+**5. Making rules too long**
+
+```markdown
+❌ BAD:
+A 2,000-line custom instructions file covering every possible scenario
+
+✅ GOOD:
+Start with 5-10 core rules, add iteratively based on what Copilot actually needs guidance on
+```
+
+---
+
+### Template for Your Project
+
+**Copy this template and adapt it to your project:**
+
+```markdown
+# Project: [YOUR PROJECT NAME]
+
+## Overview
+[1-2 sentence description of what this project does]
+[Tech stack: Python 3.11+, FastAPI, SQLAlchemy, PostgreSQL, etc.]
+
+## Architecture Patterns
+- [Your architecture: 3-tier, microservices, monolith, etc.]
+- [Key patterns: dependency injection, repository pattern, etc.]
+- [Data layer: ORM, raw SQL, etc.]
+
+## Coding Standards
+- Use type hints on all function signatures
+- Write [docstring style] docstrings for all public functions
+- Follow [style guide: PEP 8, Black, etc.]
+- Max line length: [80/100/120] characters
+- Use [async/sync] for I/O operations
+
+## Naming Conventions
+- Files: [snake_case/kebab-case]
+- Classes: [PascalCase]
+- Functions: [snake_case/camelCase]
+- Constants: [UPPER_SNAKE_CASE]
+
+## Error Handling
+- [How to handle API errors: HTTPException, custom exceptions, etc.]
+- [Logging requirements: log level, format, etc.]
+- [What to expose vs hide in error messages]
+
+## Testing
+- [Test framework: pytest, unittest, jest, etc.]
+- [Test structure: AAA, Given-When-Then, etc.]
+- [Coverage requirements: 80%, 90%, etc.]
+- [Mocking requirements: mock external APIs, databases, etc.]
+
+## [Project-Specific Section]
+- [Add any project-specific rules here]
+- [Authentication patterns, caching strategies, etc.]
+```
+
+---
+
+### Quick Reference: Rules Writing Checklist
+
+Before finalizing your custom instructions, check:
+
+- [ ] **Short statements** - Each rule is one concise line
+- [ ] **Positive directives** - Tell AI what TO do, not what to avoid
+- [ ] **Specific and actionable** - Zero ambiguity about what's expected
+- [ ] **Structured with headings** - Clear sections for different concerns
+- [ ] **Code examples included** - Show patterns where helpful
+- [ ] **Under 1,000 lines** - Start minimal, add iteratively
+- [ ] **Tested with Copilot** - Verified that Copilot follows them
+- [ ] **References visible** - Check that Copilot reads them in chat
+
+**Remember: Rules are a living document. Start small, test, iterate.**
 
 ---
 
@@ -971,20 +1502,35 @@ Answer: Inline Chat (Cmd+I)
 **5. What #mention includes terminal output?**
 Answer: #terminalSelection
 
-**6. Where do custom instructions go?**
+**6. Where do repo-wide custom instructions go?**
 Answer: `.github/copilot-instructions.md`
 
-**7. How do you search your entire codebase?**
+**7. What makes a GOOD rule vs a BAD rule?**
+Answer: Good = short, specific, positive directive (what TO do). Bad = vague, negative, or too long.
+
+**8. Why use XML tags in rules for Claude-based tools?**
+Answer: Creates clear boundaries that prevent AI from mixing up context, instructions, and examples.
+
+**9. How do you verify Copilot is reading your rules?**
+Answer: Check the References section in Copilot Chat responses.
+
+**10. What's Principle 2 of effective rules writing?**
+Answer: Tell the AI what TO DO, not what to avoid (LLMs are poor at negations).
+
+**11. How do you search your entire codebase?**
 Answer: @workspace query
 
-**8. What are the 4 main Copilot modes?**
+**12. What are the 4 main Copilot modes?**
 Answer: Ask, Edit, Agent, Plan
 
-**9. How do you access Inline Chat?**
+**13. How do you access Inline Chat?**
 Answer: Cmd+I (Mac) or Ctrl+I (Windows)
 
-**10. What's the golden rule for terminal commands?**
+**14. What's the golden rule for terminal commands?**
 Answer: Never approve commands you don't understand
+
+**15. What's the recommended max length for custom instructions files?**
+Answer: Under ~1,000 lines (GitHub warns quality deteriorates beyond this)
 
 ---
 
