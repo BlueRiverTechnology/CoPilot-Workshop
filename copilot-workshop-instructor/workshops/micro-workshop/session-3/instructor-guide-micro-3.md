@@ -19,17 +19,18 @@
 
 ---
 
-## CRITICAL: New Checkpoint-Based Approach
+## 📋 INSTRUCTOR NOTES (Do NOT Read to Students)
 
-**THIS SESSION IS COMPLETELY DIFFERENT FROM THE ORIGINAL.**
+**Session Design Philosophy:**
+This session uses a checkpoint-based approach where students start with WORKING code instead of empty scaffolding. This design prevents the "everything breaks at once" problem and lets you focus on teaching TDD patterns rather than debugging async SQLAlchemy for 20 students.
 
-**OLD approach:** Students build API from empty scaffolding, everything can break.
+**Your Mindset:**
+- You're teaching professional workflows, not troubleshooting environments
+- Students learn by watching you first, then doing one thing themselves
+- The safety net (`git reset --hard session-3-start`) means nobody gets permanently stuck
 
-**NEW approach:** Students start with WORKING code, learn by watching then doing ONE thing well.
-
-**Instructor mindset:** You're teaching TDD patterns and professional workflows, NOT debugging async SQLAlchemy setup for 20 students simultaneously.
-
-**Safety net:** If anything breaks, students can `git reset --hard session-3-start` and they're back to working code.
+**Key Difference:**
+Students don't build the API from scratch - they extend working code. This is INTENTIONAL and BETTER for learning.
 
 ---
 
@@ -57,9 +58,9 @@
 >
 > We're using a CHECKPOINT approach. You're starting with WORKING code, not empty scaffolding.
 >
-> Why? Because in the original workshop, too many things could fail at once. Database setup, async SQLAlchemy, test fixtures - each failure ate 5 minutes per student.
+> Why? Because when you're learning professional workflows, you should focus on the PATTERNS, not fighting environment setup. Database, async, test fixtures - all that's already done and working.
 >
-> **NEW approach:** Start with working infrastructure. Learn by watching, then build ONE feature with support.
+> **Here's how it works:** Start with working infrastructure. Watch me build a feature with TDD, then YOU build one with full context support.
 >
 > Let's verify your checkpoint is working! 🛡️"
 
