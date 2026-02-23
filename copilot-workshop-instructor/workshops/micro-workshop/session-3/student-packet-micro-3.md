@@ -282,36 +282,83 @@ Simple feature. Clear requirements. Working infrastructure.
 
 ### Feature Requirements & Strategy (2 minutes)
 
-**What you're building:**
+**First: What does this feature DO for users?**
+
+You know how in any todo app (Todoist, Things, your phone) you can mark tasks as high/medium/low priority? That's what we're building.
+
+**User stories:**
+- Create urgent todo: "Fix production bug" → Priority 1 (high)
+- Create normal todo: "Write docs" → Priority 2 (medium) - the default
+- Create later todo: "Organize files" → Priority 3 (low)
+- Filter: "Show me only urgent tasks" → GET /todos?priority=1
+
+Simple. Familiar. Everyone gets it.
+
+---
+
+**Second: How does our API organize code?**
+
+Our API has three layers (think restaurant):
+- **API Endpoints** (src/api/v1/) = Waiter (takes orders, returns food)
+- **Service Layer** (src/services/) = Kitchen (does the work)
+- **Database Models** (src/models/) = Pantry (stores data)
+
+Plus **Schemas** (src/schemas/) = Menu (defines what's required, optional, defaults)
+
+For todos, we have three schemas:
+- **TodoCreate** = Order form (what's needed to create?)
+- **TodoResponse** = Plated dish (what customer sees?)
+- **TodoUpdate** = Modification form (what can change?)
+
+To add priority, ALL these layers need updating.
+
+---
+
+**Third: What YOU do vs what AI does**
+
+**YOU specify (the WHAT and WHY):**
+- What the priority field does (mark tasks 1/2/3)
+- Business rules (defaults to 2, optional, filterable)
+
+**AI handles (the HOW):**
+- Pydantic syntax, SQLAlchemy columns, async patterns
+- Just give AI good #mentions and clear requirements!
+
+---
+
+**Now the technical requirements:**
 
 ```
 FEATURE: Add Priority Field to Todos
 
-REQUIREMENTS:
-1. Add 'priority' field to Todo model
-   - Type: Integer
-   - Values: 1 (high), 2 (medium), 3 (low)
+WHAT IT DOES:
+Users can mark todos as high/medium/low priority and filter by importance.
+
+TECHNICAL REQUIREMENTS:
+
+1. Database Model (src/models/todo.py):
+   - Add 'priority' field (Integer: 1=high, 2=medium, 3=low)
    - Default: 2 (medium)
-   - Optional in creation
 
-2. Update schemas:
-   - TodoCreate: priority is optional (defaults to 2)
+2. Schemas (src/schemas/todo.py):
+   - TodoCreate: priority is Optional[int] = 2
    - TodoResponse: include priority
-   - TodoUpdate: allow updating priority
+   - TodoUpdate: priority is Optional[int] (can update it)
 
-3. Update existing endpoints:
-   - POST /todos: Accept priority in request
+3. Service Layer (src/services/todo_service.py):
+   - Add priority filtering to get_all() method
+
+4. API Endpoints (src/api/v1/todos.py):
+   - POST /todos: Accept priority in request body
    - GET /todos: Return priority in response
+   - GET /todos?priority=1: Filter by priority
    - PUT /todos/{id}: Allow updating priority
 
-4. Add filtering:
-   - GET /todos?priority=1 should filter by priority
-
 SUCCESS CRITERIA:
-✅ Can create todo with priority
+✅ Can create todo with priority (1, 2, or 3)
 ✅ Can create todo without priority (defaults to 2)
-✅ Can update priority
-✅ Can filter by priority
+✅ Can update a todo's priority
+✅ Can filter: GET /todos?priority=1
 ✅ All existing tests still pass
 ```
 
