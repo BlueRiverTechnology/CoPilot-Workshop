@@ -476,37 +476,78 @@ pytest tests/api/test_todos.py -v
 #### [0:13-0:15] Feature Requirements & Strategy (2 min)
 
 **SAY:**
-> "Here's what you're building:"
+> "Here's what you're building. First, let's talk about what this feature DOES for users."
+
+**EXPLAIN THE USER STORY (30 seconds):**
+> "You know how in any todo app - Todoist, Things, your phone's reminders - you can mark things as high priority, medium, low?
+>
+> That's what we're building. Simple:
+> - Create an urgent todo: 'Fix production bug' → Priority 1 (high)
+> - Create a normal todo: 'Write docs' → Priority 2 (medium, the default)
+> - Create a later todo: 'Organize files' → Priority 3 (low)
+> - Filter: 'Show me only urgent tasks' → GET /todos?priority=1
+>
+> Familiar feature. Everyone gets it."
+
+**EXPLAIN THE ARCHITECTURE (45 seconds):**
+> "Now let's map this to our technical pieces. Our API has three layers - think of it like a restaurant:
+>
+> 1. **API Endpoints** (src/api/v1/) = The waiter - takes orders, returns food
+> 2. **Service Layer** (src/services/) = The kitchen - does the work
+> 3. **Database Models** (src/models/) = The pantry - stores ingredients
+>
+> **And we have Schemas** (src/schemas/) = The menu - defines what you CAN order and what format it comes in.
+>
+> For todos, we have three schemas:
+> - **TodoCreate** = Order form (what's required when creating?)
+> - **TodoResponse** = Plated dish (what does customer see?)
+> - **TodoUpdate** = Modification form (what can you change?)
+>
+> To add priority, ALL these layers need updating."
+
+**EXPLAIN WHAT THEY NEED TO KNOW (30 seconds):**
+> "Here's the magic: You don't need to know Pydantic or SQLAlchemy syntax.
+>
+> **AI handles the HOW. You handle the WHAT and WHY.**
+>
+> Your job: Tell AI what the priority field does, where it goes, and what the business rules are.
+>
+> AI's job: Write the code.
+>
+> Let me show you the requirements:"
 
 **SHOW ON SCREEN:**
 ```
 FEATURE: Add Priority Field to Todos
 
-REQUIREMENTS:
-1. Add 'priority' field to Todo model
-   - Type: Integer
-   - Values: 1 (high), 2 (medium), 3 (low)
+WHAT IT DOES:
+Users can mark todos as high/medium/low priority and filter by importance.
+
+TECHNICAL REQUIREMENTS:
+
+1. Database Model (src/models/todo.py):
+   - Add 'priority' field (Integer: 1=high, 2=medium, 3=low)
    - Default: 2 (medium)
-   - Optional in creation
 
-2. Update schemas:
-   - TodoCreate: priority is optional (defaults to 2)
-   - TodoResponse: include priority
-   - TodoUpdate: allow updating priority
+2. Schemas (src/schemas/todo.py):
+   - TodoCreate: priority is Optional[int] = 2
+   - TodoResponse: include priority field
+   - TodoUpdate: priority is Optional[int] (can update it)
 
-3. Update existing endpoints:
-   - POST /todos: Accept priority in request
+3. Service Layer (src/services/todo_service.py):
+   - Add priority filtering to get_all() method
+
+4. API Endpoints (src/api/v1/todos.py):
+   - POST /todos: Accept priority in request body
    - GET /todos: Return priority in response
+   - GET /todos?priority=1: Filter by priority
    - PUT /todos/{id}: Allow updating priority
 
-4. Add filtering:
-   - GET /todos?priority=1 should filter by priority
-
 SUCCESS CRITERIA:
-✅ Can create todo with priority
+✅ Can create todo with priority (1, 2, or 3)
 ✅ Can create todo without priority (defaults to 2)
-✅ Can update priority
-✅ Can filter by priority
+✅ Can update a todo's priority
+✅ Can filter: GET /todos?priority=1
 ✅ All existing tests still pass
 ```
 
@@ -526,17 +567,25 @@ SUCCESS CRITERIA:
 **AT 0:30:**
 > "Okay! Here's my suggestion:
 >
-> **Complexity:** Medium (4-5 elements)
-> - CONTEXT: #file references to models, schemas, services, routes
-> - TASK: Clear - add priority field
-> - CONSTRAINTS: Field specs, default value, filtering
-> - FORMAT: Which files to update
-> - Skip PERSONA (straightforward), skip EXAMPLES (have patterns)
+> **What YOU specify (the WHAT and WHY):**
+> - WHAT: Add priority field that lets users mark tasks as 1/2/3
+> - WHY: Users need to filter by importance
+> - RULES: Defaults to 2, optional when creating, can be updated, can filter
 >
-> **Approach:** ONE comprehensive prompt
-> - You have working infrastructure
-> - Requirements are clear
-> - AI can see all patterns with #mentions
+> **What AI handles (the HOW):**
+> - WHERE: All four files (models, schemas, services, routes)
+> - HOW: Pydantic syntax, SQLAlchemy column, async service methods
+>
+> **Your prompt structure:**
+> - CONTEXT: #file mentions to all four files
+> - TASK: Add priority field
+> - CONSTRAINTS: Business rules (1/2/3, defaults to 2, filterable)
+> - FORMAT: Update all layers
+>
+> **Approach:** ONE comprehensive prompt with good #mentions
+> - AI can see the patterns in existing code
+> - You give the business requirements
+> - It handles the implementation
 >
 > Ready to build? Let's go! 🚀"
 
