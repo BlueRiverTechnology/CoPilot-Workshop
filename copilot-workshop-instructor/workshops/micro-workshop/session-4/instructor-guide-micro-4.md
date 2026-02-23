@@ -549,22 +549,125 @@ YOU Must Add (30%):
 >
 > Everything you've learned. All techniques. One challenge.
 >
-> **THE CHALLENGE:**
-> Build a POST endpoint to add tags to todos using the many-to-many relationship.
+> But first - let's make sure everyone understands WHAT we're building."
+
+**EXPLAIN THE USER STORY (45 seconds):**
+> "Tags are like labels in Gmail, categories in your notes app, or hashtags on social media.
 >
-> **What's ALREADY BUILT (in session-4-start):**
-> - ✅ Tag model (id, name, created_at)
-> - ✅ todo_tags association table
-> - ✅ Relationship defined in Todo model
+> **User perspective:**
+> - I have a todo: 'Fix login bug'
+> - I tag it: 'urgent', 'backend', 'security'
+> - Now I can find ALL todos tagged 'urgent' or ALL 'backend' work
 >
-> **WHAT YOU BUILD:**
-> - POST /api/v1/todos/{todo_id}/tags
-> - Request body: { "name": "urgent" }
-> - Creates tag if doesn't exist (case-insensitive)
-> - Associates tag with todo
-> - Returns updated TodoResponse with tags included
-> - Proper error handling (404 if todo not found, 403 if not owned)
-> - THE 30%: Ownership validation, edge cases, error messages
+> **Real-world use:**
+> - Organize: Group related tasks
+> - Filter: 'Show me all urgent items'
+> - Context: 'What are my backend tasks?'
+>
+> Simple concept. You've used it a hundred times.
+>
+> Now let's map this to our API..."
+
+**EXPLAIN WHAT'S ALREADY BUILT (30 seconds):**
+> "Here's the good news - the hard database work is DONE:
+>
+> In session-4-start checkpoint, you have:
+> - ✅ Tag table (stores tags: 'urgent', 'backend', 'security')
+> - ✅ Association table (connects todos to tags - many-to-many)
+> - ✅ Database relationship configured
+>
+> **What's 'many-to-many'?**
+> - One todo can have MANY tags ('urgent' + 'backend' + 'security')
+> - One tag can be on MANY todos (10 todos all tagged 'urgent')
+>
+> That's why we need an association table to track all the connections.
+>
+> The infrastructure exists. YOU just add the API endpoint!"
+
+**EXPLAIN YOU VS AI (30 seconds):**
+> "**AI will handle (the HOW):**
+> - Database query syntax
+> - Creating tag if it doesn't exist
+> - Adding association between todo and tag
+> - Returning the updated todo with tags
+>
+> **YOU must specify (the WHAT and the 30%):**
+> - What should happen (add tag to todo)
+> - Business rules (case-insensitive, create-if-missing)
+> - Security (can I tag someone else's todo? NO!)
+> - Edge cases (what if tag already on todo? what if todo doesn't exist?)
+>
+> The 30% is where YOU prove you're a professional!"
+
+**NOW THE CHALLENGE:**
+> "**THE BOSS FIGHT CHALLENGE:**
+>
+> Build ONE endpoint: Add a tag to a todo"
+
+**SHOW ON SCREEN:**
+```
+BOSS FIGHT: Tag Endpoint
+
+USER STORY:
+As a user, I want to tag my todo "Fix login bug" as "urgent"
+so I can later filter and find all my urgent tasks.
+
+ENDPOINT TO BUILD:
+POST /api/v1/todos/{todo_id}/tags
+Request: { "name": "urgent" }
+Response: TodoResponse with tags included
+
+EXAMPLE FLOW:
+1. User posts: POST /todos/123/tags with {"name": "urgent"}
+2. API checks: Does todo 123 exist? Do I own it?
+3. API checks: Does tag "urgent" exist? If not, create it
+4. API adds: Associate tag with todo
+5. API returns: Updated todo with tags: ["urgent"]
+
+BUSINESS RULES:
+- Tag names are case-insensitive ("Urgent" = "urgent")
+- Tags are created automatically if they don't exist
+- Same tag can be added to many todos
+- One todo can have many tags
+- Users can ONLY tag their OWN todos (ownership check!)
+
+WHAT'S ALREADY DONE:
+✅ Tag model exists (src/models/tag.py)
+✅ Association table exists (todo_tags)
+✅ Relationship configured in Todo model
+
+WHAT YOU BUILD:
+1. Schemas (src/schemas/tag.py):
+   - TagCreate: { "name": str }
+   - TagResponse: { "id": UUID, "name": str, "created_at": datetime }
+
+2. Service method (src/services/todo_service.py):
+   - add_tag_to_todo(todo_id, tag_name, user_id, db)
+   - Check todo exists and owned by user (THE 30%!)
+   - Normalize tag name to lowercase
+   - Get or create tag
+   - Add tag to todo.tags
+   - Return updated todo
+
+3. API endpoint (src/api/v1/todos.py):
+   - POST /{todo_id}/tags
+   - Validate request body
+   - Call service method
+   - Handle errors: 404 (not found), 403 (not owned)
+   - Return TodoResponse with tags
+
+4. Update TodoResponse schema (src/schemas/todo.py):
+   - Add: tags: List[TagResponse] = []
+
+THE CRITICAL 30%:
+🎯 Ownership validation - Can ANY user tag ANY todo?
+🎯 Case handling - "Urgent" vs "urgent" same tag?
+🎯 Idempotency - What if tag already on todo?
+🎯 Error messages - Clear and helpful?
+```
+
+**SAY:**
+> "Everything you've learned. All in one challenge.
 >
 > **TECHNIQUES TO USE:**
 > - ✅ Custom Agent context (just created!)
