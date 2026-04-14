@@ -79,6 +79,7 @@ echo "test-secret-key" > .env
 # It should show: "This file is ignored" or not find the file
 ```
 
+
 **SAY:**
 > "✅ If you see 'file is ignored' - you're protected! 🛡️"
 
@@ -251,121 +252,6 @@ Keep it simple but demonstrative.
 
 ---
 
-### [0:18-0:20] 🛡️ Copilot Safety Features (2 min)
-
-**ENERGY:** Reassuring, practical
-
-**SAY:**
-> "Before we dive deeper, let me show you safety features.
->
-> Because you'll experiment, try things, sometimes code won't work out.
->
-> Copilot + VS Code have your back!"
-
----
-
-#### [0:18-0:19] Undo and Git Integration (1 min)
-
-**SAY:**
-> "Multiple ways to recover from AI changes:"
-
-**DO - Demo:**
-```
-1. Standard Undo: Cmd+Z (Mac) / Ctrl+Z (Windows) 
-   - Works for individual file changes
-   
-2. Git Integration:
-   - Stage changes you like
-   - Discard changes you don't (right-click → Discard Changes)
-   - Commit at checkpoints
-   
-3. Accept/Reject in Edit Mode:
-   - Edit Mode shows diffs BEFORE applying
-   - Accept or Discard each change
-```
-
-**SAY:**
-> "Key workflow: Work in small increments. Commit often.
->
-> Agent Mode making too many changes? Stop it, undo, try a more specific prompt.
->
-> Edit Mode shows diffs first - review before accepting!
->
-> You're in control!"
-
----
-
-#### [0:19-0:20] Review Before Accepting (1 min)
-
-**SAY:**
-> "In Edit Mode and Agent Mode, you see changes before they're final."
-
-**SHOW:**
-- Edit Mode: Diff preview with Accept/Discard buttons
-- Agent Mode: Files in working set, option to review each
-
-**SAY:**
-> "Golden rule: **Review before you accept.**
->
-> AI is powerful but not perfect. You're the final quality gate!"
-
----
-
-### [0:20-0:25] ⚡ Inline AI Tools & Other Modes (5 min)
-
-**ENERGY:** Fast-paced, show the superpowers
-
-**SAY:**
-> "Agent Mode: mastered! ✅ Now I'll show you the INLINE superpowers that work as you code!"
-
----
-
-#### [0:21-0:22] Inline Chat - Quick Edits (1 min)
-
-**SAY:**
-> "Superpower: Inline Chat (Cmd+I) - edit code inline, no chat panel needed!"
-
-**DO - Demo:**
-```
-1. Open routes/hello.py
-2. Select the get_greeting function
-3. Press Cmd+I (Mac) or Ctrl+I (Windows/Linux)
-4. Type: "add type hints and docstring"
-5. Shows DIFF PREVIEW
-6. Accept or reject
-```
-
-**SAY:**
-> "See that? AI shows you the DIFF before applying.
->
-> Perfect for:
-> - Quick refactoring
-> - Adding docstrings
-> - Converting code (sync→async)
-> - Extracting methods
->
-> Fast, inline, no chat needed. Lightning quick!"
-
----
-
-#### [0:22-0:23] Ghost Text / Inline Completions (1 min)
-
-**SAY:**
-> "As you type, Copilot suggests completions in gray 'ghost text'. Press Tab to accept."
-
-**DO - Demo:**
-```
-1. Open a Python file
-2. Start typing: def calculate_
-3. See ghost text suggestion appear
-4. Press Tab to accept
-5. Continue typing, more suggestions appear
-```
-
-**SAY:**
-> "This is the original Copilot superpower - it's always there, always helping as you code!"
-
----
 
 #### [0:24-0:25] Other Modes Quick Demo (1 min)
 
@@ -606,6 +492,7 @@ Custom instructions are **always-on context** that multiplies your AI productivi
 
 **SAY:**
 > "There's not just one place for AI rules. There's an entire ecosystem. Let me show you the full picture."
+> "You need to have Instructions turned on: Go to Code/Settings/Settings and Type: github.copilot.chat.codegeneration.useInstructionfiles then Check box
 
 **SHOW VISUAL:**
 ```
@@ -772,6 +659,12 @@ async def get_user(user_id: str) -> User:
 
 **TIMER:** 2 minutes
 
+**DO - Add this rule to Coding Standards: **
+- write functions docstrings in shakespearean style (i.e. "thou shalt not write functions longer than 20 lines")
+- PROMPT : "write 3 random functions in new file called test_functions.py with docstrings"
+
+
+
 **AT 2:00:**
 > "Done! ✅ You've written your first AI rules using research-backed principles!"
 
@@ -824,6 +717,127 @@ applyTo: "**/tests/**"
 > "You can verify rules are being used by checking the **References** section in Copilot Chat responses. It'll show `.github/copilot-instructions.md` when it's reading your rules."
 
 ---
+
+
+
+### [0:20-0:25] ⚡ Inline AI Tools & Other Modes (5 min)
+
+**ENERGY:** Fast-paced, show the superpowers
+
+**SAY:**
+> "Agent Mode: mastered! ✅ Now I'll show you the INLINE superpowers that work as you code!"
+
+---
+
+#### [0:21-0:22] Inline Chat - Quick Edits (1 min)
+
+**SAY:**
+> "Superpower: Inline Chat (Cmd+I) - edit code inline, no chat panel needed!"
+
+**DO - Demo:**
+```
+1. Open routes/hello.py
+2. Select the get_greeting function
+3. Press Cmd+I (Mac) or Ctrl+I (Windows/Linux)
+4. Type: "add type hints and docstring"
+5. Shows DIFF PREVIEW
+6. Accept or reject
+```
+
+**SAY:**
+> "See that? AI shows you the DIFF before applying.
+>
+> Perfect for:
+> - Quick refactoring
+> - Adding docstrings
+> - Converting code (sync→async)
+> - Extracting methods
+>
+> Fast, inline, no chat needed. Lightning quick!"
+
+---
+
+#### [0:22-0:23] Ghost Text / Inline Completions (1 min)
+
+**SAY:**
+> "As you type, Copilot suggests completions in gray 'ghost text'. Press Tab to accept."
+
+**DO - Demo:**
+```
+1. Open a Python file
+2. Start typing: def calculate_
+3. See ghost text suggestion appear
+4. Press Tab to accept
+5. Continue typing, more suggestions appear
+```
+
+**SAY:**
+> "This is the original Copilot superpower - it's always there, always helping as you code!"
+
+---
+
+
+### [0:18-0:20] 🛡️ Copilot Safety Features (2 min)
+
+**ENERGY:** Reassuring, practical
+
+**SAY:**
+> "Before we dive deeper, let me show you safety features.
+>
+> Because you'll experiment, try things, sometimes code won't work out.
+>
+> Copilot + VS Code have your back!"
+
+---
+
+#### [0:18-0:19] Undo and Git Integration (1 min)
+
+**SAY:**
+> "Multiple ways to recover from AI changes:"
+
+**DO - Demo:**
+```
+1. Standard Undo: Cmd+Z (Mac) / Ctrl+Z (Windows) 
+   - Works for individual file changes
+   
+2. Git Integration:
+   - Stage changes you like
+   - Discard changes you don't (right-click → Discard Changes)
+   - Commit at checkpoints
+   
+3. Accept/Reject in Edit Mode:
+   - Edit Mode shows diffs BEFORE applying
+   - Accept or Discard each change
+```
+
+**SAY:**
+> "Key workflow: Work in small increments. Commit often.
+>
+> Agent Mode making too many changes? Stop it, undo, try a more specific prompt.
+>
+> Edit Mode shows diffs first - review before accepting!
+>
+> You're in control!"
+
+---
+
+#### [0:19-0:20] Review Before Accepting (1 min)
+
+**SAY:**
+> "In Edit Mode and Agent Mode, you see changes before they're final."
+
+**SHOW:**
+- Edit Mode: Diff preview with Accept/Discard buttons
+- Agent Mode: Files in working set, option to review each
+
+**SAY:**
+> "Golden rule: **Review before you accept.**
+>
+> AI is powerful but not perfect. You're the final quality gate!"
+
+---
+
+
 
 ## Session 1 Wrap-Up
 
